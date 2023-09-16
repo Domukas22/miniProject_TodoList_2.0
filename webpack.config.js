@@ -21,6 +21,7 @@ module.exports = {
         hot: true, //shows changes without refrashing the page
         compress: true,
         historyApiFallback: true,
+       
     },
     module: {
         rules: [
@@ -49,7 +50,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'Webpack App',
+            title: 'TodoList 2.0',
             filename: 'index.html',
             template: 'src/homeTemplate.html'
         }), 
