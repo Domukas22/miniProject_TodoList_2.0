@@ -42,8 +42,8 @@ All functions
 - /// Get list 
 - /// Create
 - /// Delete
-- Edit content
-- Edit color
+- /// Edit content
+- /// Edit priority
 - Edit date
 - Save to localStorage
 - Get from localStorage
