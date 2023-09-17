@@ -39,10 +39,11 @@ All functions
 - delete(id)
 
 4. Todo-list
-- Get list 
-- push_newTodo(date, title, desc, color, id)
-- Delete todo-item
-- Edit content of todo-item
-- Edit color of todo-item
+- /// Get list 
+- /// Create
+- /// Delete
+- Edit content
+- Edit color
+- Edit date
 - Save to localStorage
 - Get from localStorage
