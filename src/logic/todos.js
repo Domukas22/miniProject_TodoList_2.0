@@ -3,11 +3,12 @@ import { generate_ID, format_Date } from "./general";
 
 let todoList = []
 
+export function get_Todo() {
+    return todoList[0].todos[0]
+}
+
 export function log_todoList() {
     console.log(todoList);
-    todoList.forEach(day => {
-        day.todos.forEach(x => console.log(x))
-    })
 }
 export function add_newTodo(title, desc, priority, date_Unformated) {
     const date = format_Date(date_Unformated)

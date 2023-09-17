@@ -1,18 +1,19 @@
-import { log_todoList, add_newTodo, delete_Todo, edit_todoText, edit_todoPriority, getId, getFirst } from "./logic/todos.js";
+import { log_todoList, add_newTodo, get_Todo } from "./logic/todos.js";
 import './styles/reset.css'
 import './styles/main.css'
 
 
 console.log('--------------------');
 add_newTodo('Shopping', '', 1, new Date(2023, 1, 14))
-add_newTodo('Training', '', 1, new Date(2023, 1, 14))
-add_newTodo('Candy', '', 1, new Date(2023, 1, 15))
-add_newTodo('Sports', '', 1, new Date(2023, 1, 15))
-add_newTodo('Swimming', '', 1, new Date(2023, 1, 16))
+add_newTodo('Training', '', 1, new Date(2023, 1, 15))
+
 
 log_todoList()
-
-
+get_Todo().edit_Priority(2)
+get_Todo().edit_Text('New title', 'New Desc')
+get_Todo().edit_Priority(3)
+get_Todo().remove()
+log_todoList()
 
 // let list = [
 //     {
