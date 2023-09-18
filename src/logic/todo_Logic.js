@@ -3,10 +3,12 @@ import { generate_ID, format_Date } from "./general";
 
 let todoList = []
 
-export function get_Todo() {
-    return todoList[0].todos[0]
+export function get_Todos_ofDay(title_ofDate) { 
+    // argument example ==> "12.04.2023"
+    const day_Obj = todoList.find(day => day.date == title_ofDate)
+    if (!day_Obj) {return []}
+    return day_Obj.todos
 }
-
 export function log_todoList() {
     console.log(todoList);
 }
@@ -24,6 +26,7 @@ function factory_Todo(title, desc, priority) {
     return {title, desc, priority, id, remove, edit_Text, edit_Priority}
 }
 function delete_Todo(id_toDelete, old_List) {
+    // loop through list and skip the obj with mathcing id
     const new_List = old_List.reduce((acc, day) => {
         const new_Day = {...day}
         new_Day.todos = new_Day.todos.filter(todo => todo.id !== id_toDelete)
@@ -88,7 +91,7 @@ function rebuild_List_sameDays(old_List, new_Todo, index_toChange) {
 }
 function rebuild_List_newDay(old_List, new_Day, new_Todo) {
     // return a list with a NEW day (and new todo)
-    return [...old_List, {date: new_Day, todos: [new_Todo]}]
+    return [...old_List, {date: new_Day, todos: [new_Todo], id: generate_ID()}]
 }
 function is_dateNew(array, date_Formated) {
     // check if day already exists in the todoList
