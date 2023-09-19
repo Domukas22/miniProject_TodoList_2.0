@@ -2,22 +2,34 @@
 import { generate_ID, format_Date } from "./general";
 
 let todoList = []
+let selected_Day = {}
 
+export function select_Day(date_Target) {
+    const need_newDate = is_dateNew(todoList, date_Target)
+
+    if (!need_newDate) {
+        selected_Day = todoList.find(day => day.date == date_Target)
+        console.log("Selected =>", selected_Day);
+        return
+    }
+    selected_Day = {
+        date: date_Target,
+        todos: []
+    }
+    console.log("Selected =>", selected_Day)
+}
 export function get_Todos_ofDay(title_ofDate) { 
-    // argument example ==> "12.04.2023"
+    // formated date => "dd.mm.yyy"
     const day_Obj = todoList.find(day => day.date == title_ofDate)
     if (!day_Obj) {return []}
     return day_Obj.todos
 }
-export function log_todoList() {
-    console.log(todoList);
-}
 export function add_newTodo(title, desc, priority, date_Unformated) {
     const date = format_Date(date_Unformated)
-    const need_newDate = is_dateNew(todoList, date)
     const new_Todo = factory_Todo(title, desc, priority)
-    todoList = rebuild_todoList(need_newDate, todoList, new_Todo, date);
+    todoList = create_newTodoList(todoList, new_Todo, date);
 }
+
 function factory_Todo(title, desc, priority) {
     const id = generate_ID()
     const edit_Text = (new_Title, new_Desc) => edit_todoText(id, new_Title, new_Desc, todoList)
@@ -71,36 +83,34 @@ function edit_todoPriority(id_toEdit, new_Priority, old_List) {
     todoList = new_List 
 }
 
+
 // no more refferences outside functions
-function rebuild_todoList(need_newDate, old_List, new_Todo, date) {
-    if (!need_newDate) {
-        // add a new todo to an EXISTING day
-        const new_todoList = rebuild_List_sameDays(old_List, new_Todo, get_dayIndex(old_List, date))
-        return new_todoList.sort((a, b) => a.date.localeCompare(b.date));
+function create_newTodoList(old_List, new_Todo, date_Target) {
+    const need_newDate = is_dateNew(old_List, date_Target)
+
+    // if day exists --> push new_Todo, else push new_Day with the new_Todo
+    if (!need_newDate) { 
+        return insert_newTodo(old_List, date_Target, new_Todo)
     }
-    // add a new todo to a NEW day
-    const new_todoList = rebuild_List_newDay(old_List, date, new_Todo) 
-    return new_todoList.sort((a, b) => a.date.localeCompare(b.date));
+    return [...old_List, create_newDay(date_Target, new_Todo)] 
+            .sort((a, b) => a.date.localeCompare(b.date));
 }
-function rebuild_List_sameDays(old_List, new_Todo, index_toChange) {
-    // return a list with the same days, but a new todo
-    return old_List.map((day, index) => {
-        if (index == index_toChange) {day.todos.push(new_Todo)}
+function create_newDay(date, new_Todo) {
+    // formated date => "dd.mm.yyy"
+    return {date, todos: [new_Todo], id: generate_ID()}
+}
+function insert_newTodo(old_List, date_Target, new_Todo) {
+    return old_List.map((day) => {
+        if (day.date == date_Target) {day.todos.push(new_Todo)}
         return day
-    });
+    }).sort((a, b) => a.date.localeCompare(b.date));
 }
-function rebuild_List_newDay(old_List, new_Day, new_Todo) {
-    // return a list with a NEW day (and new todo)
-    return [...old_List, {date: new_Day, todos: [new_Todo], id: generate_ID()}]
+function is_dateNew(array, date_Target) {
+    // formated date => "dd.mm.yyy"
+    // see if the todoList already has the target Date
+    return !array.some(day => day.date === date_Target);
 }
-function is_dateNew(array, date_Formated) {
-    // check if day already exists in the todoList
-    return !array.some(day => day.date === date_Formated);
-}
-function get_dayIndex(array, date) {
-    // get the index of a chosen day in the todoList
-    return array.findIndex((item) => item.date === date)
-}
+
 
 
 

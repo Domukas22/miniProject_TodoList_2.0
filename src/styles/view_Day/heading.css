@@ -11,7 +11,7 @@
     padding: 12px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
-.heading_dayView > .title {
+.title_dayView {
     color: rgba(255, 255, 255, 0.749);
     font-size: 20px;
     letter-spacing: 0.1px;

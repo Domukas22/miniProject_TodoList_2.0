@@ -1,58 +1,14 @@
 
 import { get_Todos_ofDay } from "../todo_Logic"
-import { open_Day } from "./interactions"
+import { format_Date, get_monthInfo, is_Weekend } from "../general.js"
+import { open_Day } from "./view_Day"
 
-// the selected day should be a variable, and not driven by html
-let selected_Day = 'yy'
 
 export function create_Calender_html(year, month) {
     const {day_Count, blank_Count} = get_monthInfo(year, month)
     const div_Calender = document.querySelector('.calender')
     generate_blankDays_html(div_Calender, blank_Count)
-    generate_monthDays_html(div_Calender, day_Count, year, month)
-}
-
-function generate_monthDays_html(calender, day_Count, year, month) {
-    // for every day in the month, create an html cell
-    const day_Today = new Date().setHours(0, 0, 0, 0);
-
-    for (let day = 1; day < day_Count + 1; day++) {
-        const day_Requested = new Date(year, month, day).setHours(0, 0, 0, 0);
-        const cal_Day_status = get_dayStatus(day_Today, day_Requested)
-
-        const cal_Day_html = create_calCell_html(day, cal_Day_status)
-        const cal_Day_todos = get_Todos_ofDay(`${day}.${month}.${year}`)
-        
-        
-        // if the day has todos, print their titles 
-        if (cal_Day_todos.length > 0) {
-            for (let i = 0; i < cal_Day_todos.length; i++) {
-                cal_Day_html.appendChild(create_todoTitle_html(cal_Day_todos[i].title))
-            }
-        }
-
-        cal_Day_html.addEventListener('click', (e) => {
-            cal_Day_todos.length <= 0 ? console.log('No todos') : console.log(cal_Day_todos)
-        })
-        
-        calender.appendChild(cal_Day_html)
-    }  
-}
-
-function create_calCell_html(day_ofMonth, status) {
-    const cal_Day = document.createElement('div')
-    cal_Day.classList.add('calender_Cell')
-    cal_Day.classList.add(status)
-    cal_Day.setAttribute('active', 'false')
-    cal_Day.innerHTML = `<p class="cornerText_dayOfMonth">${day_ofMonth}</p>`
-    cal_Day.addEventListener('click', e => open_Day(e.currentTarget))
-    return cal_Day
-}
-function create_todoTitle_html(title) {
-    const todo_Title_html = document.createElement('p');
-    todo_Title_html.classList.add('dayBox_todoTitle');
-    todo_Title_html.textContent = title;
-    return todo_Title_html
+    generate_calCells_html(div_Calender, day_Count, month, year)
 }
 
 function generate_blankDays_html(target, blank_Count) {
@@ -63,24 +19,52 @@ function generate_blankDays_html(target, blank_Count) {
         target.appendChild(blank_Day)
     }
 }
-function get_dayStatus(day_Today, day_Requested) {
-    const is_Weekend = () => {
-        return (new Date(day_Requested).getDay() === 0 || new Date(day_Requested).getDay() === 6)
-    } 
+function generate_calCells_html(calender, day_Count, month, year) {
+    const date_Today = new Date()
 
-    if (day_Today > day_Requested) {return 'passed'}
-    if (day_Today == day_Requested) {return 'today'}
-    if (day_Today < day_Requested) {
-        if (is_Weekend()){return 'future_weekend'}
+    // create an html cell for every day in month
+    for (let day_ofMonth = 1; day_ofMonth < day_Count + 1; day_ofMonth++) {
+        const date_ofLoop = new Date(year, month, day_ofMonth)
+        const status = get_dayStatus(date_Today, date_ofLoop)
+        const todos = get_Todos_ofDay(`${day_ofMonth}.${month}.${year}`)
+        calender.appendChild(create_divCell(date_ofLoop, status, todos))
+    }  
+}
+function create_divCell(date_ofLoop, status, todos) {
+    const div_calCell = document.createElement('div')
+    div_calCell.classList.add('calender_Cell')
+    div_calCell.classList.add(status)
+    div_calCell.setAttribute('active', 'false')
+    div_calCell.setAttribute('data-date', format_Date(date_ofLoop))
+    div_calCell.innerHTML = `<p class="cornerText_dayOfMonth">${date_ofLoop.getDate()}</p>`
+    append_todoTitles(div_calCell, todos)
+    div_calCell.addEventListener('click', (e) => open_Day(e.currentTarget.dataset.date))
+    
+    return div_calCell
+}
+
+function append_todoTitles(div_calCell, todos) {
+    todos.forEach(todo => {
+        const paragraph = document.createElement('p')
+        paragraph.classList.add('dayBox_todoTitle')
+        paragraph.innerHTML = todo.title
+        div_calCell.appendChild(paragraph) 
+    });
+}
+function get_dayStatus(day_Today, day_Requested) {
+    const today = day_Today.setHours(0, 0, 0, 0)
+    const target_Day = day_Requested.setHours(0, 0, 0, 0)
+
+    if (today > target_Day) {return 'passed'}
+    if (today == target_Day) {return 'today'}
+    if (today < target_Day) {
+        if (is_Weekend(day_Requested)){return 'future_weekend'}
         return 'future'
     }
-    return 'Error. Expected values ==> new Date().setHours(0, 0, 0, 0);'
+    return 'Error. Expected values "new Date()"'
 }
-function get_monthInfo(year, month) {
-    const day_Count = new Date(year, month + 1, 0).getDate()
-    const blank_Count = new Date(year, month, 0).getDay()
-    return {day_Count, blank_Count}
-}
+
+
 
 
 

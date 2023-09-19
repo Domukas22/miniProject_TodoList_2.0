@@ -1,4 +1,4 @@
-import { log_todoList, add_newTodo, get_Todo } from "./logic/todo_Logic.js";
+import { add_newTodo, select_Day } from "./logic/todo_Logic.js";
 import { create_Calender_html } from "./logic/visuals/view_Calender.js";
 import './styles/reset.css'
 import './styles/main.css'
@@ -11,51 +11,14 @@ import './styles/view_Day/todo.css'
 
 
 
-console.log('--------------------');
-add_newTodo('Shopping', '', 1, new Date(2023, 1, 14))
+console.log('--------------------------------------------------');
+add_newTodo('Shopping', '', 1, new Date(2023, 8, 14))
 add_newTodo('Training', '', 1, new Date(2023, 8, 18))
-log_todoList()
-console.log('-----');
-const year = new Date().getFullYear()
-const month = new Date().getMonth()
-create_Calender_html(year, month)
+add_newTodo('Secodn training', '', 1, new Date(2023, 8, 18))
+select_Day('14.8.2023')
 
-// let list = [
-//     {
-//         date: "1.1.2023",
-//         todos: [
-//             {
-//                 title: 'Item_1',
-//                 desc: '',
-//                 priority: 1,
-//                 id: 111111
-//             },
-//             {
-//                 title: 'Item_2',
-//                 desc: '',
-//                 priority: 1,
-//                 id: 222222
-//             }
-//         ]
-//     },
-//     {
-//         date: "2.1.2023",
-//         todos: [
-//             {
-//                 title: 'Item_3',
-//                 desc: '',
-//                 priority: 1,
-//                 id: 333333
-//             },
-//             {
-//                 title: 'Item_4',
-//                 desc: '',
-//                 priority: 1,
-//                 id: 444444
-//             }
-//         ]
-//     }
-// ]
+
+create_Calender_html(new Date().getFullYear(), new Date().getMonth())
 
 
 
