@@ -1,5 +1,13 @@
 
+:root {
+    --low: rgb(199, 199, 199);
+    --medium: rgb(255, 249, 140);
+    --high: rgb(255, 152, 152);
 
+    --BG_low: rgb(99, 99, 99);
+    --BG_medium: #e5e3ae4c;
+    --BG_high: #ff87874f;
+}
 
 .calender {
     display: grid;
@@ -40,6 +48,10 @@
     background-color: rgba(255, 255, 255, 0.10);
     border-top: 6px solid #f67c00;
 }
+.calender_Cell.active {
+    background-color: rgba(255, 255, 255, 0.10) !important;
+    border-top: 6px solid rgb(255, 249, 140);
+}
 .calender_Cell.future {
     background-color: rgb(74, 74, 77)
 }
@@ -50,9 +62,18 @@
 .calender_Cell.passed > .cornerText_dayOfMonth {
     color: rgba(255, 255, 255, 0.2);
 }
-.calender_Cell.today > .cornerText_dayOfMonth {
+.calender_Cell.today > .cornerText_dayOfMonth,
+.calender_Cell.active > .cornerText_dayOfMonth {
     font-weight: 700;
     color: rgba(255, 255, 255, 0.95);
+}
+
+.calender_Cell:hover {
+    background-color: rgb(108, 108, 108);
+}
+
+.calender_Cell.passed:hover {
+    background-color: rgba(255, 255, 255, 0.04);
 }
 
 
@@ -79,18 +100,17 @@
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.1px;
-    color: rgb(216, 216, 216);
 }
-.dayBox_todoTitle.low {
-    color: var(--color_low);
+.dayBox_todoTitle[data-priority="3"] {
+    color: var(--low);
 }
-.dayBox_todoTitle.medium {
-    color: var(--color_medium);
+.dayBox_todoTitle[data-priority="2"] {
+    color: var(--medium);
 }
-.dayBox_todoTitle.high {
+.dayBox_todoTitle[data-priority="1"] {
     font-size: 14px;
     font-weight: 700;
-    color: var(--color_high);
+    color: var(--high);
 }
 
 

@@ -30,23 +30,33 @@
             <div class="heading_dayView">
                 <h1 class="title_dayView">Title</h1>
             </div>
-            <div class="todo_wrap_right"></div>
-            <div class="todo template" id="todo_template_right">
-                <div class="wrap_allTemplateInputs">
-                    <div class="wrap_textInputsTemplate">
-                        <input type="text" class="input_todo title" id="input_todo_title_right" placeholder="Title...">
-                        <textarea class="input_todo desc" cols="30" rows="10" placeholder="Description..."></textarea>
+            <div class="wrap_Todos">
+                <!-- <div class="todo">
+                    <p class="title_Todo" data-priority="1" data-id="12415">Title</p>
+                    <p class="desc_Todo">This is a description</p>
+                    <div class="actionBox_Todo">
+                        <div class="todoBtn remove">
+                            X
+                        </div>
                     </div>
-                    <div class="todo_priorityWrap">
-                        <input type="radio" name="priority" class="input_priority high" data-priority="high">
-                        <input type="radio" name="priority" class="input_priority medium" data-priority="medium">
-                        <input type="radio" name="priority" class="input_priority low" data-priority="low" checked>
+                </div> -->
+            </div>
+            <div class="todo template show" id="todo_template_right">
+                <div class="all_inputWrap_createTodo">
+                    <div class="textInputWrap_createTodo">
+                        <input type="text" class="input_todoTitle" id="input_todo_title_right" placeholder="Title...">
+                        <textarea class="input_todoDesc" cols="30" rows="10" placeholder="Description..."></textarea>
+                    </div>
+                    <div class="radioWrap_createPriority">
+                        <input type="radio" name="priority" class="radio_Priority" data-priority="1" data-action="create">
+                        <input type="radio" name="priority" class="radio_Priority" data-priority="2" data-action="create">
+                        <input type="radio" name="priority" class="radio_Priority" data-priority="3" data-action="create" checked>
                     </div>
                 </div>
                 <div class="horSeparator"></div>
-                <div class="todo_buttons_wrap submit">
-                    <div class="input_submitBtn done" id="btn_submitTodo">Add</div>
-                    <div class="input_submitBtn cancel" id="btn_cancelTodo">Cancel</div>
+                <div class="btnWrap_createTodo submit">
+                    <div class="btn_createTodo done" id="btn_submitTodo">Add</div>
+                    <div class="btn_createTodo cancel" id="btn_cancelTodo">Cancel</div>
                 </div>
             </div>
             <div class="add_todo_btn" id="add_todo_btn_right">

@@ -18,6 +18,3 @@ export function get_monthInfo(year, month) {
 export function is_Weekend(date) {
     return (date.getDay() === 0 || date.getDay() === 6)
 }
-export function reverse_(params) {
-    
-}

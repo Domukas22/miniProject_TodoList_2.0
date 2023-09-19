@@ -1,2 +1,70 @@
+:root {
+    --low: rgb(199, 199, 199);
+    --medium: rgb(255, 249, 140);
+    --high: rgb(255, 152, 152);
 
+    --BG_low: rgb(99, 99, 99);
+    --BG_medium: #e5e3ae4c;
+    --BG_high: #ff87874f;
+}
 
+.wrap_Todos {}
+
+.todo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+
+    padding: 18px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.032);
+    cursor: pointer;
+    position: relative;
+}
+.title_Todo {
+    font-weight: 700;
+    font-size: 17px;
+    color: rgba(255, 255, 255, 0.9);
+    
+    letter-spacing: 0.1px;
+    white-space: nowrap;
+}
+.title_Todo[data-priority="3"] {
+    color: var(--low);
+}
+.title_Todo[data-priority="2"] {
+    color: var(--medium);
+}
+.title_Todo[data-priority="1"] {
+    color: var(--high);
+}
+
+.desc_Todo {
+    margin-top: 7px;
+}
+.desc_Todo[data-empty="false"] {
+    margin-top: 0px;
+}
+
+.actionBox_Todo {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    padding: 10px;
+
+}
+.todoBtn {
+    background-color: #565656;
+    height: 32px;
+    width: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 100px;
+}
+.todoBtn:hover {
+    background-color: #666666;
+}

@@ -1,41 +1,52 @@
 
-import { generate_ID, format_Date } from "./general";
+import { generate_ID } from "./general.js";
+
+
 
 let todoList = []
 let selected_Day = {}
+let last_touchedTodo = {}
 
 export function select_Day(date_Target) {
+    // formated date => "dd.mm.yyy"
     const need_newDate = is_dateNew(todoList, date_Target)
 
     if (!need_newDate) {
         selected_Day = todoList.find(day => day.date == date_Target)
-        console.log("Selected =>", selected_Day);
         return
     }
     selected_Day = {
         date: date_Target,
         todos: []
     }
-    console.log("Selected =>", selected_Day)
 }
-export function get_Todos_ofDay(title_ofDate) { 
+export function get_selectedDay() {
+    return selected_Day
+}
+export function get_lastTouched_Todo() {
+    return last_touchedTodo
+}
+export function get_Todos_ofDay(date_Target) { 
     // formated date => "dd.mm.yyy"
-    const day_Obj = todoList.find(day => day.date == title_ofDate)
+    const day_Obj = todoList.find(day => day.date == date_Target)
     if (!day_Obj) {return []}
     return day_Obj.todos
 }
-export function add_newTodo(title, desc, priority, date_Unformated) {
-    const date = format_Date(date_Unformated)
-    const new_Todo = factory_Todo(title, desc, priority)
+export function add_newTodo(title, desc, priority, date, id) {
+    // formated date => "dd.mm.yyy"
+    if (title == ''){console.log('ERROR. Provide a title');return}
+    const new_Todo = factory_Todo(title, desc, priority, id, date)
     todoList = create_newTodoList(todoList, new_Todo, date);
+    last_touchedTodo = new_Todo
+    console.log(last_touchedTodo);
 }
 
-function factory_Todo(title, desc, priority) {
-    const id = generate_ID()
+
+function factory_Todo(title, desc, priority, id, date) {
     const edit_Text = (new_Title, new_Desc) => edit_todoText(id, new_Title, new_Desc, todoList)
     const edit_Priority = (new_Priority) => edit_todoPriority(id, new_Priority, todoList)
     const remove = () => delete_Todo(id, todoList)
-    return {title, desc, priority, id, remove, edit_Text, edit_Priority}
+    return {title, desc, priority, id, remove, edit_Text, edit_Priority, date}
 }
 function delete_Todo(id_toDelete, old_List) {
     // loop through list and skip the obj with mathcing id

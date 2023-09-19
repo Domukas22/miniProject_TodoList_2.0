@@ -1,4 +1,14 @@
 
+:root {
+    --low: rgb(199, 199, 199);
+    --medium: rgb(255, 249, 140);
+    --high: rgb(255, 152, 152);
+
+    --BG_low: rgb(99, 99, 99);
+    --BG_medium: #e5e3ae4c;
+    --BG_high: #ff87874f;
+}
+
 
 * {
     margin: 0px;
@@ -12,7 +22,7 @@
 @font-face {
     font-family: "Nunito";
     src: url(../assets/fonts/Nunito-Medium.ttf);
-    font-weight: normal;
+    font-weight: medium;
 }
 
 @font-face {
@@ -33,9 +43,6 @@ body {
     height: 100vh;
     color: rgba(255, 255, 255, 0.822); 
 }
-h1 {
-    font-size: 25px;
-}
 
 .allWrap {
     display: flex;
@@ -47,7 +54,13 @@ main {
     padding-left: 30px;
     padding-right: 30px;
     padding-bottom: 30px;
-    max-height: 97vh;
+    
     display: flex;
+    min-height: 97vh;
     flex-direction: column;
+}
+
+p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
 }

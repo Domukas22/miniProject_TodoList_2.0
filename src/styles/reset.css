@@ -41,3 +41,7 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+textarea:focus, input:focus, .todo_desc:focus, .todo_title:focus {
+    outline: none;
+}
