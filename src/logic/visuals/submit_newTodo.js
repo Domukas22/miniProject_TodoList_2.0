@@ -1,7 +1,7 @@
 
-import { add_newTodo, get_selectedDay, get_lastTouched_Todo } from "../todo_Logic.js"
-import { add_todoTitle_toCell } from "./generate_Calender.js"
-import { generate_ID } from "../general.js";
+import { add_newTodo, get_selectedDay_obj, get_lastTouched_todoObj } from "../todo_Logic.js"
+import { add_todoTitle_toCell, get_displayedDate } from "./create_Calender.js"
+import { format_Date, generate_ID } from "../general.js";
 import { create_singleTodo_html } from "./open_calDay.js";
 
 const input_todoTitle = document.querySelector('.input_todoTitle')
@@ -11,11 +11,10 @@ const input_todoDesc = document.querySelector('.input_todoDesc')
 export function submit_newTodo() {
     const {title, desc, priority, id, date} = get_Infos_forTodo()
     add_newTodo(title, desc, priority, date, id)
-    adjust_html_afterSubmit(get_lastTouched_Todo())
+    adjust_html_afterSubmit(get_lastTouched_todoObj())
 }
 
-
-function adjust_html_afterSubmit(obj_Todo) { //div_calCell, title, priority, i
+function adjust_html_afterSubmit(obj_Todo) {
     const todo_Date = obj_Todo.date
     const todo_Title = obj_Todo.title
     const todo__Priority = obj_Todo.priority
@@ -30,7 +29,9 @@ function get_Infos_forTodo() {
     const desc = input_todoDesc.value
     const priority = get_selectedPriority()
     const id = generate_ID()
-    const { date } = get_selectedDay();
+
+    const {day, month, year} = get_displayedDate()
+    const date = format_Date(new Date(year, month, day)); // this needs to return a formated strings
 
     return {title, desc, priority, id, date}
 }

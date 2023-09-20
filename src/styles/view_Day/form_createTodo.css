@@ -9,25 +9,97 @@
     --BG_high: #ff87874f;
 }
 
-
-.todo.template {
-    flex-direction: column;
-    display: flex;
-    border: none;
-    padding: 10px;
+/* todo_Form.style.height = '50px'
+    todo_Form.style.minHeight = '50px'
+    todo_Form.style.maxHeight = '100vh' */
+.todo_Form {
     position: relative;
+    height: 50px;
+    min-height: 50px;
+    max-height: 100vh;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+    padding: 10px;
+    margin: 12px 0;
+    flex: 1;
+    
+    border: none;
     overflow: hidden;
+    border-radius: 8px;
+    
+    transition: 400ms;
+    transition-delay: 0ms;
     background-color: #373737;
-    border-radius: 0px;
+}
+.todo_Form[data-open="false"] {
+    background-color: #464646;
+    cursor: pointer;
+    transition: 600ms;
+}
+.todo_Form[data-open="false"]:hover {
+    background-color: #4e4e4e;
+}
+.todo_Form[data-open="false"] > *{
+    opacity: 0%;
+    transition: 100ms;
+    transition-delay: 0ms;
+}
+.todo_Form[data-open="true"] > *{
+    transition-delay: 200ms;
 }
 
-.all_inputWrap_createTodo {
+
+.todo_Form::before,
+.todo_Form::after {
+    content: "";
+    position: absolute;
+    display: flex;
+
+    width: 20px;
+    height: 2px;
+    background-color: rgb(176, 176, 176);
+
+    border-radius: 100px;
+    transition: 150ms;
+    opacity: 100%;
+}
+.todo_Form::after {
+    rotate: 90deg;
+}
+
+.todo_Form[data-open="true"]::before {
+    opacity: 0%;
+}
+.todo_Form[data-open="true"]::after {
+    opacity: 0%;
+}
+.overlay_openForm {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+}
+.todo_Form[data-open="false"] > .overlay_openForm {
+    display: flex;
+}
+.todo_Form[data-open="true"] > .overlay_openForm {
+    display: none;
+}
+
+.wrap_createTodoInputs {
     display: flex;
     width: 100%;
     margin-bottom: 10px;
-    justify-content: space-between;
+    justify-content: space-between;    
 }
-.textInputWrap_createTodo {
+.wrap_createTodo_textInputs {
     flex-grow: 1;
 }
 
@@ -69,7 +141,7 @@
     border-radius: 4px;
 }
 
-.radioWrap_createPriority {
+.wrap_createTodo_priorityRadios {
     display: grid;
     grid-template-columns: 40px;
     grid-template-rows: 1fr 1fr 1fr;
@@ -115,7 +187,6 @@
     border:1px solid rgba(95, 95, 95, 0); 
 }
 
-
 .radio_Priority[data-priority="2"]::before {
     background-color: var(--medium)
 }
@@ -145,8 +216,9 @@
     margin-bottom: 10px;
 }
 
-.btnWrap_createTodo.submit {
+.wrap_createTodo_submitBtns {
     display: flex;
+    width: 100%;
     min-height: 35px;
     column-gap: 5px;
 }
@@ -161,12 +233,12 @@
     background-color: #434343;
     height: 45px;
 }
-.btn_createTodo.done {
+.btn_createTodo.submit {
     color: #93FF51;
     font-weight: 700;
     flex-grow: 3;
 }
-.btn_createTodo.done:hover {
+.btn_createTodo.submit:hover {
     background-color: #94ff511f;
 }
 .btn_createTodo.cancel {
@@ -176,18 +248,4 @@
 .btn_createTodo.cancel:hover {
     background-color: rgba(255, 155, 155, 0.2);
     color: rgb(255, 149, 149);
-}
-
-.add_todo_btn {
-    height: 35px;
-    background-color: rgba(255, 255, 255, 0.048);
-    margin-top: 20px;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    padding-left: 15px;
-    cursor: pointer;
-    color: rgba(255, 255, 255, 0.744);
-    margin-left: 15px;
-    margin-right: 15px;
 }

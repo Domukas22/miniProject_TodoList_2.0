@@ -1,0 +1,49 @@
+
+
+nav {
+    display: flex;
+    height: 52px;
+    min-height: 52px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.wrap_navYear {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 32px;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+.wrap_navYear > h1 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.wrap_navMonths {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+;
+}
+.navlink_Month {
+    height: 100%;
+    flex: 1;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    background-color: rgba(255, 255, 255, 0);
+    color: rgba(255, 255, 255, 0.50);
+    cursor: pointer;
+}
+.navlink_Month:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.60);
+}
+.navlink_Month.active {
+    background-color: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.60);
+}

@@ -6,63 +6,80 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
 </head>
 <body>
-    <div class="allWrap">
-        <main >
-            <div class="calender_UpperWrap">
-                <h1 class="mainTitle" id="calDate"></h1>
-                <div class="btn_changeMonth prev" id="prev"><img src="./img/SVG/Arrow.svg"></div>
-                <div class="btn_changeMonth current" id="now">Today</div>
-                <div class="btn_changeMonth next" id="next"><img src="./img/SVG/Arrow.svg"></div>
+    
+    <div class="contentWrap">
+        <nav>
+            <div class="wrap_navYear"><h1>2023</h1></div>
+            <ul class="wrap_navMonths">
+                <li class="navlink_Month" data-month="0" data-year="2023">Jan</li>
+                <li class="navlink_Month" data-month="1" data-year="2023">Feb</li>
+                <li class="navlink_Month" data-month="2" data-year="2023">Mar</li>
+                <li class="navlink_Month" data-month="3" data-year="2023">Apr</li>
+                <li class="navlink_Month" data-month="4" data-year="2023">May</li>
+                <li class="navlink_Month" data-month="5" data-year="2023">Jun</li>
+                <li class="navlink_Month" data-month="6" data-year="2023">Jul</li>
+                <li class="navlink_Month" data-month="7" data-year="2023">Aug</li>
+                <li class="navlink_Month active" data-month="8" data-year="2023">Sep</li>
+                <li class="navlink_Month" data-month="9" data-year="2023">Oct</li>
+                <li class="navlink_Month" data-month="10" data-year="2023">Nov</li>
+                <li class="navlink_Month" data-month="11" data-year="2023">Dec</li>
+            </ul>
+        </nav>
+        <main>
+            <div class="wrap_Calender">
+                <div class="wrap_weekDays">
+                    <div class="weekDay">MON</div>
+                    <div class="weekDay">TUE</div>
+                    <div class="weekDay">WED</div>
+                    <div class="weekDay">THU</div>
+                    <div class="weekDay">FRI</div>
+                    <div class="weekDay sat">SAT</div>
+                    <div class="weekDay sun">SUN</div>
+                </div>
+                <div class="calender"></div>
             </div>
-            <div class="weekDays_wrap">
-                <div class="weekDay">MON</div>
-                <div class="weekDay">TUE</div>
-                <div class="weekDay">WED</div>
-                <div class="weekDay">THU</div>
-                <div class="weekDay">FRI</div>
-                <div class="weekDay sat">SAT</div>
-                <div class="weekDay sun">SUN</div>
-            </div>
-            <div class="calender"></div>
-            
-        </main>
-        <div class="day_View">
-            <div class="heading_dayView">
-                <h1 class="title_dayView">Title</h1>
-            </div>
-            <div class="wrap_Todos">
-                <!-- <div class="todo">
-                    <p class="title_Todo" data-priority="1" data-id="12415">Title</p>
-                    <p class="desc_Todo">This is a description</p>
-                    <div class="actionBox_Todo">
-                        <div class="todoBtn remove">
-                            X
+            <div class="wrap_Day">
+                
+                <div class="wrap_Todos">
+                    <!-- <div class="todo">
+                        <p class="title_Todo" data-priority="1" data-id="12415">Title</p>
+                        <p class="desc_Todo">This is a description</p>
+                        <div class="actionBox_Todo">
+                            <div class="todoBtn remove">
+                                X
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="todo_Form" data-open="false">
+                    <div class="wrap_createTodoInputs">
+                        <div class="wrap_createTodo_textInputs">
+                            <input type="text" class="input_todoTitle" id="input_todo_title_right" placeholder="Title...">
+                            <textarea class="input_todoDesc" cols="30" rows="10" placeholder="Description..."></textarea>
+                        </div>
+                        <div class="wrap_createTodo_priorityRadios">
+                            <input type="radio" name="priority" class="radio_Priority" data-priority="1" data-action="create">
+                            <input type="radio" name="priority" class="radio_Priority" data-priority="2" data-action="create">
+                            <input type="radio" name="priority" class="radio_Priority" data-priority="3" data-action="create" checked>
                         </div>
                     </div>
-                </div> -->
-            </div>
-            <div class="todo template show" id="todo_template_right">
-                <div class="all_inputWrap_createTodo">
-                    <div class="textInputWrap_createTodo">
-                        <input type="text" class="input_todoTitle" id="input_todo_title_right" placeholder="Title...">
-                        <textarea class="input_todoDesc" cols="30" rows="10" placeholder="Description..."></textarea>
+                    <div class="horSeparator"></div>
+                    <div class="wrap_createTodo_submitBtns">
+                        <div class="btn_createTodo submit">Add</div>
+                        <div class="btn_createTodo cancel" data-action="close">Cancel</div>
                     </div>
-                    <div class="radioWrap_createPriority">
-                        <input type="radio" name="priority" class="radio_Priority" data-priority="1" data-action="create">
-                        <input type="radio" name="priority" class="radio_Priority" data-priority="2" data-action="create">
-                        <input type="radio" name="priority" class="radio_Priority" data-priority="3" data-action="create" checked>
-                    </div>
+                    <div class="overlay_openForm" data-action="open"></div>
                 </div>
-                <div class="horSeparator"></div>
-                <div class="btnWrap_createTodo submit">
-                    <div class="btn_createTodo done" id="btn_submitTodo">Add</div>
-                    <div class="btn_createTodo cancel" id="btn_cancelTodo">Cancel</div>
+                <div class="wrap_Controls" data-step="day">
+                    <div class="toggle_dayOrMonth">20. September</div>
+                    <div class="controlBtn" data-action="prev"><</div>
+                    <div class="controlBtn" data-action="next">></div>
+                    <div class="controlBtn" data-action="current">O</div>
                 </div>
             </div>
-            <div class="add_todo_btn" id="add_todo_btn_right">
-                <p>+ Add new...</p>
-            </div>
-        </div> 
+        </main>  
+        
     </div>
+    
 </body>
-    </html>
+</html>

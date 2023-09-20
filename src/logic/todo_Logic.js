@@ -4,27 +4,11 @@ import { generate_ID } from "./general.js";
 
 
 let todoList = []
-let selected_Day = {}
-let last_touchedTodo = {}
+let last_touchedTodo_obj = {}
 
-export function select_Day(date_Target) {
-    // formated date => "dd.mm.yyy"
-    const need_newDate = is_dateNew(todoList, date_Target)
 
-    if (!need_newDate) {
-        selected_Day = todoList.find(day => day.date == date_Target)
-        return
-    }
-    selected_Day = {
-        date: date_Target,
-        todos: []
-    }
-}
-export function get_selectedDay() {
-    return selected_Day
-}
-export function get_lastTouched_Todo() {
-    return last_touchedTodo
+export function get_lastTouched_todoObj() {
+    return last_touchedTodo_obj
 }
 export function get_Todos_ofDay(date_Target) { 
     // formated date => "dd.mm.yyy"
@@ -37,10 +21,8 @@ export function add_newTodo(title, desc, priority, date, id) {
     if (title == ''){console.log('ERROR. Provide a title');return}
     const new_Todo = factory_Todo(title, desc, priority, id, date)
     todoList = create_newTodoList(todoList, new_Todo, date);
-    last_touchedTodo = new_Todo
-    console.log(last_touchedTodo);
+    last_touchedTodo_obj = new_Todo
 }
-
 
 function factory_Todo(title, desc, priority, id, date) {
     const edit_Text = (new_Title, new_Desc) => edit_todoText(id, new_Title, new_Desc, todoList)

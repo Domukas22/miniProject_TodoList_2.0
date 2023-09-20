@@ -8,7 +8,14 @@
     --BG_high: #ff87874f;
 }
 
-.wrap_Todos {}
+.wrap_Todos {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    
+    border-radius: 8px;
+    background-color: #464646;
+}
 
 .todo {
     width: 100%;
@@ -16,8 +23,8 @@
     flex-direction: column;
     justify-content: start;
 
+    border-top: 1px solid rgba(255, 255, 255, 0.032);
     padding: 18px 18px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.032);
     cursor: pointer;
     position: relative;
 }
