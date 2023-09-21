@@ -2,10 +2,8 @@
 import { generate_ID, format_Date } from "./general.js";
 
 
-
 let todoList = []
 let last_touchedTodo_obj = {}
-
 
 export function get_lastTouched_todoObj() {
     return last_touchedTodo_obj
@@ -23,6 +21,9 @@ export function add_newTodo(title, desc, priority, date) {
     last_touchedTodo_obj = new_Todo
 }
 
+function insert_newTodoList(newList) {
+    todoList = newList
+}
 
 function factory_Todo(title, desc, priority, date) {
     const id = generate_ID()
@@ -42,8 +43,7 @@ function delete_Todo(id_toDelete, old_List) {
         }
         return acc
     }, [])
-    todoList = new_List
-
+    insert_newTodoList(new_List)
 }
 function edit_todoText(id_toEdit, new_Title, new_Desc, old_List) {
     // loop through each day and each todo
@@ -74,10 +74,9 @@ function edit_todoPriority(id_toEdit, new_Priority, old_List) {
         })
         return {...day, todos: new_dayTodos}
     })
-    todoList = new_List 
+    insert_newTodoList(new_List)
 }
 
-// no more refferences outside functions
 function create_newTodoList(old_List, new_Todo, date_Target) {
     const need_newDate = is_dateNew(old_List, date_Target)
 

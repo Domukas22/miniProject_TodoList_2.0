@@ -1,12 +1,12 @@
 
-import { add_todoTitle_toCell } from "./1_create_Calender.js"
-import { create_singleTodo_html, get_displayedDate } from "./2_print_Date.js";
+import { add_todoTitle_toCell } from "./1_print_Calender.js"
+import { _append_singleTodo } from "./2_print_Todos.js";
+import { get_selectedDate } from "./5_select_Dates.js";
 import { generate_ID } from "../general.js";
 import { add_newTodo, get_lastTouched_todoObj } from "../todo_Logic.js"
 
 const input_todoTitle = document.querySelector('.input_todoTitle')
 const input_todoDesc = document.querySelector('.input_todoDesc')
-
 
 export function submit_newTodo() {
     const {title, desc, priority, date} = get_submitInfos()
@@ -37,7 +37,7 @@ function adjust_html_afterSubmit(obj_Todo) {
     const todo_Id = obj_Todo.id
 
     add_todoTitle_toCell(find_targetCalCell(todo_Date), todo_Title, todo__Priority, todo_Id)
-    create_singleTodo_html(obj_Todo)
+    _append_singleTodo(obj_Todo)
     clear_Inputs()
 }
 function get_submitInfos() {
@@ -45,7 +45,7 @@ function get_submitInfos() {
     const desc = input_todoDesc.value
     const priority = get_selectedPriority()
     const id = generate_ID()
-    const date = get_displayedDate()
+    const date = get_selectedDate()
 
     return {title, desc, priority, id, date}
 }

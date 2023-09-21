@@ -13,8 +13,9 @@ export function format_Date(date) { // new Date(year, month, day)
 export function get_formatedDate_info(date) {
     // formated date => "dd.mm.yyyy"
     const [day, month, year] = date.split('.').map(Number);
-    const day_Count = new Date(year, month - 1, 0).getDate();
-    return {day, month, year, day_Count}
+    const day_Count = new Date(year, month + 1, 0).getDate();
+    const month_inWords = get_Date_withMonth(`${day}.${month}.${year}`)
+    return {day, month, year, day_Count, month_inWords}
 }
 export function get_Date_withMonth(date) {
     // formated date => "dd.mm.yyy"
