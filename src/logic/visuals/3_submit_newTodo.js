@@ -1,17 +1,33 @@
 
-import { add_newTodo, get_selectedDay_obj, get_lastTouched_todoObj } from "../todo_Logic.js"
-import { add_todoTitle_toCell, get_displayedDate } from "./create_Calender.js"
-import { format_Date, generate_ID } from "../general.js";
-import { create_singleTodo_html } from "./open_calDay.js";
+import { add_todoTitle_toCell } from "./1_create_Calender.js"
+import { create_singleTodo_html, get_displayedDate } from "./2_print_Date.js";
+import { generate_ID } from "../general.js";
+import { add_newTodo, get_lastTouched_todoObj } from "../todo_Logic.js"
 
 const input_todoTitle = document.querySelector('.input_todoTitle')
 const input_todoDesc = document.querySelector('.input_todoDesc')
 
 
 export function submit_newTodo() {
-    const {title, desc, priority, id, date} = get_Infos_forTodo()
-    add_newTodo(title, desc, priority, date, id)
+    const {title, desc, priority, date} = get_submitInfos()
+    if (title == ''){console.log('ERROR. Provide a title'); return}
+    add_newTodo(title, desc, priority, date)
     adjust_html_afterSubmit(get_lastTouched_todoObj())
+}
+export function toggle_todoFrom(action) {
+    const todo_Form = document.querySelector('.todo_Form')
+    
+    if (action == 'open') {
+        todo_Form.setAttribute('data-open', 'true')
+        todo_Form.style.height = '242px'
+        todo_Form.style.minHeight = '242px'
+        todo_Form.style.maxHeight = '242px'
+        return
+    }
+    todo_Form.setAttribute('data-open', 'false')
+    todo_Form.style.height = '50px'
+    todo_Form.style.minHeight = '50px'
+    todo_Form.style.maxHeight = '100vh'
 }
 
 function adjust_html_afterSubmit(obj_Todo) {
@@ -24,14 +40,12 @@ function adjust_html_afterSubmit(obj_Todo) {
     create_singleTodo_html(obj_Todo)
     clear_Inputs()
 }
-function get_Infos_forTodo() {
+function get_submitInfos() {
     const title = input_todoTitle.value
     const desc = input_todoDesc.value
     const priority = get_selectedPriority()
     const id = generate_ID()
-
-    const {day, month, year} = get_displayedDate()
-    const date = format_Date(new Date(year, month, day)); // this needs to return a formated strings
+    const date = get_displayedDate()
 
     return {title, desc, priority, id, date}
 }

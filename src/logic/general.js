@@ -10,17 +10,17 @@ export function format_Date(date) { // new Date(year, month, day)
     const year = date.getFullYear();
     return `${day}.${month}.${year}`;
 }
-export function get_cellCount(year, month) {
-    const day_Count = new Date(year, month + 1, 0).getDate()
-    const blank_Count = new Date(year, month, 0).getDay()
-    return {day_Count, blank_Count}
-}
-export function is_Weekend(date) {
-    return (date.getDay() === 0 || date.getDay() === 6)
-}
-export function get_dateInfo(date) {
+export function get_formatedDate_info(date) {
     // formated date => "dd.mm.yyyy"
     const [day, month, year] = date.split('.').map(Number);
     const day_Count = new Date(year, month - 1, 0).getDate();
     return {day, month, year, day_Count}
+}
+export function get_Date_withMonth(date) {
+    // formated date => "dd.mm.yyy"
+    // returs => "dd. Month yy"
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+                     'August', 'September', 'October', 'November', 'December'];
+    const [day, month, year] = date.split('.')
+    return `${day}. ${months[month]} ${year}`
 }

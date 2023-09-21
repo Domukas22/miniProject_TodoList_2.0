@@ -1,5 +1,5 @@
 
-import { generate_ID } from "./general.js";
+import { generate_ID, format_Date } from "./general.js";
 
 
 
@@ -16,15 +16,16 @@ export function get_Todos_ofDay(date_Target) {
     if (!day_Obj) {return []}
     return day_Obj.todos
 }
-export function add_newTodo(title, desc, priority, date, id) {
+export function add_newTodo(title, desc, priority, date) {
     // formated date => "dd.mm.yyy"
-    if (title == ''){console.log('ERROR. Provide a title');return}
-    const new_Todo = factory_Todo(title, desc, priority, id, date)
+    const new_Todo = factory_Todo(title, desc, priority, date)
     todoList = create_newTodoList(todoList, new_Todo, date);
     last_touchedTodo_obj = new_Todo
 }
 
-function factory_Todo(title, desc, priority, id, date) {
+
+function factory_Todo(title, desc, priority, date) {
+    const id = generate_ID()
     const edit_Text = (new_Title, new_Desc) => edit_todoText(id, new_Title, new_Desc, todoList)
     const edit_Priority = (new_Priority) => edit_todoPriority(id, new_Priority, todoList)
     const remove = () => delete_Todo(id, todoList)
@@ -75,7 +76,6 @@ function edit_todoPriority(id_toEdit, new_Priority, old_List) {
     })
     todoList = new_List 
 }
-
 
 // no more refferences outside functions
 function create_newTodoList(old_List, new_Todo, date_Target) {
