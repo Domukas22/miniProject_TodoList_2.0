@@ -1,9 +1,11 @@
 import { get_Date_withMonth } from "../general"
 
 
-export function toggle_Title_controlBox(date) {
-    const title_Day = document.querySelector('.toggle_dayOrMonth')
-    title_Day.textContent = get_Date_withMonth(date)
+
+export function toggle_Date_controlBox(date) {
+    const date_controlBox = document.querySelector('.date_controlBox')
+    date_controlBox.textContent = get_Date_withMonth(date)
+    play_clickEffect(date_controlBox)
 }
 export function toggle_calCell(date) {
     const cells_All = document.querySelectorAll(`.calender_Cell`)
@@ -27,4 +29,12 @@ export function remove_Element_hmtl_withId(el_Class, id) {
 }
 export function edit_yearTitle(year) {
     document.querySelector('.title_Year').textContent = year
+}
+export function play_clickEffect(el) {
+    
+    el.setAttribute('data-click_effect', 'true')
+
+    setTimeout(() => {
+        el.setAttribute('data-click_effect', 'false')
+    }, 500);
 }

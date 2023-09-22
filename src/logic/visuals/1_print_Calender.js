@@ -1,9 +1,9 @@
 
-import { select_Date } from "./5_select_Dates.js"
-import { clear_Element_hmtl } from "./6_other_Effects.js"
+import { toggle_activeNavLink } from './4_Nav.js'
+import { get_selectedDate, select_Date } from "./5_select_Dates.js"
+import { clear_Element_hmtl, play_clickEffect } from "./6_other_Effects.js"
 import { get_Todos_ofDay } from "../todo_Logic.js"
 import { format_Date, get_formatedDate_info } from "../general.js"
-
 
 
 export function print_Calender_html(date) {
@@ -39,12 +39,12 @@ function create_divCell(calender, date_ofLoop, status, todos) {
      // formated date => "dd.mm.yyyy"
     const div_calCell = document.createElement('div')
     div_calCell.classList.add('calender_Cell')
+    if (format_Date(date_ofLoop) == get_selectedDate()) {div_calCell.classList.add('active')}
     div_calCell.classList.add(status)
     div_calCell.setAttribute('data-date', format_Date(date_ofLoop))
     div_calCell.innerHTML = `<p class="cornerText_dayOfMonth">${date_ofLoop.getDate()}</p>`
     append_todoTitles(div_calCell, todos)
     div_calCell.addEventListener('click', (e) => select_Date(e.currentTarget.dataset.date))
-    
     calender.appendChild(div_calCell)
 }
 

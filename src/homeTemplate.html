@@ -9,7 +9,7 @@
     
     <div class="contentWrap">
         <nav>
-            <div class="wrap_navYear"><h1 class="title_Year">xxx</h1></div>
+            <div class="wrap_navYear" data-click_effect="false"><h1 class="title_Year">xxx</h1></div>
             <ul class="wrap_navMonths">
                 <!-- <li class="navlink_Month" data-month="0" data-year="2023">Jan</li>
                 <li class="navlink_Month" data-month="1" data-year="2023">Feb</li>
@@ -38,7 +38,23 @@
                 </div>
                 <div class="calender"></div>
             </div>
-            <div class="wrap_Day">      
+            <div class="wrap_Day">   
+                <div class="wrap_Controls" data-step="day">
+                    <div class="date_controlBox">20. September</div>
+                    <div class="controlBtn" data-action="prev" data-click_effect="false">
+                        <svg width="11" height="15" viewBox="0 0 11 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path class="path_controlArrow" d="M8 15L6.55671e-07 7.5L8 -2.54292e-07L11 2.8125L6 7.5L11 12.1875L8 15Z"/>
+                        </svg>
+                    </div>
+                    <div class="controlBtn" data-action="next" data-click_effect="false">
+                        <svg width="11" height="15" viewBox="0 0 11 15" fill="none" xmlns="http://www.w3.org/2000/svg" style="rotate: 180deg">
+                            <path class="path_controlArrow" d="M8 15L6.55671e-07 7.5L8 -2.54292e-07L11 2.8125L6 7.5L11 12.1875L8 15Z"  />
+                        </svg>
+                    </div>
+                    <div class="controlBtn" data-action="current" data-click_effect="false">
+                        <div class="circle_Control"></div>
+                    </div>
+                </div>   
                 <div class="wrap_Todos">
                     <!-- <div class="todo">
                         <p class="title_Todo" data-priority="1" data-id="12415">Title</p>
@@ -69,12 +85,7 @@
                     </div>
                     <div class="overlay_openForm" data-action="open"></div>
                 </div>
-                <div class="wrap_Controls" data-step="day">
-                    <div class="toggle_dayOrMonth">20. September</div>
-                    <div class="controlBtn" data-action="prev"><</div>
-                    <div class="controlBtn" data-action="next">></div>
-                    <div class="controlBtn" data-action="current">O</div>
-                </div>
+                
             </div>
         </main>  
         

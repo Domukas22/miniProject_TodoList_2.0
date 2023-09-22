@@ -1,15 +1,23 @@
 
 
+. Edit nav links when year changes
+. Current month in nav should be orange
+. Add todo count for each month in nav
+. signal changing nav link
+. signal adjusted date control text
+. Past months should be darkened
+. add proper icons
 
-Left to do:
+. Toggle todo-form with space (disable when it's opened)
+. Auto-focus when opening todo form
+. cancel todo with esc
+. Submit todo on enter
+. toggle priorities with arrows
 
 
-0. When I open a cal day, I should be opening the entire date, not the day.
-This means I should be able to provide a any month with any day,
-and it will display both the todos of the day, as well as regenerate calender if needed
-
-1. get_Infos_forTodo should not need an id generator
-2. Selected date should be in the logic file. The factory shoudl take in the date of the selected date
+. Fix overcrowding issues
+. local storage
+1. add timed animations / effects (select cell, add todo, delete todo)
 2. Edit priorities / text
 3. Upload icons
 4. The destructuring doesnt hav eto happen in sequence. Remove all obj.properties, and replace with deconstruction
