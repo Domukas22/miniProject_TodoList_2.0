@@ -1,54 +1,48 @@
+import { PRINTcalender } from './1_print_Calender';
+import { SUBMITnewTodo, TOGGLEtodoForm } from './3_submit_newTodo';
+import { PRINTnavLinks } from './4_print_Nav';
+import {
+  GETselectedDate, GETselectedYear, SELECTdate, SELECTtoday, SELECTprevMonth, SELECTnextMonth,
+} from './5_select_Dates';
+import { EDITyearTitle, PLAYclickEffect } from './6_other_Effects';
+import { ADDnewTodo } from '../todo_Logic';
+import { FORMATEdate, GENERATEid } from '../general';
 
-import { print_Calender_html } from "./1_print_Calender.js";
-import { submit_newTodo, toggle_todoFrom } from "./3_submit_newTodo.js";
-import { print_navLinks } from "./4_Nav.js";
-import { get_selectedDate, get_selectedYear, select_Date, select_Today, select_prev_Month, select_next_Month } from "./5_select_Dates.js";
-import { edit_yearTitle, play_clickEffect } from "./6_other_Effects.js";
-import { add_newTodo } from "../todo_Logic.js";
-import { format_Date, generate_ID } from "../general.js";
+export default function SETlisteners() {
+  console.log('-------');
 
-export function set_Listeners() {
-    console.log('-------');
- 
+  ADDnewTodo('Shopping', '', 2, FORMATEdate(new Date(2023, 2, 14)), GENERATEid());
+  ADDnewTodo('Training', '', 3, FORMATEdate(new Date(2023, 8, 18)), GENERATEid());
+  ADDnewTodo('Secodn training', '', 1, FORMATEdate(new Date(2023, 8, 14)), GENERATEid());
 
-    add_newTodo('Shopping', '', 2, format_Date(new Date(2023, 2, 14)), generate_ID())
-    add_newTodo('Training', '', 3, format_Date(new Date(2023, 8, 18)), generate_ID())
-    add_newTodo('Secodn training', '', 1, format_Date(new Date(2023, 8, 14)), generate_ID())
-    
-    const today = get_selectedDate()
-    print_navLinks(today)
-    print_Calender_html(today)
-    edit_yearTitle(get_selectedYear())
+  const today = GETselectedDate();
+  PRINTnavLinks(today);
+  PRINTcalender(today, GETselectedDate(), SELECTdate);
+  EDITyearTitle(GETselectedYear());
 
-    const btn_createTodo = document.querySelector('.btn_createTodo.submit')
-    const btn_cancelTodo = document.querySelector('.btn_createTodo.cancel')
-    const overlay_openForm = document.querySelector('.overlay_openForm')
-    btn_createTodo.addEventListener('click', submit_newTodo)
-    btn_cancelTodo.addEventListener('click', (e) => {toggle_todoFrom(e.currentTarget.dataset.action)})
-    overlay_openForm.addEventListener('click', (e) => {toggle_todoFrom(e.currentTarget.dataset.action)})
+  const createTodoBTN = document.querySelector('.btn_createTodo.submit');
+  const cancelTodoBTN = document.querySelector('.btn_createTodo.cancel');
+  const openFormOVERLAY = document.querySelector('.overlay_openForm');
+  createTodoBTN.addEventListener('click', SUBMITnewTodo);
+  cancelTodoBTN.addEventListener('click', (e) => { TOGGLEtodoForm(e.currentTarget.dataset.action); });
+  openFormOVERLAY.addEventListener('click', (e) => { TOGGLEtodoForm(e.currentTarget.dataset.action); });
 
-    const btn_prevDay =  document.querySelector('.controlBtn[data-action="prev"]')
-    const btn_currentDay =  document.querySelector('.controlBtn[data-action="current"]')
-    const btn_selectedDay =  document.querySelector('.date_controlBox')
-    const btn_nextDay =  document.querySelector('.controlBtn[data-action="next"]')
-    btn_prevDay.addEventListener('click', select_prev_Month)
-    btn_currentDay.addEventListener('click', select_Today)
-    btn_nextDay.addEventListener('click', select_next_Month)
-    btn_selectedDay.addEventListener('click', (e) => {
-        select_Date(get_selectedDate())
-        print_Calender_html(get_selectedDate())
-    })
+  const prevDayBTN = document.querySelector('.controlBtn[data-action="prev"]');
+  const currentDayBTN = document.querySelector('.controlBtn[data-action="current"]');
+  const selectedDayBTN = document.querySelector('.date_controlBox');
+  const nextDayBTN = document.querySelector('.controlBtn[data-action="next"]');
+  prevDayBTN.addEventListener('click', SELECTprevMonth);
+  currentDayBTN.addEventListener('click', SELECTtoday);
+  nextDayBTN.addEventListener('click', SELECTnextMonth);
+  selectedDayBTN.addEventListener('click', () => {
+    SELECTdate(GETselectedDate());
+    PRINTcalender(GETselectedDate());
+  });
 
-    const btns_toColor_onClick = document.querySelectorAll('[data-click_effect="false"]')
-    btns_toColor_onClick.forEach(btn => btn.addEventListener('click', e => play_clickEffect(e.currentTarget)))
-
-    window.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') select_prev_Month()
-        if (e.key === 'ArrowRight') select_next_Month()
-    })
-
-    
+  const colorOnClickBTNS = document.querySelectorAll('[data-click_effect="false"]');
+  colorOnClickBTNS.forEach((btn) => btn.addEventListener('click', (e) => PLAYclickEffect(e.currentTarget)));
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') SELECTprevMonth();
+    if (e.key === 'ArrowRight') SELECTnextMonth();
+  });
 }
-
-
-

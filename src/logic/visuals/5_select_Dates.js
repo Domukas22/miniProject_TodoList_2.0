@@ -1,109 +1,106 @@
+import { PRINTcalender } from './1_print_Calender';
+import { PRINTtodos } from './2_print_Todos';
+import { PRINTnavLinks, TOGGLEactiveNavLink } from './4_print_Nav';
+import {
+  EDITdateTitle, COLORcalenderCell, CLEARhtml, EDITyearTitle, PLAYclickEffect,
+} from './6_other_Effects';
+import { FORMATEdate, GETformatedDateInfo } from '../general';
 
-import { print_Calender_html } from "./1_print_Calender.js";
-import { _print_Todos_html } from "./2_print_Todos.js"
-import { print_navLinks,toggle_activeNavLink } from "./4_Nav.js"
-import { toggle_Date_controlBox, toggle_calCell, clear_Element_hmtl, edit_yearTitle, play_clickEffect } from "./6_other_Effects.js";
-import { format_Date, get_formatedDate_info } from "../general.js"
+let selectedDATE = FORMATEdate(new Date());
+let selectedMONTH = new Date().getMonth();
+let selectedYEAR = new Date().getFullYear();
 
+export function SELECTdate(date) {
+  selectedDATE = date;
+  const { month, year } = GETformatedDateInfo(date);
 
-let date_Selected = format_Date(new Date())
-let month_Selected = new Date().getMonth()
-let year_Selected = new Date().getFullYear()
+  SELECTmonth(month);
+  SELECTyear(year);
 
+  PRINTcalender(selectedDATE, selectedDATE, SELECTdate);
+  COLORcalenderCell(selectedDATE);
 
-export function select_Date(date) {
-    date_Selected = date
-    const {month, year} = get_formatedDate_info(date)
-
-    select_Month(month)
-    select_Year(year)
-
-    print_Calender_html(date)
-    toggle_calCell(date)
-
-    clear_Element_hmtl('.wrap_Todos')
-    _print_Todos_html(date)
-    toggle_Date_controlBox(date)
-}
-export function select_prev_Date() {
-    let {day, month, year, day_Count} = get_formatedDate_info(get_selectedDate());
-
-    if (day == 1) {
-        day = new Date(year, month, 0).getDate()  
-        if (month == 0) {
-            month = 11; year--;
-            select_Date(`${day}.${month}.${year}`);
-            return;
-        }
-        select_Date(`${day}.${--month}.${year}`);
-        return;
-    } 
-    select_Date(`${--day}.${month}.${year}`);
-}
-export function select_next_Date() {
-    let {day, month, year, day_Count} = get_formatedDate_info(get_selectedDate());
-
-    if (day == day_Count) {
-        day = 1;  
-        if (month == 11) {
-            month = 0; year++;
-            select_Date(`${day}.${month}.${year}`);
-            return;
-        }
-        select_Date(`${day}.${++month}.${year}`);
-        return;
-    } 
-    select_Date(`${++day}.${month}.${year}`);
-}
-export function select_Today() {
-    const {day, month, year} = get_formatedDate_info(format_Date(new Date()))
-    select_Date(`${day}.${month}.${year}`);
+  CLEARhtml('.wrap_Todos');
+  PRINTtodos(selectedDATE);
+  EDITdateTitle(selectedDATE);
 }
 
-export function select_Month(month) {
-    month_Selected = month
-    print_Calender_html(`xx.${get_selectedMonth()}.${get_selectedYear()}`)
-    toggle_activeNavLink()
-}
-export function select_prev_Month() {
-    let month = get_selectedMonth()
-    if (month == 0) {
-            const year_New = get_selectedYear() - 1 
-            print_navLinks(`1.${month}.${year_New}`)
-            select_Year(year_New)
-            select_Month(11);
-            return;
+export function SELECTprevDate() {
+  const {
+    day, month, year,
+  } = GETformatedDateInfo(GETselectedDate());
+
+  if (day === 1) {
+    const newDAY = new Date(year, month, 0).getDate();
+    if (month === 0) {
+      SELECTdate(`${newDAY}.${11}.${year - 1}`);
+      return;
     }
-    select_Month(--month)
+    SELECTdate(`${day}.${month - 1}.${year}`);
+    return;
+  }
+  SELECTdate(`${day - 1}.${month}.${year}`);
 }
-export function select_next_Month() {
-    let month = get_selectedMonth()
-    if (month == 11) {
-        const year_New = get_selectedYear() + 1 
-        print_navLinks(`1.${month}.${year_New}`)
-        select_Year(year_New)
-        select_Month(0);
-        return;
+export function SELECTnewDate() {
+  const {
+    day, month, year, dayCOUNT,
+  } = GETformatedDateInfo(GETselectedDate());
+
+  if (day === dayCOUNT) {
+    if (month === 11) {
+      SELECTdate(`${1}.${0}.${year + 1}`);
+      return;
     }
-    select_Month(++month)
+    SELECTdate(`${day}.${month + 1}.${year}`);
+    return;
+  }
+  SELECTdate(`${day + 1}.${month}.${year}`);
+}
+export function SELECTtoday() {
+  const { day, month, year } = GETformatedDateInfo(FORMATEdate(new Date()));
+  SELECTdate(`${day}.${month}.${year}`);
 }
 
-export function select_Year(year) {
-    year_Selected = year
-    play_clickEffect(document.querySelector('.wrap_navYear'))
-    edit_yearTitle(year);
-
+export function SELECTmonth(month) {
+  selectedMONTH = month;
+  PRINTcalender(`xx.${selectedMONTH}.${GETselectedYear()}`, GETselectedDate(), SELECTdate);
+  TOGGLEactiveNavLink(selectedMONTH);
+}
+export function SELECTprevMonth() {
+  const month = GETselectedMonth();
+  if (month === 0) {
+    const newYEAR = GETselectedYear() - 1;
+    PRINTnavLinks(`1.${month}.${newYEAR}`, SELECTmonth);
+    SELECTyear(newYEAR);
+    SELECTmonth(11);
+    return;
+  }
+  SELECTmonth(month - 1);
+}
+export function SELECTnextMonth() {
+  const month = GETselectedMonth();
+  if (month === 11) {
+    const newYEAR = GETselectedYear() + 1;
+    PRINTnavLinks(`1.${month}.${newYEAR}`, SELECTmonth);
+    SELECTyear(newYEAR);
+    SELECTmonth(0);
+    return;
+  }
+  SELECTmonth(month + 1);
 }
 
-export function get_selectedDate() {
-    return date_Selected
-}
-export function get_selectedMonth() {
-    return month_Selected
-}
-export function get_selectedYear() {
-    return year_Selected
+export function SELECTyear(year) {
+  selectedYEAR = year;
+  PLAYclickEffect(document.querySelector('.wrap_navYear'));
+  EDITyearTitle(year);
 }
 
-
-
+export function GETselectedDate() {
+  return selectedDATE;
+}
+export function GETselectedMonth() {
+  return selectedMONTH;
+}
+export function GETselectedYear() {
+  return selectedYEAR;
+}

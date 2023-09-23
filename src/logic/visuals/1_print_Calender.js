@@ -1,92 +1,80 @@
+import { CLEARhtml } from './6_other_Effects';
+import { GETtodosOfDay } from '../todo_Logic';
+import { FORMATEdate, GETformatedDateInfo } from '../general';
 
-import { toggle_activeNavLink } from './4_Nav.js'
-import { get_selectedDate, select_Date } from "./5_select_Dates.js"
-import { clear_Element_hmtl, play_clickEffect } from "./6_other_Effects.js"
-import { get_Todos_ofDay } from "../todo_Logic.js"
-import { format_Date, get_formatedDate_info } from "../general.js"
+export function PRINTcalender(toPrintDATE, selectedDATE, selectDateFUNC) {
+  // formated date => "dd.mm.yyyy"
 
-
-export function print_Calender_html(date) {
-    // formated date => "dd.mm.yyyy"
-    const {month, year} = get_formatedDate_info(date)
-    const {day_Count, blank_Count} = get_cellCount(year, month)
-    clear_Element_hmtl('.calender')
-    generate_blankDays_html(blank_Count)
-    generate_calCells_html(day_Count, month, year)
+  const { month, year } = GETformatedDateInfo(toPrintDATE);
+  const { dayCOUNT, blankCOUNT } = GETcellCount(year, month);
+  CLEARhtml('.calender');
+  GENERATEcalenderBlanks(blankCOUNT);
+  // GENERATEcalenderCells(dayCOUNT, month, year);
+  GENERATEcalenderCellS(dayCOUNT, month, year, selectedDATE, selectDateFUNC);
 }
 
-function generate_blankDays_html(blank_Count) {
-    //push blanks into calender
-    const div_Calender = document.querySelector('.calender')
-    for (let i = 0; i < blank_Count; i++) {
-        const blank_Day = document.createElement('div')
-        blank_Day.classList.add("blankDay")
-        div_Calender.appendChild(blank_Day)
-    }
-}
-function generate_calCells_html(day_Count, month, year) {
-    const date_Today = new Date()
-    const div_Calender = document.querySelector('.calender')
-    // create an html cell for every day in month
-    for (let day_ofMonth = 1; day_ofMonth < day_Count + 1; day_ofMonth++) {
-        const date_ofLoop = new Date(year, month, day_ofMonth)
-        const cell_Color = get_cellColor(date_Today, date_ofLoop)
-        const todos = get_Todos_ofDay(`${day_ofMonth}.${month}.${year}`)
-        create_divCell(div_Calender, date_ofLoop, cell_Color, todos)
-    }  
-}
-function create_divCell(calender, date_ofLoop, status, todos) {
-     // formated date => "dd.mm.yyyy"
-    const div_calCell = document.createElement('div')
-    div_calCell.classList.add('calender_Cell')
-    if (format_Date(date_ofLoop) == get_selectedDate()) {div_calCell.classList.add('active')}
-    div_calCell.classList.add(status)
-    div_calCell.setAttribute('data-date', format_Date(date_ofLoop))
-    div_calCell.innerHTML = `<p class="cornerText_dayOfMonth">${date_ofLoop.getDate()}</p>`
-    append_todoTitles(div_calCell, todos)
-    div_calCell.addEventListener('click', (e) => select_Date(e.currentTarget.dataset.date))
-    calender.appendChild(div_calCell)
+function GENERATEcalenderBlanks(blankCOUNT) {
+  // push blanks into calender
+  const calenderDIV = document.querySelector('.calender');
+  for (let i = 0; i < blankCOUNT; i += 1) {
+    const blankDAY = document.createElement('div');
+    blankDAY.classList.add('blankDay');
+    calenderDIV.appendChild(blankDAY);
+  }
 }
 
-function get_cellCount(year, month) {
-    const day_Count = new Date(year, month + 1, 0).getDate()
-    const blank_Count = new Date(year, month, 0).getDay()
-    return {day_Count, blank_Count}
-}
-function append_todoTitles(div_calCell, todos) {
-    todos.forEach(todo => {
-        add_todoTitle_toCell(div_calCell, todo.title, todo.priority, todo.id)
-    });
-}
-export function add_todoTitle_toCell(div_calCell, title, priority, id) {
-    const paragraph = document.createElement('p')
-    paragraph.classList.add('todoTitle_calCell')
-    paragraph.setAttribute('data-priority', priority)
-    paragraph.setAttribute('data-id', `${id}`)
-    paragraph.innerHTML = title
-    div_calCell.appendChild(paragraph)
-}
+function GENERATEcalenderCellS(dayCOUNT, month, year, selectedDATE, selectDateFUNC) {
+  const todayDATE = new Date();
+  const calenderDIV = document.querySelector('.calender');
 
-function get_cellColor(day_Today, day_Requested) {
-    const today = day_Today.setHours(0, 0, 0, 0)
-    const target_Day = day_Requested.setHours(0, 0, 0, 0)
+  for (let monthDAY = 1; monthDAY < dayCOUNT + 1; monthDAY += 1) {
+    const loopDATE = new Date(year, month, monthDAY);
+    const cellCOLOR = GETcellColor(todayDATE, loopDATE);
+    const todos = GETtodosOfDay(`${monthDAY}.${month}.${year}`);
 
-    if (today > target_Day) {return 'passed'}
-    if (today == target_Day) {return 'today'}
-    if (today < target_Day) {
-        if (is_Weekend(day_Requested)){return 'future_weekend'}
-        return 'future'
-    }
-    return 'Error. Expected values "new Date()"'
-}
-function is_Weekend(date) {
-    return (date.getDay() === 0 || date.getDay() === 6)
+    const calCellDIV = document.createElement('div');
+    calCellDIV.classList.add('calender_Cell');
+    if (FORMATEdate(loopDATE) === selectedDATE) { calCellDIV.classList.add('active'); }
+    calCellDIV.classList.add(cellCOLOR);
+    calCellDIV.setAttribute('data-date', FORMATEdate(loopDATE));
+    calCellDIV.innerHTML = `<p class="cornerText_dayOfMonth">${loopDATE.getDate()}</p>`;
+    APPENDtodoTitles(calCellDIV, todos);
+    calCellDIV.addEventListener('click', (e) => selectDateFUNC(e.currentTarget.dataset.date));
+    calenderDIV.appendChild(calCellDIV);
+  }
 }
 
+function GETcellCount(year, month) {
+  const dayCOUNT = new Date(year, month + 1, 0).getDate();
+  const blankCOUNT = new Date(year, month, 0).getDay();
+  return { dayCOUNT, blankCOUNT };
+}
+function APPENDtodoTitles(calCellDIV, todos) {
+  todos.forEach((todo) => {
+    APPENDtodoTitleToCell(calCellDIV, todo.title, todo.priority, todo.id);
+  });
+}
+export function APPENDtodoTitleToCell(calCellDIV, title, priority, id) {
+  const paragraph = document.createElement('p');
+  paragraph.classList.add('todoTitle_calCell');
+  paragraph.setAttribute('data-priority', priority);
+  paragraph.setAttribute('data-id', `${id}`);
+  paragraph.innerHTML = title;
+  calCellDIV.appendChild(paragraph);
+}
 
+function GETcellColor(todayDATE, requestedDATE) {
+  const today = todayDATE.setHours(0, 0, 0, 0);
+  const targetDAY = requestedDATE.setHours(0, 0, 0, 0);
 
-
-
-
-
-
+  if (today > targetDAY) { return 'passed'; }
+  if (today === targetDAY) { return 'today'; }
+  if (today < targetDAY) {
+    if (ISweekend(requestedDATE)) { return 'future_weekend'; }
+    return 'future';
+  }
+  return 'Error. Expected values "new Date()"';
+}
+function ISweekend(date) {
+  return (date.getDay() === 0 || date.getDay() === 6);
+}

@@ -1,65 +1,68 @@
+import { APPENDtodoTitleToCell } from './1_print_Calender';
+import { APPENDsingleTodo } from './2_print_Todos';
+import { GETselectedDate } from './5_select_Dates';
+import { GENERATEid } from '../general';
+import { ADDnewTodo, GETlastTouchTodoObj } from '../todo_Logic';
 
-import { add_todoTitle_toCell } from "./1_print_Calender.js"
-import { _append_singleTodo } from "./2_print_Todos.js";
-import { get_selectedDate } from "./5_select_Dates.js";
-import { generate_ID } from "../general.js";
-import { add_newTodo, get_lastTouched_todoObj } from "../todo_Logic.js"
+const todoTitleINPUT = document.querySelector('.input_todoTitle');
+const todoDescINPUT = document.querySelector('.input_todoDesc');
 
-const input_todoTitle = document.querySelector('.input_todoTitle')
-const input_todoDesc = document.querySelector('.input_todoDesc')
+export function SUBMITnewTodo() {
+  const {
+    title, desc, priority, date,
+  } = GETsubmitInfos();
 
-export function submit_newTodo() {
-    const {title, desc, priority, date} = get_submitInfos()
-    if (title == ''){console.log('ERROR. Provide a title'); return}
-    add_newTodo(title, desc, priority, date)
-    adjust_html_afterSubmit(get_lastTouched_todoObj())
+  if (title === '') return;
+  ADDnewTodo(title, desc, priority, date);
+  ADJUSThtmlAfterSubmit(GETlastTouchTodoObj());
 }
-export function toggle_todoFrom(action) {
-    const todo_Form = document.querySelector('.todo_Form')
-    
-    if (action == 'open') {
-        todo_Form.setAttribute('data-open', 'true')
-        todo_Form.style.height = '242px'
-        todo_Form.style.minHeight = '242px'
-        todo_Form.style.maxHeight = '242px'
-        return
-    }
-    todo_Form.setAttribute('data-open', 'false')
-    todo_Form.style.height = '50px'
-    todo_Form.style.minHeight = '50px'
-    todo_Form.style.maxHeight = '100vh'
-}
+export function TOGGLEtodoForm(action) {
+  const todoFORM = document.querySelector('.todo_Form');
 
-function adjust_html_afterSubmit(obj_Todo) {
-    const todo_Date = obj_Todo.date
-    const todo_Title = obj_Todo.title
-    const todo__Priority = obj_Todo.priority
-    const todo_Id = obj_Todo.id
-
-    add_todoTitle_toCell(find_targetCalCell(todo_Date), todo_Title, todo__Priority, todo_Id)
-    _append_singleTodo(obj_Todo)
-    clear_Inputs()
-}
-function get_submitInfos() {
-    const title = input_todoTitle.value
-    const desc = input_todoDesc.value
-    const priority = get_selectedPriority()
-    const id = generate_ID()
-    const date = get_selectedDate()
-
-    return {title, desc, priority, id, date}
-}
-function get_selectedPriority() {
-    const radio_Priorities = document.querySelectorAll('.radio_Priority[data-action="create"]') 
-    return Array.from(radio_Priorities).find(x => x.checked == true).dataset.priority
-}
-function find_targetCalCell(date) {
-    // formated date => "dd.mm.yyy"
-    return document.querySelector(`.calender_Cell[data-date="${date}"]`)
-}
-function clear_Inputs() {
-    input_todoTitle.value = ''
-    input_todoDesc.value = ''
-    document.querySelector('.radio_Priority[data-priority="3"][data-action="create"]').checked = true
+  if (action === 'open') {
+    todoFORM.setAttribute('data-open', 'true');
+    todoFORM.style.height = '242px';
+    todoFORM.style.minHeight = '242px';
+    todoFORM.style.maxHeight = '242px';
+    return;
+  }
+  todoFORM.setAttribute('data-open', 'false');
+  todoFORM.style.height = '50px';
+  todoFORM.style.minHeight = '50px';
+  todoFORM.style.maxHeight = '100vh';
 }
 
+function ADJUSThtmlAfterSubmit(todoOBJ) {
+  const todoDATE = todoOBJ.date;
+  const todoTITLE = todoOBJ.title;
+  const todoPRIORITY = todoOBJ.priority;
+  const todoID = todoOBJ.id;
+
+  APPENDtodoTitleToCell(FINDtargetCalCell(todoDATE), todoTITLE, todoPRIORITY, todoID);
+  APPENDsingleTodo(todoOBJ);
+  CLEARinputs();
+}
+function GETsubmitInfos() {
+  const title = todoTitleINPUT.value;
+  const desc = todoDescINPUT.value;
+  const priority = GETselectedPriority();
+  const id = GENERATEid();
+  const date = GETselectedDate();
+
+  return {
+    title, desc, priority, id, date,
+  };
+}
+function GETselectedPriority() {
+  const priorityRADIOS = document.querySelectorAll('.radio_Priority[data-action="create"]');
+  return Array.from(priorityRADIOS).find((x) => x.checked === true).dataset.priority;
+}
+function FINDtargetCalCell(date) {
+  // formated date => "dd.mm.yyy"
+  return document.querySelector(`.calender_Cell[data-date="${date}"]`);
+}
+function CLEARinputs() {
+  todoTitleINPUT.value = '';
+  todoDescINPUT.value = '';
+  document.querySelector('.radio_Priority[data-priority="3"][data-action="create"]').checked = true;
+}
