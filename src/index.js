@@ -1,4 +1,4 @@
-import SETlisteners from './logic/visuals/7_event_Listeners.js';
+import SETlisteners from './logic/visuals/7_event_Listeners';
 
 import './styles/reset.css';
 import './styles/main.css';
