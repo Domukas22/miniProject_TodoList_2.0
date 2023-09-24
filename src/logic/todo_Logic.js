@@ -28,12 +28,13 @@ export function GETtodosOfMonth(reqMONTH, reqYEAR) {
 export function GETlastTouchTodoObj() {
   return lastTouchTodoOBJ;
 }
-export function GETallTodos() {
-  console.log(todoLIST);
+export function GETtodoList() {
+  return todoLIST;
 }
 
 function REPLACEtodoList(newLIST) {
   todoLIST = newLIST;
+  localStorage.setItem('todoLIST', JSON.stringify(newLIST));
 }
 
 function CREATEtodo(title, desc, priority, date) {
@@ -114,4 +115,12 @@ function ISdateNEw(array, targetDATE) {
   // formated date => "dd.mm.yyy"
   // see if the todoList already has the target Date
   return !array.some((day) => day.date === targetDATE);
+}
+
+export function setLocalStorage() {
+  if (localStorage.getItem('todoLIST') === null) {
+    localStorage.setItem('todoLIST', JSON.stringify(GETtodoList()));
+    return;
+  }
+  REPLACEtodoList(JSON.parse(localStorage.getItem('todoLIST')));
 }

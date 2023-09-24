@@ -17,16 +17,11 @@ import { EDITyearTitle, PLAYclickEffect, TOGGLEtodoForm } from './6_other_Effect
 export default function SETlisteners() {
   console.log('-------');
 
-  ADDnewTodo('Shopping', '', 2, FORMATEdate(new Date(2023, 2, 14)), GENERATEid());
-  ADDnewTodo('Training', '', 3, FORMATEdate(new Date(2023, 8, 24)), GENERATEid());
-  ADDnewTodo('Secodn training', '', 1, FORMATEdate(new Date(2023, 8, 14)), GENERATEid());
-
   const today = GETselectedDate();
   PRINTnavLinks(today, SELECTmonth);
   PRINTcalender(today, today, SELECTdate);
   PRINTtodos(today);
   EDITyearTitle(GETselectedYear());
-  
 
   const createTodoBTN = document.querySelector('.btn_createTodo.submit');
   const cancelTodoBTN = document.querySelector('.btn_createTodo.cancel');

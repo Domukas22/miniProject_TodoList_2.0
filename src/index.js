@@ -1,5 +1,5 @@
 import SETlisteners from './logic/visuals/7_event_Listeners';
-import { GETallTodos } from './logic/todo_Logic';
+import { setLocalStorage } from './logic/todo_Logic';
 
 import './styles/reset.css';
 import './styles/main.css';
@@ -14,6 +14,6 @@ import './styles/view_Day/form_createTodo.css';
 import './styles/view_Day/todo.css';
 
 (() => {
+  setLocalStorage();
   SETlisteners();
-  // GETallTodos();
 })();
