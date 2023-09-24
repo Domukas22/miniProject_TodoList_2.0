@@ -1,9 +1,4 @@
-:root {
-    --text_whiteHover: rgba(255, 255, 255, 0.85);
-    --text_whitePassed: rgba(255, 255, 255, 0.25);
-    --color_selected: rgb(255, 249, 140);
-    --color_selectedHover: rgba(255, 249, 140, 0.20);
-}
+
 
 nav {
     display: flex;
@@ -31,8 +26,6 @@ nav {
 .wrap_navYear[data-click_effect="true"] > h1 {
     color: var(--color_selected);
 }
-
-
 .wrap_navMonths {
     flex: 1;
     display: flex;
@@ -40,6 +33,7 @@ nav {
     justify-content: space-between;
 ;
 }
+
 .navlink_Month {
     height: 100%;
     flex: 1;
@@ -53,46 +47,78 @@ nav {
     cursor: pointer;
 }
 .navlink_Month[data-this_month="true"] {
-    color: rgb(255, 141, 27);
-    font-weight: 600;
+  color: rgb(255, 141, 27);
+  font-weight: 600;
 }
-
-.navlink_Month.active {
-    background-color: rgba(255, 255, 255, 0.10) !important;
-    color: var(--color_selected);
-    /* border-top: 5px solid var(--color_selected); */
-}
-
-
 .navlink_Month[data-has_passed="true"] {
     background-color: rgb(0 0 0 / 6%);
     color: var(--text_whitePassed);
 }
-.navlink_Month.active[data-has_passed="true"] {
-    background-color: rgba(255, 255, 255, 0.03);
-    color: var(--color_selected)
-}
 
 .navlink_Month:hover {
-    background-color: rgba(255, 255, 255, 0.03);
-    color: var(--text_whiteHover);
+  background-color: rgba(255, 255, 255, 0.03);
+  color: var(--text_whiteHover);
 }
-.navlink_Month[data-has_passed="true"]:hover {
-    background-color: rgba(255, 255, 255, 0.03);
-    color: var(--text_whiteHover);
+.navlink_Month[data-this_month="true"]:hover {
+  color: var(--color_orange);
+  background-color: var(--color_orangeHover);
+}
+.navlink_Month.active[data-this_month="true"]:hover {
+  color: var(--color_selected);
+  background-color: var(--color_selectedHover);
 }
 
-.navlink_Month[data-today="true"] {
-    color: var(--text_whiteHover);
+.navlink_Month[data-click_effect="false"]:active {
+  color: var(--color_selected);
+  background-color: var(--color_selectedHover)
 }
-
 .navlink_Month[data-click_effect="true"],
 .navlink_Month[data-has_passed="true"][data-click_effect="true"] {
-    color: var(--color_selected);
-    background-color: var(--color_selectedHover)
-}
-.navlink_Month[data-click_effect="false"]:active {
-    color: var(--color_selected);
-    background-color: var(--color_selectedHover)
+    color: var(--color_selected) !important;
+    background-color: var(--color_selectedHover) !important
 }
 
+.navlink_Month.active {
+  background-color: rgba(255, 255, 255, 0.10);
+  color: var(--color_selected);
+  font-weight: 600;
+}
+
+.todoCount_month[data-count="0"]{
+  display: none;
+}
+.todoCount_month {
+  margin-left: 6px;
+  width: 18px;
+  height: 18px;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  font-size: 12px;
+  font-weight: 600;
+  background-color: rgb(72, 72, 72);
+  border-radius: 100px;
+}
+.navlink_Month[data-has_passed="true"] > .todoCount_month {
+  color: rgba(255, 255, 255, 0.50);
+}
+.navlink_Month:hover > .todoCount_month {
+  color: var(--text_whiteHover);
+  background-color: rgb(91 91 91);
+}
+
+.navlink_Month[data-this_month="true"] > .todoCount_month {
+  color: var(--color_orange);
+  background-color: var(--color_orangeHover);
+}
+.navlink_Month[data-this_month="true"]:hover {
+  color: var(--color_orange);
+  background-color: var(--color_orangeHover);
+}
+
+.navlink_Month.active > .todoCount_month {
+  color: var(--color_selected);
+  background-color: var(--color_selectedHover);
+}

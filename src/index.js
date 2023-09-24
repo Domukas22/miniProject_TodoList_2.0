@@ -1,4 +1,5 @@
 import SETlisteners from './logic/visuals/7_event_Listeners';
+import { GETallTodos } from './logic/todo_Logic';
 
 import './styles/reset.css';
 import './styles/main.css';
@@ -14,6 +15,5 @@ import './styles/view_Day/todo.css';
 
 (() => {
   SETlisteners();
+  // GETallTodos();
 })();
-
-console.log('hello');

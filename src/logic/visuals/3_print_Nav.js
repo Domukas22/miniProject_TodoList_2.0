@@ -1,38 +1,39 @@
-// import { SELECTmonth } from './5_select_Dates';
-import { PLAYclickEffect } from './6_other_Effects';
 import { GETformatedDateInfo } from '../general';
+import { GETtodosOfMonth } from '../todo_Logic';
 
-export function PRINTnavLinks(date, selectMonthFUNC) {
+export default function PRINTnavLinks(date, selectMonthFUNC) {
   EMPTYnavLinkWrap();
 
   const { year, month: printedMONTH } = GETformatedDateInfo(date);
   const navLinkWRAP = document.querySelector('.wrap_navMonths');
   const todayDATE = new Date();
 
-  for (let month = 0; month < 12; month + 1) {
+  for (let month = 0; month < 12; month += 1) {
     navLinkWRAP.appendChild(CREATEnavLink(year, month, printedMONTH, todayDATE, selectMonthFUNC));
   }
 }
 function CREATEnavLink(year, month, printedMONTH, todayDATE, selectMonthFUNC) {
   const link = document.createElement('li');
+  const todoCOUNT = GETtodosOfMonth(month, year).length;
+  console.log(todoCOUNT);
+
   link.classList.add('navlink_Month');
+  if (month === printedMONTH) { link.classList.add('active'); }
   link.setAttribute('data-month', month);
   link.setAttribute('data-year', year);
   link.setAttribute('data-click_effect', 'false');
   link.addEventListener('click', () => {
     selectMonthFUNC(month);
   });
-  link.innerHTML = `${GETmonthName(month)}`;
-  if (month === printedMONTH) { link.classList.add('active'); }
 
-  let HASpassed = (new Date(year, month, 1) < todayDATE);
-  let ISmonthSameAsToday = false;
+  link.setAttribute('data-has_passed', (new Date(year, month, 1) < todayDATE));
+  link.setAttribute('data-this_Month', false);
   if (todayDATE.getMonth() === month && todayDATE.getFullYear() === year) {
-    HASpassed = false;
-    ISmonthSameAsToday = true;
+    link.setAttribute('data-has_passed', false);
+    link.setAttribute('data-this_Month', true);
   }
-  link.setAttribute('data-has_passed', HASpassed);
-  link.setAttribute('data-this_Month', ISmonthSameAsToday);
+
+  link.innerHTML = `${GETmonthName(month)}<span class="todoCount_month" data-count="${todoCOUNT}" data-month="${month}" data-year="${year}">${todoCOUNT}</span>`;
 
   return link;
 }
@@ -56,14 +57,4 @@ function GETmonthName(month) {
 }
 function EMPTYnavLinkWrap() {
   document.querySelector('.wrap_navMonths').innerHTML = '';
-}
-
-export function TOGGLEactiveNavLink(selectedMONTH) {
-  document.querySelectorAll('.navlink_Month').forEach((x) => {
-    if (x.dataset.month == selectedMONTH) {
-      x.classList.add('active');
-      PLAYclickEffect(x);
-      return;
-    } x.classList.remove('active');
-  });
 }

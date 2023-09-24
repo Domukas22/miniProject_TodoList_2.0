@@ -3,20 +3,33 @@ import { GENERATEid } from './general';
 let todoLIST = [];
 let lastTouchTodoOBJ = {};
 
-export function GETlastTouchTodoObj() {
-  return lastTouchTodoOBJ;
-}
-export function GETtodosOfDay(targetDATE) {
-  // formated date => "dd.mm.yyy"
-  const dayOBJ = todoLIST.find((day) => day.date == targetDATE);
-  if (!dayOBJ) { return []; }
-  return dayOBJ.todos;
-}
 export function ADDnewTodo(title, desc, priority, date) {
   // formated date => "dd.mm.yyy"
   const newTODO = CREATEtodo(title, desc, priority, date);
   REPLACEtodoList(CREATEnewTodoList(todoLIST, newTODO, date));
   lastTouchTodoOBJ = newTODO;
+}
+export function GETtodosOfDay(targetDATE) {
+  // formated date => "dd.mm.yyy"
+  const dayOBJ = todoLIST.find((day) => day.date === targetDATE);
+  if (!dayOBJ) { return []; }
+  return dayOBJ.todos;
+}
+export function GETtodosOfMonth(reqMONTH, reqYEAR) {
+  const dayOBJS = todoLIST.filter((dayOBJ) => {
+    const objMONTH = parseFloat(dayOBJ.date.split('.')[1]);
+    const objYEAR = parseFloat(dayOBJ.date.split('.')[2]);
+    if ((objMONTH === reqMONTH) && (objYEAR === reqYEAR)) return true;
+    return false;
+  });
+
+  return dayOBJS;
+}
+export function GETlastTouchTodoObj() {
+  return lastTouchTodoOBJ;
+}
+export function GETallTodos() {
+  console.log(todoLIST);
 }
 
 function REPLACEtodoList(newLIST) {
@@ -51,7 +64,7 @@ function EDITtodoText(toEditID, newTITLE, newDESC, oldLIST) {
   const newLIST = oldLIST.map((day) => {
     const newDayTODOS = day.todos.map((todo) => {
       const newTODO = { ...todo };
-      if (newTODO.id == toEditID) {
+      if (newTODO.id === toEditID) {
         newTODO.title = newTITLE;
         newTODO.desc = newDESC;
       }
@@ -67,7 +80,7 @@ function EDITtodoPriority(toEditID, newPRIORITY, oldLIST) {
   const newLIST = oldLIST.map((day) => {
     const newDayTODOS = day.todos.map((todo) => {
       const newTODO = { ...todo };
-      if (newTODO.id == toEditID) {
+      if (newTODO.id === toEditID) {
         newTODO.priority = newPRIORITY;
       }
       return newTODO;
@@ -93,7 +106,7 @@ function CREATEnewDay(date, newTODO) {
 }
 function INSERTnewTodo(oldLIST, targetDATE, newTODO) {
   return oldLIST.map((day) => {
-    if (day.date == targetDATE) { day.todos.push(newTODO); }
+    if (day.date === targetDATE) { day.todos.push(newTODO); }
     return day;
   }).sort((a, b) => a.date.localeCompare(b.date));
 }

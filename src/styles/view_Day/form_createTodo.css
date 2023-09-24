@@ -1,14 +1,4 @@
 
-:root {
-    --low: rgb(199, 199, 199);
-    --medium: rgb(255, 249, 140);
-    --high: rgb(255, 152, 152);
-
-    --BG_low: rgb(99, 99, 99);
-    --BG_medium: #e5e3ae4c;
-    --BG_high: #ff87874f;
-}
-
 /* todo_Form.style.height = '50px'
     todo_Form.style.minHeight = '50px'
     todo_Form.style.maxHeight = '100vh' */

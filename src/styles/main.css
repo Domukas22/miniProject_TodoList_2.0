@@ -7,6 +7,14 @@
     --BG_low: rgb(99, 99, 99);
     --BG_medium: #e5e3ae4c;
     --BG_high: #ff87874f;
+
+    --color_orange: rgb(255, 141, 27);
+    --color_orangeHover: #f67b0021;
+
+    --text_whiteHover: rgba(255, 255, 255, 0.85);
+    --text_whitePassed: rgba(255, 255, 255, 0.25);
+    --color_selected: rgb(255, 249, 140);
+    --color_selectedHover: rgba(255, 249, 140, 0.1);
 }
 * {
     margin: 0px;

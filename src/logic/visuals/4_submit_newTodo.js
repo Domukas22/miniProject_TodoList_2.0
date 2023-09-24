@@ -1,45 +1,38 @@
+import { GENERATEid, GETformatedDateInfo } from '../general';
+import { ADDnewTodo, GETtodosOfMonth, GETlastTouchTodoObj } from '../todo_Logic';
 import { APPENDtodoTitleToCell } from './1_print_Calender';
 import { APPENDsingleTodo } from './2_print_Todos';
-import { GETselectedDate } from './5_select_Dates';
-import { GENERATEid } from '../general';
-import { ADDnewTodo, GETlastTouchTodoObj } from '../todo_Logic';
+import { SELECTdate, GETselectedDate } from './5_select_Dates';
+import { EDITnavLinkTodoCount } from './6_other_Effects';
 
 const todoTitleINPUT = document.querySelector('.input_todoTitle');
 const todoDescINPUT = document.querySelector('.input_todoDesc');
 
-export function SUBMITnewTodo() {
+export default function SUBMITnewTodo() {
   const {
     title, desc, priority, date,
   } = GETsubmitInfos();
 
+  SELECTdate(date)
   if (title === '') return;
   ADDnewTodo(title, desc, priority, date);
-  ADJUSThtmlAfterSubmit(GETlastTouchTodoObj());
-}
-export function TOGGLEtodoForm(action) {
-  const todoFORM = document.querySelector('.todo_Form');
-
-  if (action === 'open') {
-    todoFORM.setAttribute('data-open', 'true');
-    todoFORM.style.height = '242px';
-    todoFORM.style.minHeight = '242px';
-    todoFORM.style.maxHeight = '242px';
-    return;
-  }
-  todoFORM.setAttribute('data-open', 'false');
-  todoFORM.style.height = '50px';
-  todoFORM.style.minHeight = '50px';
-  todoFORM.style.maxHeight = '100vh';
+  ADJUSThtmlAfterSubmit();
 }
 
-function ADJUSThtmlAfterSubmit(todoOBJ) {
-  const todoDATE = todoOBJ.date;
-  const todoTITLE = todoOBJ.title;
-  const todoPRIORITY = todoOBJ.priority;
-  const todoID = todoOBJ.id;
+function ADJUSThtmlAfterSubmit() {
+  // we could also just provide the obj at SUBMITnewTodo
+  // here we are calling APPENDsingleTodo, so that we wouldn't need to reprint calender
+  // this allows easier animations
+  const todoOBJ = GETlastTouchTodoObj();
+  const {
+    title, priority, id, date,
+  } = todoOBJ;
 
-  APPENDtodoTitleToCell(FINDtargetCalCell(todoDATE), todoTITLE, todoPRIORITY, todoID);
+  const { month, year } = GETformatedDateInfo(date);
+
+  APPENDtodoTitleToCell(FINDtargetCalCell(date), title, priority, id);
   APPENDsingleTodo(todoOBJ);
+  EDITnavLinkTodoCount(month, year, GETtodosOfMonth(month, year).length);
   CLEARinputs();
 }
 function GETsubmitInfos() {

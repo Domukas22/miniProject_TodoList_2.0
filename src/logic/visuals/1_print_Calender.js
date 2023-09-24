@@ -2,10 +2,10 @@ import { CLEARhtml } from './6_other_Effects';
 import { GETtodosOfDay } from '../todo_Logic';
 import { FORMATEdate, GETformatedDateInfo } from '../general';
 
-export function PRINTcalender(toPrintDATE, selectedDATE, selectDateFUNC) {
+export function PRINTcalender(requestedDATE, selectedDATE, selectDateFUNC) {
   // formated date => "dd.mm.yyyy"
 
-  const { month, year } = GETformatedDateInfo(toPrintDATE);
+  const { month, year } = GETformatedDateInfo(requestedDATE);
   const { dayCOUNT, blankCOUNT } = GETcellCount(year, month);
   CLEARhtml('.calender');
   GENERATEcalenderBlanks(blankCOUNT);
@@ -34,13 +34,13 @@ function GENERATEcalenderCellS(dayCOUNT, month, year, selectedDATE, selectDateFU
 
     const calCellDIV = document.createElement('div');
     calCellDIV.classList.add('calender_Cell');
-    if (FORMATEdate(loopDATE) === selectedDATE) { calCellDIV.classList.add('active'); }
     calCellDIV.classList.add(cellCOLOR);
+    if (FORMATEdate(loopDATE) === selectedDATE) { calCellDIV.classList.add('active'); }
     calCellDIV.setAttribute('data-date', FORMATEdate(loopDATE));
     calCellDIV.innerHTML = `<p class="cornerText_dayOfMonth">${loopDATE.getDate()}</p>`;
-    APPENDtodoTitles(calCellDIV, todos);
     calCellDIV.addEventListener('click', (e) => selectDateFUNC(e.currentTarget.dataset.date));
     calenderDIV.appendChild(calCellDIV);
+    APPENDtodoTitles(calCellDIV, todos);
   }
 }
 

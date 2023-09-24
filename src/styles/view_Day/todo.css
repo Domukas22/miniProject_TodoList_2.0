@@ -1,12 +1,3 @@
-:root {
-    --low: rgb(199, 199, 199);
-    --medium: rgb(255, 249, 140);
-    --high: rgb(255, 152, 152);
-
-    --BG_low: rgb(99, 99, 99);
-    --BG_medium: #e5e3ae4c;
-    --BG_high: #ff87874f;
-}
 
 .wrap_Todos {
     overflow-y: auto;
@@ -51,6 +42,8 @@
 
 .desc_Todo {
     margin-top: 7px;
+    word-break: break-all;
+    width: 90%;
 }
 .desc_Todo[data-empty="false"] {
     margin-top: 0px;
@@ -65,7 +58,7 @@
 
 }
 .todoBtn {
-    background-color: #565656;
+    background-color: #4c4c4c;
     height: 32px;
     width: 32px;
 
@@ -73,8 +66,29 @@
     align-items: center;
     justify-content: center;
 
+    position: relative;
     border-radius: 100px;
 }
 .todoBtn:hover {
-    background-color: #666666;
+    background-color: #545454;
 }
+
+.todoBtn > .x_line {
+  width: 40px;
+  height: 40px;
+
+  position: absolute;
+  width: 2px;
+  height: 15px;
+
+  rotate: 45deg;
+  background-color: rgb(176, 176, 176);
+  border-radius: 100px;
+}
+.todoBtn > .x_line.second {
+  rotate: -45deg;
+}
+.todoBtn:hover > .x_line {
+  background-color: #ff8c8c;
+}
+

@@ -1,12 +1,4 @@
-:root {
-    --low: rgb(199, 199, 199);
-    --medium: rgb(255, 249, 140);
-    --high: rgb(255, 152, 152);
 
-    --BG_low: rgb(99, 99, 99);
-    --BG_medium: #e5e3ae4c;
-    --BG_high: #ff87874f;
-}
 
 .blankDay {
     width: 100%;
@@ -47,7 +39,7 @@
 }
 .calender_Cell.today {
     background-color: rgba(255, 255, 255, 0.10);
-    border-top: 6px solid #f67c00;
+    border-top: 6px solid var(--color_orange);
 }
 .calender_Cell.active {
     background-color: rgba(255, 255, 255, 0.10) !important;
