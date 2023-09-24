@@ -55,12 +55,19 @@
     right: 0;
 
     padding: 10px;
+    display: flex;
+    align-items: center;
 
 }
+.todoBtnWRAP {
+  display: flex;
+}
+
 .todoBtn {
     background-color: #4c4c4c;
     height: 32px;
     width: 32px;
+    margin-left: 6px;
 
     display: flex;
     align-items: center;
@@ -72,7 +79,6 @@
 .todoBtn:hover {
     background-color: #545454;
 }
-
 .todoBtn > .x_line {
   width: 40px;
   height: 40px;
@@ -89,6 +95,106 @@
   rotate: -45deg;
 }
 .todoBtn:hover > .x_line {
-  background-color: #ff8c8c;
+  background-color: var(--high);
 }
 
+.changePriorityCIRCLE {
+  width: 10px;
+  height: 10px;
+  border-radius: 100px;
+  background-color: rgb(176, 176, 176);
+}
+.todoBtn:hover > .changePriorityCIRCLE[data-priority="1"] {
+  background-color: var(--high);
+}
+.todoBtn:hover > .changePriorityCIRCLE[data-priority="2"] {
+  background-color: var(--medium);
+}
+.todoBtn:hover > .changePriorityCIRCLE[data-priority="3"] {
+  background-color: var(--low);
+}
+
+
+.editTodoICON {
+  content: '';
+  width: 100%; 
+  height: 100%;
+
+  background-image: url('/dist/pen_Edit.svg'); 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: auto 16px;
+  rotate: 220deg;
+  opacity: 0.5; 
+}
+.todoBtn.EDITtext:hover > .editTodoICON { 
+  opacity: 0.8; 
+}
+
+.editTodoRADIOS {
+  position: absolute;
+  right: 10px;
+
+  display: flex;
+  align-content: center;
+
+  width: 105px;
+  height: 32px;
+
+  border-radius: 8px;
+  background-color: #4A4A4D;
+  overflow: hidden;
+
+  display: none;
+}
+.editPriorityRADIO {
+  appearance: none;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+
+  display: grid;
+  place-content: center;
+  transition: 150ms;
+}
+.editPriorityRADIO::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+
+  transform: scale(1);
+  background-color: var(--low);
+  transition: 150ms;
+
+  position: relative;
+  border-radius: 10px;
+}
+.editPriorityRADIO[data-priority="3"]::before {
+  background-color: var(--low);
+}
+.editPriorityRADIO[data-priority="2"]::before {
+  background-color: var(--medium);
+}
+.editPriorityRADIO[data-priority="1"]::before {
+  background-color: var(--high);
+}
+
+.editPriorityRADIO[data-priority="3"]:hover,
+.editPriorityRADIO[data-priority="3"]:checked {
+  background-color: var(--BG_low);
+}
+.editPriorityRADIO[data-priority="2"]:hover,
+.editPriorityRADIO[data-priority="2"]:checked {
+  background-color: var(--BG_medium);
+}
+.editPriorityRADIO[data-priority="1"]:hover,
+.editPriorityRADIO[data-priority="1"]:checked {
+  background-color: var(--BG_high);
+}
+
+.editPriorityRADIO:hover::before {
+  transform: scale(1.2);
+}
+.editPriorityRADIO:checked::before {
+  transform: scale(1);
+}

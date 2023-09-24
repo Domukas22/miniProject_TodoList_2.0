@@ -1,5 +1,3 @@
-import { FORMATEdate, GENERATEid } from '../general';
-import { ADDnewTodo } from '../todo_Logic';
 import { PRINTcalender } from './1_print_Calender';
 import { PRINTtodos } from './2_print_Todos';
 import PRINTnavLinks from './3_print_Nav';
@@ -44,21 +42,21 @@ export default function SETlisteners() {
   const colorOnClickBTNS = document.querySelectorAll('[data-click_effect="false"]');
   colorOnClickBTNS.forEach((btn) => btn.addEventListener('click', (e) => PLAYclickEffect(e.currentTarget)));
 
-  let isletterDpressed = false;
+  let ISdPressed = false;
   window.addEventListener('keyup', (e) => {
     if (e.key === 'd') {
-      isletterDpressed = false;
+      ISdPressed = false;
     }
   });
   window.addEventListener('keydown', (e) => {
     const ISformOpen = (document.querySelector('.todo_Form').dataset.open === 'true');
 
     if (e.key === 'd') {
-      isletterDpressed = true;
+      ISdPressed = true;
     }
     if (e.key === 'ArrowLeft') {
       if (ISformOpen) return;
-      if (isletterDpressed) {
+      if (ISdPressed) {
         SELECTprevDate();
         return;
       }
@@ -66,11 +64,29 @@ export default function SETlisteners() {
     }
     if (e.key === 'ArrowRight') {
       if (ISformOpen) return;
-      if (isletterDpressed) {
+      if (ISdPressed) {
         SELECTnextDate();
         return;
       }
       SELECTnextMonth();
+    }
+    if (e.key === 'ArrowUp') {
+      if (!ISformOpen) return;
+      const checkedRADIO = document.querySelector('.radio_Priority:checked');
+      if (checkedRADIO.dataset.priority === '1') {
+        checkedRADIO.parentElement.lastElementChild.checked = true;
+        return;
+      }
+      checkedRADIO.previousElementSibling.checked = true;
+    }
+    if (e.key === 'ArrowDown') {
+      if (!ISformOpen) return;
+      const checkedRADIO = document.querySelector('.radio_Priority:checked');
+      if (checkedRADIO.dataset.priority === '3') {
+        checkedRADIO.parentElement.firstElementChild.checked = true;
+        return;
+      }
+      checkedRADIO.nextElementSibling.checked = true;
     }
 
     if (e.key === 'Escape') TOGGLEtodoForm('close');
@@ -80,7 +96,6 @@ export default function SETlisteners() {
     }
     if (e.key === 'Enter') {
       if (!ISformOpen) return;
-      console.log('YES');
       SUBMITnewTodo();
     }
   });

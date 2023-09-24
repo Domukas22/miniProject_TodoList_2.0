@@ -13,6 +13,8 @@ import './styles/view_Day/controls.css';
 import './styles/view_Day/form_createTodo.css';
 import './styles/view_Day/todo.css';
 
+import './assets/icons/pen_Edit.svg';
+
 (() => {
   setLocalStorage();
   SETlisteners();

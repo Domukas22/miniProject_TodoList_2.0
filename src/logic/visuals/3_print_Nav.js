@@ -15,7 +15,6 @@ export default function PRINTnavLinks(date, selectMonthFUNC) {
 function CREATEnavLink(year, month, printedMONTH, todayDATE, selectMonthFUNC) {
   const link = document.createElement('li');
   const todoCOUNT = GETtodosOfMonth(month, year).length;
-  console.log(todoCOUNT);
 
   link.classList.add('navlink_Month');
   if (month === printedMONTH) { link.classList.add('active'); }

@@ -1,4 +1,5 @@
 import { GETdateWithMonth } from '../general';
+import { todoTitleINPUT, todoDescINPUT } from './4_submit_newTodo';
 
 export function PLAYclickEffect(el) {
   el.setAttribute('data-click_effect', 'true');
@@ -60,7 +61,56 @@ export function TOGGLEtodoForm(action) {
     return;
   }
   todoFORM.setAttribute('data-open', 'false');
+  todoFORM.setAttribute('data-editing', 'false');
+  todoFORM.setAttribute('data-toeditid', '');
   todoFORM.style.height = '50px';
   todoFORM.style.minHeight = '50px';
   todoFORM.style.maxHeight = '100vh';
+  CLEARinputs();
+}
+export function TOGGLEeditPriority(id) {
+  const editTodoRADIOS = document.querySelector(`.editTodoRADIOS[data-id="${id}"]`);
+  const todoBtnWRAP = document.querySelector(`.todoBtnWRAP[data-id="${id}"]`);
+
+  const ISopen = (editTodoRADIOS.dataset.open === 'true');
+  if (!ISopen) {
+    editTodoRADIOS.style.display = 'flex';
+    todoBtnWRAP.style.opacity = '0%';
+
+    setTimeout(() => {
+      editTodoRADIOS.style.opacity = '100%';
+    }, 50);
+    editTodoRADIOS.setAttribute('data-open', 'true');
+    return;
+  }
+  editTodoRADIOS.style.opacity = '0%';
+  todoBtnWRAP.style.opacity = '100%';
+  setTimeout(() => {
+    editTodoRADIOS.style.display = 'none';
+  }, 160);
+  editTodoRADIOS.setAttribute('data-open', 'false');
+}
+export function EDIThtmlTodosPrio(id, priority) {
+  const cellTodoTITLE = document.querySelector(`.todoTitle_calCell[data-id="${id}"]`);
+  const todoTITLE = document.querySelector(`.title_Todo[data-id="${id}"]`);
+  const todoEditCIRCLE = document.querySelector(`.changePriorityCIRCLE[data-id="${id}"]`);
+  [todoTITLE, cellTodoTITLE, todoEditCIRCLE].forEach((el) => el.setAttribute('data-priority', priority));
+}
+export function PREPAREformForEdit(title, desc, priority, id) {
+  const todoFORM = document.querySelector('.todo_Form');
+  const todoTitleINPUT = document.querySelector('.input_todoTitle');
+  const todoDescINPUT = document.querySelector('.input_todoDesc');
+  const todoPriorityRADIO = document.querySelector(`.radio_Priority[data-priority="${priority}"]`);
+
+  todoFORM.setAttribute('data-editing', 'true');
+  todoFORM.setAttribute('data-toEditID', id);
+  todoTitleINPUT.value = title;
+  todoDescINPUT.value = desc;
+  todoPriorityRADIO.checked = true;
+}
+
+export function CLEARinputs() {
+  document.querySelector('.input_todoTitle').value = '';
+  document.querySelector('.input_todoDesc').value = '';
+  document.querySelector('.radio_Priority[data-priority="3"][data-action="create"]').checked = true;
 }

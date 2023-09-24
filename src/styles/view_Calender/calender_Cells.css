@@ -88,6 +88,7 @@
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.1px;
+    margin-bottom: 4px;
 }
 .todoTitle_calCell[data-priority="3"] {
     color: var(--low);

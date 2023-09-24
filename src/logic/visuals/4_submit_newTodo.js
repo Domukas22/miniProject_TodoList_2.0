@@ -1,25 +1,40 @@
 import { GENERATEid, GETformatedDateInfo } from '../general';
-import { ADDnewTodo, GETtodosOfMonth, GETlastTouchTodoObj } from '../todo_Logic';
+import {
+  ADDnewTodo, GETtodosOfMonth, GETlastTouchTodoObj,
+  EDITtodo, GETtodoList,
+} from '../todo_Logic';
 import { APPENDtodoTitleToCell } from './1_print_Calender';
 import { APPENDsingleTodo } from './2_print_Todos';
 import { SELECTdate, GETselectedDate } from './5_select_Dates';
-import { EDITnavLinkTodoCount } from './6_other_Effects';
+import { CLEARinputs } from './6_other_Effects';
+import { EDITnavLinkTodoCount, TOGGLEtodoForm } from './6_other_Effects';
 
-const todoTitleINPUT = document.querySelector('.input_todoTitle');
-const todoDescINPUT = document.querySelector('.input_todoDesc');
+// DELETE theses
+export const todoTitleINPUT = document.querySelector('.input_todoTitle');
+export const todoDescINPUT = document.querySelector('.input_todoDesc');
 
 export default function SUBMITnewTodo() {
   const {
     title, desc, priority, date,
   } = GETsubmitInfos();
-
-  SELECTdate(date)
+  const todoFORM = document.querySelector('.todo_Form');
+  const ISediting = (todoFORM.dataset.editing === 'true');
   if (title === '') return;
-  ADDnewTodo(title, desc, priority, date);
-  ADJUSThtmlAfterSubmit();
+
+  if (ISediting) {
+    SELECTdate(date);
+    EDITtodo(parseFloat(todoFORM.dataset.toeditid), title, desc, priority, GETtodoList());
+    ADJUSThtmlAfterTodoEdit(title, desc, priority, GETlastTouchTodoObj().id, todoFORM);
+    return;
+  }
+
+  todoTitleINPUT.focus();
+  SELECTdate(date);
+  ADDnewTodo(title, desc, parseFloat(priority), date);
+  ADJUSThtmlAfterNewTodo();
 }
 
-function ADJUSThtmlAfterSubmit() {
+function ADJUSThtmlAfterNewTodo() {
   // we could also just provide the obj at SUBMITnewTodo
   // here we are calling APPENDsingleTodo, so that we wouldn't need to reprint calender
   // this allows easier animations
@@ -34,6 +49,18 @@ function ADJUSThtmlAfterSubmit() {
   APPENDsingleTodo(todoOBJ);
   EDITnavLinkTodoCount(month, year, GETtodosOfMonth(month, year).length);
   CLEARinputs();
+}
+function ADJUSThtmlAfterTodoEdit(newTITLE, newDESC, newPRIORITY, id, todoFORM) {
+  const inCellTITLE = document.querySelector(`.todoTitle_calCell[data-id="${id}"]`);
+  const inDayViewTITLE = document.querySelector(`.title_Todo[data-id="${id}"]`);
+
+  [inCellTITLE, inDayViewTITLE].forEach((x) => x.textContent = newTITLE);
+  [inCellTITLE, inDayViewTITLE].forEach((x) => x.setAttribute('data-priority', newPRIORITY));
+
+  CLEARinputs();
+  TOGGLEtodoForm('close');
+  todoFORM.setAttribute('data-editing', 'false');
+  todoFORM.setAttribute('data-toeditid', '');
 }
 function GETsubmitInfos() {
   const title = todoTitleINPUT.value;
@@ -54,8 +81,4 @@ function FINDtargetCalCell(date) {
   // formated date => "dd.mm.yyy"
   return document.querySelector(`.calender_Cell[data-date="${date}"]`);
 }
-function CLEARinputs() {
-  todoTitleINPUT.value = '';
-  todoDescINPUT.value = '';
-  document.querySelector('.radio_Priority[data-priority="3"][data-action="create"]').checked = true;
-}
+
