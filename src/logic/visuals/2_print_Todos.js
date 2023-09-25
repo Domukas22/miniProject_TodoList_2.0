@@ -1,6 +1,10 @@
 import {
-  CLEARhtml, REMOVEelementClassId, EDITnavLinkTodoCount,
-  TOGGLEeditPriority, EDIThtmlTodosPrio, PREPAREformForEdit,
+  CLEARhtml,
+  REMOVEelementClassId,
+  EDITnavLinkTodoCount,
+  TOGGLEeditPriority,
+  EDIThtmlTodosPrio,
+  PREPAREformForEdit,
   TOGGLEtodoForm,
 } from './6_other_Effects';
 import { GETtodosOfDay, GETtodosOfMonth, GETsingleTodo } from '../todo_Logic';
@@ -12,22 +16,28 @@ export function PRINTtodos(date) {
   // if seected day has todos, remove them and print new ones later
   // if it doesn't, print them instantly
   if (htmlTODOS.length > 0) {
-    htmlTODOS.forEach((x) => x.setAttribute('data-visible', 'false'));
+    htmlTODOS.forEach(x => x.setAttribute('data-visible', 'false'));
     setTimeout(() => {
       CLEARhtml('.wrap_Todos');
-      todos.forEach((todoOBJ) => {
+      todos.forEach(todoOBJ => {
         APPENDsingleTodo(todoOBJ);
       });
     }, 160);
     return;
   }
   CLEARhtml('.wrap_Todos');
-  todos.forEach((todoOBJ) => {
+  todos.forEach(todoOBJ => {
     APPENDsingleTodo(todoOBJ);
   });
 }
 export function APPENDsingleTodo({
-  id, priority, title, desc, removeMETHOD, editPriorityMETHOD, date,
+  id,
+  priority,
+  title,
+  desc,
+  removeMETHOD,
+  editPriorityMETHOD,
+  date,
 }) {
   const todoWrapDIV = document.querySelector('.wrap_Todos');
   const todoDIV = document.createElement('div');
@@ -36,7 +46,9 @@ export function APPENDsingleTodo({
   todoDIV.setAttribute('data-visible', 'false');
   todoDIV.innerHTML = `
         <p class="title_Todo" data-priority="${priority}" data-id="${id}">${title}</p>
-        <p class="desc_Todo" data-empty="${desc === ''}" data-id="${id}">${desc}</p>
+        <p class="desc_Todo" data-empty="${
+          desc === ''
+        }" data-id="${id}">${desc}</p>
         <div class="actionBox_Todo">
           <div class="todoBtnWRAP" data-id="${id}">
             <div class="todoBtn EDITtext"><div class="editTodoICON"></div></div>
@@ -50,8 +62,12 @@ export function APPENDsingleTodo({
           </div>
         </div>
     `;
-  todoDIV.querySelector('.EDITpriority').addEventListener('click', () => TOGGLEeditPriority(id));
-  todoDIV.querySelector(`.editPriorityRADIO[data-priority="${priority}"]`).checked = true;
+  todoDIV
+    .querySelector('.EDITpriority')
+    .addEventListener('click', () => TOGGLEeditPriority(id));
+  todoDIV.querySelector(
+    `.editPriorityRADIO[data-priority="${priority}"]`,
+  ).checked = true;
 
   ATTACHeventREMOVE(todoDIV, removeMETHOD, id, date);
   ATTACHeventEDITpriority(todoDIV, id, editPriorityMETHOD);
@@ -79,7 +95,7 @@ function ATTACHeventREMOVE(todoDIV, removeMETHOD, id, date) {
 }
 function ATTACHeventEDITpriority(todoDIV, id, editPriorityMETHOD) {
   const radios = todoDIV.querySelectorAll('.editPriorityRADIO');
-  radios.forEach((radio) => {
+  radios.forEach(radio => {
     radio.addEventListener('click', () => {
       TOGGLEeditPriority(id);
       editPriorityMETHOD(parseFloat(radio.dataset.priority));

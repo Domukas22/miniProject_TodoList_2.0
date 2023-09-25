@@ -3,7 +3,10 @@ import { PRINTtodos } from './2_print_Todos';
 import PRINTnavLinks from './3_print_Nav';
 import {
   TOGGLEactiveNavLink,
-  EDITdateTitle, TOGGLEcalenderCell, CLEARhtml, EDITyearTitle, PLAYclickEffect,
+  EDITdateTitle,
+  TOGGLEcalenderCell,
+  EDITyearTitle,
+  PLAYclickEffect,
 } from './6_other_Effects';
 import { FORMATEdate, GETformatedDateInfo } from '../general';
 
@@ -13,9 +16,9 @@ let selYEAR = new Date().getFullYear();
 
 export function SELECTdate(requestedDATE) {
   const { year: reqYEAR, month: reqMONTH } = GETformatedDateInfo(requestedDATE);
-  const ISsameDate = (requestedDATE === selDATE);
-  const ISsameYear = (reqYEAR === selYEAR);
-  const ISsameMonth = (reqMONTH === selMONTH);
+  const ISsameDate = requestedDATE === selDATE;
+  const ISsameYear = reqYEAR === selYEAR;
+  const ISsameMonth = reqMONTH === selMONTH;
 
   if (ISsameDate && ISsameYear && ISsameMonth) {
     TOGGLEcalenderCell(requestedDATE);
@@ -39,9 +42,7 @@ export function SELECTdate(requestedDATE) {
 }
 
 export function SELECTprevDate() {
-  const {
-    day, month, year,
-  } = GETformatedDateInfo(GETselectedDate());
+  const { day, month, year } = GETformatedDateInfo(GETselectedDate());
 
   if (day === 1) {
     const newDAY = new Date(year, month, 0).getDate();
@@ -55,9 +56,7 @@ export function SELECTprevDate() {
   SELECTdate(`${day - 1}.${month}.${year}`);
 }
 export function SELECTnextDate() {
-  const {
-    day, month, year, dayCOUNT,
-  } = GETformatedDateInfo(GETselectedDate());
+  const { day, month, year, dayCOUNT } = GETformatedDateInfo(GETselectedDate());
 
   if (day === dayCOUNT) {
     if (month === 11) {
@@ -76,7 +75,11 @@ export function SELECTtoday() {
 
 export function SELECTmonth(month) {
   selMONTH = month;
-  PRINTcalender(`xx.${selMONTH}.${GETselectedYear()}`, GETselectedDate(), SELECTdate);
+  PRINTcalender(
+    `xx.${selMONTH}.${GETselectedYear()}`,
+    GETselectedDate(),
+    SELECTdate,
+  );
   TOGGLEactiveNavLink(selMONTH);
 }
 export function SELECTprevMonth() {

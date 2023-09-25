@@ -1,5 +1,3 @@
-
-
 .calender {
   display: grid;
   row-gap: 2.5px;
@@ -13,41 +11,42 @@
   opacity: 100%;
   transform: translateX(0px);
 }
-.calender[data-visible="false"] {
+.calender[data-visible='false'] {
   opacity: 0%;
 }
-.calender[data-position="past"]{
+.calender[data-position='past'] {
   transform: translateX(-15px);
 }
-.calender[data-position="future"]{
+.calender[data-position='future'] {
   transform: translateX(15px);
 }
 .wrap_Calender {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    margin-right: 30px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-right: 30px;
 }
 .wrap_weekDays {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: 35px;
-    grid-auto-rows: 35px;
-    column-gap: 2px;
-    margin-bottom: 6px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: 35px;
+  grid-auto-rows: 35px;
+  column-gap: 2px;
+  margin-bottom: 6px;
 }
 .weekDay {
-    background-color: rgb(74, 74, 77);
-    color: rgba(255, 255, 255, 0.5);
-    border-radius: 2px;
-    display: flex;
-    align-items: center;
-    padding-left: 12px;
-    font-size: 14px;
-    font-weight: 900;
-    letter-spacing: 0.1px;
+  background-color: rgb(74, 74, 77);
+  color: rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.1px;
 }
-.weekDay.sat, .weekDay.sun, .weekendDay {
-    background-color: rgba(255, 255, 255, 0.03);
+.weekDay.sat,
+.weekDay.sun,
+.weekendDay {
+  background-color: rgba(255, 255, 255, 0.03);
 }
-

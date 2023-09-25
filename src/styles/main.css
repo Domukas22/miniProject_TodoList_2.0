@@ -1,65 +1,63 @@
-
 :root {
-    --low: rgb(199, 199, 199);
-    --medium: rgb(255, 249, 140);
-    --high: rgb(255, 152, 152);
+  --low: rgb(199, 199, 199);
+  --medium: rgb(255, 249, 140);
+  --high: rgb(255, 152, 152);
 
-    --BG_low: rgb(99, 99, 99);
-    --BG_medium: #e5e3ae4c;
-    --BG_high: #ff87874f;
+  --BG_low: rgb(99, 99, 99);
+  --BG_medium: #e5e3ae4c;
+  --BG_high: #ff87874f;
 
-    --color_orange: rgb(255, 141, 27);
-    --color_orangeHover: #f67b0021;
+  --color_orange: rgb(255, 141, 27);
+  --color_orangeHover: #f67b0021;
 
-    --text_whiteHover: rgba(255, 255, 255, 0.85);
-    --text_whitePassed: rgba(255, 255, 255, 0.25);
-    --color_selected: rgb(255, 249, 140);
-    --color_selectedHover: rgba(255, 249, 140, 0.1);
+  --text_whiteHover: rgba(255, 255, 255, 0.85);
+  --text_whitePassed: rgba(255, 255, 255, 0.25);
+  --color_selected: rgb(255, 249, 140);
+  --color_selectedHover: rgba(255, 249, 140, 0.1);
 }
 * {
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
-    font-family: "Nunito" !important;
-    transition: 150ms;
-    color: rgba(255, 255, 255, 0.822); 
-    /* border: 1px solid grey; */
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: 'Nunito' !important;
+  transition: 150ms;
+  color: rgba(255, 255, 255, 0.822);
+  /* border: 1px solid grey; */
 }
 @font-face {
-    font-family: "Nunito";
-    src: url(../assets/fonts/Nunito-Medium.ttf);
-    font-weight: medium;
+  font-family: 'Nunito';
+  src: url(../assets/fonts/Nunito-Medium.ttf);
+  font-weight: medium;
 }
 @font-face {
-    font-family: "Nunito";
-    src: url(../assets/fonts/Nunito-Bold.ttf);
-    font-weight: bold;
+  font-family: 'Nunito';
+  src: url(../assets/fonts/Nunito-Bold.ttf);
+  font-weight: bold;
 }
 @font-face {
-    font-family: "Nunito";
-    src: url(../assets/fonts/Nunito-Light.ttf);
-    font-weight: light;
+  font-family: 'Nunito';
+  src: url(../assets/fonts/Nunito-Light.ttf);
+  font-weight: light;
 }
-
 
 body {
-    background-color: #404040;
-    overflow: hidden;
-    height: 100vh;
+  background-color: #404040;
+  overflow: hidden;
+  height: 100vh;
 }
 main {
-    flex-grow: 1;
-    display: flex;
-    width: 100%;
-    height: 100%;
-    padding: 30px;
+  flex-grow: 1;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
 }
 p {
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
 }
 .contentWrap {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }

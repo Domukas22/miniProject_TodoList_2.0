@@ -1,17 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= htmlWebpackPlugin.options.title %></title>
-</head>
-<body>
-    
+  </head>
+  <body>
     <div class="contentWrap">
-        <nav>
-            <div class="wrap_navYear" data-click_effect="false"><h1 class="title_Year">xxx</h1></div>
-            <ul class="wrap_navMonths">
-                <!-- <li class="navlink_Month" data-month="0" data-year="2023">Jan</li>
+      <nav>
+        <div class="wrap_navYear" data-click_effect="false">
+          <h1 class="title_Year">xxx</h1>
+        </div>
+        <ul class="wrap_navMonths">
+          <!-- <li class="navlink_Month" data-month="0" data-year="2023">Jan</li>
                 <li class="navlink_Month" data-month="1" data-year="2023">Feb</li>
                 <li class="navlink_Month" data-month="2" data-year="2023">Mar</li>
                 <li class="navlink_Month" data-month="3" data-year="2023">Apr</li>
@@ -23,40 +24,71 @@
                 <li class="navlink_Month" data-month="9" data-year="2023">Oct</li>
                 <li class="navlink_Month" data-month="10" data-year="2023">Nov</li>
                 <li class="navlink_Month" data-month="11" data-year="2023">Dec</li> -->
-            </ul>
-        </nav>
-        <main>
-            <div class="wrap_Calender">
-                <div class="wrap_weekDays">
-                    <div class="weekDay">MON</div>
-                    <div class="weekDay">TUE</div>
-                    <div class="weekDay">WED</div>
-                    <div class="weekDay">THU</div>
-                    <div class="weekDay">FRI</div>
-                    <div class="weekDay sat">SAT</div>
-                    <div class="weekDay sun">SUN</div>
-                </div>
-                <div class="calender" data-visible=""></div>
+        </ul>
+      </nav>
+      <main>
+        <div class="wrap_Calender">
+          <div class="wrap_weekDays">
+            <div class="weekDay">MON</div>
+            <div class="weekDay">TUE</div>
+            <div class="weekDay">WED</div>
+            <div class="weekDay">THU</div>
+            <div class="weekDay">FRI</div>
+            <div class="weekDay sat">SAT</div>
+            <div class="weekDay sun">SUN</div>
+          </div>
+          <div class="calender" data-visible=""></div>
+        </div>
+        <div class="wrap_Day">
+          <div class="wrap_Controls" data-step="day">
+            <div class="date_controlBox">20. September</div>
+            <div
+              class="controlBtn"
+              data-action="prev"
+              data-click_effect="false"
+            >
+              <svg
+                width="11"
+                height="15"
+                viewBox="0 0 11 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  class="path_controlArrow"
+                  d="M8 15L6.55671e-07 7.5L8 -2.54292e-07L11 2.8125L6 7.5L11 12.1875L8 15Z"
+                />
+              </svg>
             </div>
-            <div class="wrap_Day">   
-                <div class="wrap_Controls" data-step="day">
-                    <div class="date_controlBox">20. September</div>
-                    <div class="controlBtn" data-action="prev" data-click_effect="false">
-                        <svg width="11" height="15" viewBox="0 0 11 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path class="path_controlArrow" d="M8 15L6.55671e-07 7.5L8 -2.54292e-07L11 2.8125L6 7.5L11 12.1875L8 15Z"/>
-                        </svg>
-                    </div>
-                    <div class="controlBtn" data-action="next" data-click_effect="false">
-                        <svg width="11" height="15" viewBox="0 0 11 15" fill="none" xmlns="http://www.w3.org/2000/svg" style="rotate: 180deg">
-                            <path class="path_controlArrow" d="M8 15L6.55671e-07 7.5L8 -2.54292e-07L11 2.8125L6 7.5L11 12.1875L8 15Z"  />
-                        </svg>
-                    </div>
-                    <div class="controlBtn" data-action="current" data-click_effect="false">
-                        <div class="circle_Control"></div>
-                    </div>
-                </div>   
-                <div class="wrap_Todos">
-                    <!-- <div class="todo">
+            <div
+              class="controlBtn"
+              data-action="next"
+              data-click_effect="false"
+            >
+              <svg
+                width="11"
+                height="15"
+                viewBox="0 0 11 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style="rotate: 180deg"
+              >
+                <path
+                  class="path_controlArrow"
+                  d="M8 15L6.55671e-07 7.5L8 -2.54292e-07L11 2.8125L6 7.5L11 12.1875L8 15Z"
+                />
+              </svg>
+            </div>
+            <div
+              class="controlBtn"
+              data-action="current"
+              data-click_effect="false"
+            >
+              <div class="circle_Control"></div>
+            </div>
+          </div>
+          <div class="wrap_Todos">
+            <!-- <div class="todo">
                         <p class="title_Todo" data-priority="1" data-id="12415">Title</p>
                         <p class="desc_Todo">This is a description</p>
                         <div class="actionBox_Todo">
@@ -65,31 +97,59 @@
                             </div>
                         </div>
                     </div> -->
-                </div>
-                <div class="todo_Form" data-open="false">
-                    <div class="wrap_createTodoInputs">
-                        <div class="wrap_createTodo_textInputs">
-                            <input type="text" class="input_todoTitle" id="input_todo_title_right" placeholder="Title...">
-                            <textarea class="input_todoDesc" cols="30" rows="10" placeholder="Description..."></textarea>
-                        </div>
-                        <div class="wrap_createTodo_priorityRadios">
-                            <input type="radio" name="priority" class="radio_Priority" data-priority="1" data-action="create">
-                            <input type="radio" name="priority" class="radio_Priority" data-priority="2" data-action="create">
-                            <input type="radio" name="priority" class="radio_Priority" data-priority="3" data-action="create" checked>
-                        </div>
-                    </div>
-                    <div class="horSeparator"></div>
-                    <div class="wrap_createTodo_submitBtns">
-                        <div class="btn_createTodo submit">Add</div>
-                        <div class="btn_createTodo cancel" data-action="close">Cancel</div>
-                    </div>
-                    <div class="overlay_openForm" data-action="open"></div>
-                </div>
-                
+          </div>
+          <div class="todo_Form" data-open="false">
+            <div class="wrap_createTodoInputs">
+              <div class="wrap_createTodo_textInputs">
+                <input
+                  type="text"
+                  class="input_todoTitle"
+                  id="input_todo_title_right"
+                  placeholder="Title..."
+                />
+                <textarea
+                  class="input_todoDesc"
+                  cols="30"
+                  rows="10"
+                  placeholder="Description..."
+                ></textarea>
+              </div>
+              <div class="wrap_createTodo_priorityRadios">
+                <input
+                  type="radio"
+                  name="priority"
+                  class="radio_Priority"
+                  data-priority="1"
+                  data-action="create"
+                />
+                <input
+                  type="radio"
+                  name="priority"
+                  class="radio_Priority"
+                  data-priority="2"
+                  data-action="create"
+                />
+                <input
+                  type="radio"
+                  name="priority"
+                  class="radio_Priority"
+                  data-priority="3"
+                  data-action="create"
+                  checked
+                />
+              </div>
             </div>
-        </main>  
-        
+            <div class="horSeparator"></div>
+            <div class="wrap_createTodo_submitBtns">
+              <div class="btn_createTodo submit">Add</div>
+              <div class="btn_createTodo cancel" data-action="close">
+                Cancel
+              </div>
+            </div>
+            <div class="overlay_openForm" data-action="open"></div>
+          </div>
+        </div>
+      </main>
     </div>
-    
-</body>
+  </body>
 </html>

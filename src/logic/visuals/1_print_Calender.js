@@ -22,7 +22,13 @@ function GENERATEcalenderBlanks(blankCOUNT) {
   }
 }
 
-function GENERATEcalenderCellS(dayCOUNT, month, year, selectedDATE, selectDateFUNC) {
+function GENERATEcalenderCellS(
+  dayCOUNT,
+  month,
+  year,
+  selectedDATE,
+  selectDateFUNC,
+) {
   const todayDATE = new Date();
   const calenderDIV = document.querySelector('.calender');
 
@@ -34,10 +40,14 @@ function GENERATEcalenderCellS(dayCOUNT, month, year, selectedDATE, selectDateFU
     const calCellDIV = document.createElement('div');
     calCellDIV.classList.add('calender_Cell');
     calCellDIV.classList.add(cellCOLOR);
-    if (FORMATEdate(loopDATE) === selectedDATE) { calCellDIV.classList.add('active'); }
+    if (FORMATEdate(loopDATE) === selectedDATE) {
+      calCellDIV.classList.add('active');
+    }
     calCellDIV.setAttribute('data-date', FORMATEdate(loopDATE));
     calCellDIV.innerHTML = `<p class="cornerText_dayOfMonth">${loopDATE.getDate()}</p>`;
-    calCellDIV.addEventListener('click', (e) => selectDateFUNC(e.currentTarget.dataset.date));
+    calCellDIV.addEventListener('click', e =>
+      selectDateFUNC(e.currentTarget.dataset.date),
+    );
     calenderDIV.appendChild(calCellDIV);
     APPENDtodoTitles(calCellDIV, todos);
   }
@@ -49,7 +59,7 @@ function GETcellCount(year, month) {
   return { dayCOUNT, blankCOUNT };
 }
 function APPENDtodoTitles(calCellDIV, todos) {
-  todos.forEach((todo) => {
+  todos.forEach(todo => {
     APPENDtodoTitleToCell(calCellDIV, todo.title, todo.priority, todo.id);
   });
 }
@@ -66,14 +76,20 @@ function GETcellColor(todayDATE, requestedDATE) {
   const today = todayDATE.setHours(0, 0, 0, 0);
   const targetDAY = requestedDATE.setHours(0, 0, 0, 0);
 
-  if (today > targetDAY) { return 'passed'; }
-  if (today === targetDAY) { return 'today'; }
+  if (today > targetDAY) {
+    return 'passed';
+  }
+  if (today === targetDAY) {
+    return 'today';
+  }
   if (today < targetDAY) {
-    if (ISweekend(requestedDATE)) { return 'future_weekend'; }
+    if (ISweekend(requestedDATE)) {
+      return 'future_weekend';
+    }
     return 'future';
   }
   return 'Error. Expected values "new Date()"';
 }
 function ISweekend(date) {
-  return (date.getDay() === 0 || date.getDay() === 6);
+  return date.getDay() === 0 || date.getDay() === 6;
 }

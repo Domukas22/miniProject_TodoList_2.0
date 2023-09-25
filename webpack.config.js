@@ -21,16 +21,12 @@ module.exports = {
     hot: true, // shows changes without refrashing the page
     compress: true,
     historyApiFallback: true,
-
   },
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-        ],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.js$/,

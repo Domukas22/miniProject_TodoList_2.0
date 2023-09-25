@@ -1,95 +1,94 @@
-
-
 .blankDay {
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.01);
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.01);
 }
 
 .calender_Cell {
-    width: 100%;
-    height: 100%;
-    background-color: var(--coolor_upcoming_day);
-    position: relative;
-    
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: end;
+  width: 100%;
+  height: 100%;
+  background-color: var(--coolor_upcoming_day);
+  position: relative;
 
-    align-content: flex-start;
-    background-color: rgb(49, 49, 49);
-    color: black;
-    
-    padding: 8px;
-    border-top: 0px solid #58585800;
-    border-radius: 2px;
-    cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: end;
+
+  align-content: flex-start;
+  background-color: rgb(49, 49, 49);
+  color: black;
+
+  padding: 8px;
+  border-top: 0px solid #58585800;
+  border-radius: 2px;
+  cursor: pointer;
+
+  user-select: none;
 }
 .calender_Cell.passed {
-    background-color: rgba(255, 255, 255, 0.01);
+  background-color: rgba(255, 255, 255, 0.01);
 }
 .calender_Cell.today {
-    background-color: rgba(255, 255, 255, 0.10);
-    border-top: 6px solid var(--color_orange);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-top: 6px solid var(--color_orange);
 }
 .calender_Cell.active {
-    background-color: rgba(255, 255, 255, 0.10) !important;
-    border-top: 6px solid rgb(255, 249, 140);
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-top: 6px solid rgb(255, 249, 140);
 }
 .calender_Cell.future {
-    background-color: rgb(74, 74, 77)
+  background-color: rgb(74, 74, 77);
 }
 .calender_Cell.future_weekend {
-    background-color: rgba(255, 255, 255, 0.03);
+  background-color: rgba(255, 255, 255, 0.03);
 }
 
 .calender_Cell:hover,
 .calender_Cell.future:hover,
-.calender_Cell.future_weekend:hover   {
-    background-color: rgb(85, 85, 85);
+.calender_Cell.future_weekend:hover {
+  background-color: rgb(85, 85, 85);
 }
 .calender_Cell.passed:hover {
-    background-color: rgba(255, 255, 255, 0.04);
+  background-color: rgba(255, 255, 255, 0.04);
 }
 
 .calender_Cell.passed > .cornerText_dayOfMonth {
-    color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.2);
 }
 .calender_Cell.today > .cornerText_dayOfMonth,
 .calender_Cell.active > .cornerText_dayOfMonth {
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.95);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
 }
-
 
 .cornerText_dayOfMonth {
-    color: rgba(255, 255, 255, 0.5);
-    border-radius: 100px;
-    height: 25px;
-    width: 25px;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 4px;
-    left: 4px;
+  color: rgba(255, 255, 255, 0.5);
+  border-radius: 100px;
+  height: 25px;
+  width: 25px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 4px;
+  left: 4px;
 }
 .todoTitle_calCell {
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.1px;
-    margin-bottom: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  margin-bottom: 4px;
 }
-.todoTitle_calCell[data-priority="3"] {
-    color: var(--low);
+.todoTitle_calCell[data-priority='3'] {
+  color: var(--low);
 }
-.todoTitle_calCell[data-priority="2"] {
-    color: var(--medium);
+.todoTitle_calCell[data-priority='2'] {
+  color: var(--medium);
 }
-.todoTitle_calCell[data-priority="1"] {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--high);
+.todoTitle_calCell[data-priority='1'] {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--high);
 }

@@ -15,13 +15,15 @@ export function EDITyearTitle(year) {
   document.querySelector('.title_Year').textContent = year;
 }
 export function EDITnavLinkTodoCount(month, year, count) {
-  const todoCountSPAN = document.querySelector(`.todoCount_month[data-month="${month}"][data-year="${year}"]`);
+  const todoCountSPAN = document.querySelector(
+    `.todoCount_month[data-month="${month}"][data-year="${year}"]`,
+  );
   todoCountSPAN.setAttribute('data-count', count);
   todoCountSPAN.textContent = count;
 }
 export function TOGGLEcalenderCell(date) {
   const calenderCELLS = document.querySelectorAll('.calender_Cell');
-  calenderCELLS.forEach((cell) => {
+  calenderCELLS.forEach(cell => {
     if (cell.classList.contains('active')) {
       cell.classList.remove('active');
     }
@@ -36,16 +38,19 @@ export function CLEARhtml(elementCLASS) {
 }
 export function REMOVEelementClassId(elementCLASS, id) {
   const el = document.querySelector(`${elementCLASS}[data-id="${id}"]`);
-  if (!el) { return; }
+  if (!el) {
+    return;
+  }
   el.remove();
 }
 export function TOGGLEactiveNavLink(selectedMONTH) {
-  document.querySelectorAll('.navlink_Month').forEach((x) => {
+  document.querySelectorAll('.navlink_Month').forEach(x => {
     if (parseFloat(x.dataset.month) === selectedMONTH) {
       x.classList.add('active');
       PLAYclickEffect(x);
       return;
-    } x.classList.remove('active');
+    }
+    x.classList.remove('active');
   });
 }
 export function TOGGLEtodoForm(action) {
@@ -68,10 +73,12 @@ export function TOGGLEtodoForm(action) {
   CLEARinputs();
 }
 export function TOGGLEeditPriority(id) {
-  const editTodoRADIOS = document.querySelector(`.editTodoRADIOS[data-id="${id}"]`);
+  const editTodoRADIOS = document.querySelector(
+    `.editTodoRADIOS[data-id="${id}"]`,
+  );
   const todoBtnWRAP = document.querySelector(`.todoBtnWRAP[data-id="${id}"]`);
 
-  const ISopen = (editTodoRADIOS.dataset.open === 'true');
+  const ISopen = editTodoRADIOS.dataset.open === 'true';
   if (!ISopen) {
     editTodoRADIOS.style.display = 'flex';
     todoBtnWRAP.style.opacity = '0%';
@@ -90,16 +97,24 @@ export function TOGGLEeditPriority(id) {
   editTodoRADIOS.setAttribute('data-open', 'false');
 }
 export function EDIThtmlTodosPrio(id, priority) {
-  const cellTodoTITLE = document.querySelector(`.todoTitle_calCell[data-id="${id}"]`);
+  const cellTodoTITLE = document.querySelector(
+    `.todoTitle_calCell[data-id="${id}"]`,
+  );
   const todoTITLE = document.querySelector(`.title_Todo[data-id="${id}"]`);
-  const todoEditCIRCLE = document.querySelector(`.changePriorityCIRCLE[data-id="${id}"]`);
-  [todoTITLE, cellTodoTITLE, todoEditCIRCLE].forEach((el) => el.setAttribute('data-priority', priority));
+  const todoEditCIRCLE = document.querySelector(
+    `.changePriorityCIRCLE[data-id="${id}"]`,
+  );
+  [todoTITLE, cellTodoTITLE, todoEditCIRCLE].forEach(el =>
+    el.setAttribute('data-priority', priority),
+  );
 }
 export function PREPAREformForEdit(title, desc, priority, id) {
   const todoFORM = document.querySelector('.todo_Form');
   const todoTitleINPUT = document.querySelector('.input_todoTitle');
   const todoDescINPUT = document.querySelector('.input_todoDesc');
-  const todoPriorityRADIO = document.querySelector(`.radio_Priority[data-priority="${priority}"]`);
+  const todoPriorityRADIO = document.querySelector(
+    `.radio_Priority[data-priority="${priority}"]`,
+  );
 
   todoFORM.setAttribute('data-editing', 'true');
   todoFORM.setAttribute('data-toEditID', id);
@@ -110,20 +125,40 @@ export function PREPAREformForEdit(title, desc, priority, id) {
 export function CLEARinputs() {
   document.querySelector('.input_todoTitle').value = '';
   document.querySelector('.input_todoDesc').value = '';
-  document.querySelector('.radio_Priority[data-priority="3"][data-action="create"]').checked = true;
+  document.querySelector(
+    '.radio_Priority[data-priority="3"][data-action="create"]',
+  ).checked = true;
 }
-export function ADJUSThtmlAfterTodoEdit(newTITLE, newDESC, newPRIORITY, id, todoFORM) {
-  const inCellTodoTITLE = document.querySelector(`.todoTitle_calCell[data-id="${id}"]`);
-  const inDayViewTodoTITLE = document.querySelector(`.title_Todo[data-id="${id}"]`);
+export function ADJUSThtmlAfterTodoEdit(
+  newTITLE,
+  newDESC,
+  newPRIORITY,
+  id,
+  todoFORM,
+) {
+  const inCellTodoTITLE = document.querySelector(
+    `.todoTitle_calCell[data-id="${id}"]`,
+  );
+  const inDayViewTodoTITLE = document.querySelector(
+    `.title_Todo[data-id="${id}"]`,
+  );
   const todoDESC = document.querySelector(`.desc_Todo[data-id="${id}"]`);
-  const priorityBtnCIRCLE = document.querySelector(`.changePriorityCIRCLE[data-id="${id}"]`);
-  const priorityBtnRADIO = document.querySelector(`.editPriorityRADIO[data-priority="${newPRIORITY}"][name="${id}"]`);
+  const priorityBtnCIRCLE = document.querySelector(
+    `.changePriorityCIRCLE[data-id="${id}"]`,
+  );
+  const priorityBtnRADIO = document.querySelector(
+    `.editPriorityRADIO[data-priority="${newPRIORITY}"][name="${id}"]`,
+  );
 
   // eslint-disable-next-line no-param-reassign
-  [inCellTodoTITLE, inDayViewTodoTITLE].forEach((x) => { x.textContent = newTITLE; });
-  [inCellTodoTITLE, inDayViewTodoTITLE].forEach((x) => x.setAttribute('data-priority', newPRIORITY));
+  [inCellTodoTITLE, inDayViewTodoTITLE].forEach(x => {
+    x.textContent = newTITLE;
+  });
+  [inCellTodoTITLE, inDayViewTodoTITLE].forEach(x =>
+    x.setAttribute('data-priority', newPRIORITY),
+  );
   todoDESC.textContent = newDESC;
-  todoDESC.setAttribute('data-empty', (newDESC === ''));
+  todoDESC.setAttribute('data-empty', newDESC === '');
   priorityBtnCIRCLE.setAttribute('data-priority', newPRIORITY);
   priorityBtnRADIO.checked = true;
 
