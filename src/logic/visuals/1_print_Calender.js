@@ -1,12 +1,12 @@
-import { CLEARhtml } from './6_other_Effects';
-import { GETtodosOfDay } from '../todo_Logic';
-import { FORMATEdate, GETformatedDateInfo } from '../general';
+import { CLEARhtml } from "./6_other_Effects";
+import { GETtodosOfDay } from "../todo_Logic";
+import { FORMATEdate, GETformatedDateInfo } from "../general";
 
 export function PRINTcalender(requestedDATE, selectedDATE, selectDateFUNC) {
   // formated date => "dd.mm.yyyy"
   const { month, year } = GETformatedDateInfo(requestedDATE);
   const { dayCOUNT, blankCOUNT } = GETcellCount(year, month);
-  CLEARhtml('.calender');
+  CLEARhtml(".calender");
   GENERATEcalenderBlanks(blankCOUNT);
   // GENERATEcalenderCells(dayCOUNT, month, year);
   GENERATEcalenderCellS(dayCOUNT, month, year, selectedDATE, selectDateFUNC);
@@ -14,10 +14,10 @@ export function PRINTcalender(requestedDATE, selectedDATE, selectDateFUNC) {
 
 function GENERATEcalenderBlanks(blankCOUNT) {
   // push blanks into calender
-  const calenderDIV = document.querySelector('.calender');
+  const calenderDIV = document.querySelector(".calender");
   for (let i = 0; i < blankCOUNT; i += 1) {
-    const blankDAY = document.createElement('div');
-    blankDAY.classList.add('blankDay');
+    const blankDAY = document.createElement("div");
+    blankDAY.classList.add("blankDay");
     calenderDIV.appendChild(blankDAY);
   }
 }
@@ -30,22 +30,22 @@ function GENERATEcalenderCellS(
   selectDateFUNC,
 ) {
   const todayDATE = new Date();
-  const calenderDIV = document.querySelector('.calender');
+  const calenderDIV = document.querySelector(".calender");
 
   for (let monthDAY = 1; monthDAY < dayCOUNT + 1; monthDAY += 1) {
     const loopDATE = new Date(year, month, monthDAY);
     const cellCOLOR = GETcellColor(todayDATE, loopDATE);
     const todos = GETtodosOfDay(`${monthDAY}.${month}.${year}`);
 
-    const calCellDIV = document.createElement('div');
-    calCellDIV.classList.add('calender_Cell');
+    const calCellDIV = document.createElement("div");
+    calCellDIV.classList.add("calender_Cell");
     calCellDIV.classList.add(cellCOLOR);
     if (FORMATEdate(loopDATE) === selectedDATE) {
-      calCellDIV.classList.add('active');
+      calCellDIV.classList.add("active");
     }
-    calCellDIV.setAttribute('data-date', FORMATEdate(loopDATE));
+    calCellDIV.setAttribute("data-date", FORMATEdate(loopDATE));
     calCellDIV.innerHTML = `<p class="cornerText_dayOfMonth">${loopDATE.getDate()}</p>`;
-    calCellDIV.addEventListener('click', e =>
+    calCellDIV.addEventListener("click", (e) =>
       selectDateFUNC(e.currentTarget.dataset.date),
     );
     calenderDIV.appendChild(calCellDIV);
@@ -59,15 +59,15 @@ function GETcellCount(year, month) {
   return { dayCOUNT, blankCOUNT };
 }
 function APPENDtodoTitles(calCellDIV, todos) {
-  todos.forEach(todo => {
+  todos.forEach((todo) => {
     APPENDtodoTitleToCell(calCellDIV, todo.title, todo.priority, todo.id);
   });
 }
 export function APPENDtodoTitleToCell(calCellDIV, title, priority, id) {
-  const paragraph = document.createElement('p');
-  paragraph.classList.add('todoTitle_calCell');
-  paragraph.setAttribute('data-priority', priority);
-  paragraph.setAttribute('data-id', `${id}`);
+  const paragraph = document.createElement("p");
+  paragraph.classList.add("todoTitle_calCell");
+  paragraph.setAttribute("data-priority", priority);
+  paragraph.setAttribute("data-id", `${id}`);
   paragraph.innerHTML = title;
   calCellDIV.appendChild(paragraph);
 }
@@ -77,16 +77,16 @@ function GETcellColor(todayDATE, requestedDATE) {
   const targetDAY = requestedDATE.setHours(0, 0, 0, 0);
 
   if (today > targetDAY) {
-    return 'passed';
+    return "passed";
   }
   if (today === targetDAY) {
-    return 'today';
+    return "today";
   }
   if (today < targetDAY) {
     if (ISweekend(requestedDATE)) {
-      return 'future_weekend';
+      return "future_weekend";
     }
-    return 'future';
+    return "future";
   }
   return 'Error. Expected values "new Date()"';
 }

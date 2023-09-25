@@ -1,4 +1,4 @@
-import { GENERATEid } from './general';
+import { GENERATEid } from "./general";
 
 let todoLIST = [];
 let lastTouchTodoOBJ = {};
@@ -11,16 +11,16 @@ export function ADDnewTodo(title, desc, priority, date) {
 }
 export function GETtodosOfDay(targetDATE) {
   // formated date => "dd.mm.yyy"
-  const dayOBJ = todoLIST.find(day => day.date === targetDATE);
+  const dayOBJ = todoLIST.find((day) => day.date === targetDATE);
   if (!dayOBJ) {
     return [];
   }
   return dayOBJ.todos;
 }
 export function GETtodosOfMonth(reqMONTH, reqYEAR) {
-  const dayOBJS = todoLIST.filter(dayOBJ => {
-    const objMONTH = parseFloat(dayOBJ.date.split('.')[1]);
-    const objYEAR = parseFloat(dayOBJ.date.split('.')[2]);
+  const dayOBJS = todoLIST.filter((dayOBJ) => {
+    const objMONTH = parseFloat(dayOBJ.date.split(".")[1]);
+    const objYEAR = parseFloat(dayOBJ.date.split(".")[2]);
     if (objMONTH === reqMONTH && objYEAR === reqYEAR) return true;
     return false;
   });
@@ -37,19 +37,19 @@ export function GETsingleTodo(toSearchID) {
   const foundTodo = todoLIST.reduce((result, dayOBJ) => {
     if (result) return result; // If a match was already found, return it
     // the .find() method returns the item itsefl, not containing the array
-    return dayOBJ.todos.find(todo => todo.id === toSearchID);
+    return dayOBJ.todos.find((todo) => todo.id === toSearchID);
   }, null);
   return foundTodo;
 }
 
 function REPLACEtodoList(newLIST) {
   todoLIST = newLIST;
-  localStorage.setItem('todoLIST', JSON.stringify(newLIST));
+  localStorage.setItem("todoLIST", JSON.stringify(newLIST));
 }
 
 function CREATEtodo(title, desc, priority, date) {
   const id = GENERATEid();
-  const editPriorityMETHOD = newPRIORITY =>
+  const editPriorityMETHOD = (newPRIORITY) =>
     EDITtodoPriority(id, newPRIORITY, todoLIST);
   const removeMETHOD = () => DELETEtodo(id, todoLIST);
   return {
@@ -66,7 +66,7 @@ function DELETEtodo(toDeleteID, oldLIST) {
   // loop through list and skip the obj with mathcing id
   const newLIST = oldLIST.reduce((acc, day) => {
     const newDAY = { ...day };
-    newDAY.todos = newDAY.todos.filter(todo => todo.id !== toDeleteID);
+    newDAY.todos = newDAY.todos.filter((todo) => todo.id !== toDeleteID);
 
     if (newDAY.todos.length > 0) {
       acc.push(newDAY);
@@ -78,8 +78,8 @@ function DELETEtodo(toDeleteID, oldLIST) {
 export function EDITtodo(toEditID, newTITLE, newDESC, newPRIORITY, oldLIST) {
   // loop through each day and each todo
   // using shallow copies, return new todos and days
-  const newLIST = oldLIST.map(day => {
-    const newDayTODOS = day.todos.map(todo => {
+  const newLIST = oldLIST.map((day) => {
+    const newDayTODOS = day.todos.map((todo) => {
       const newTODO = { ...todo };
       if (newTODO.id === toEditID) {
         newTODO.title = newTITLE;
@@ -97,8 +97,8 @@ function EDITtodoPriority(toEditID, newPRIORITY, oldLIST) {
   // loop through each day and each todo
   // using shallow copies, return new todos and new dayss
 
-  const newLIST = oldLIST.map(day => {
-    const newDayTODOS = day.todos.map(todo => {
+  const newLIST = oldLIST.map((day) => {
+    const newDayTODOS = day.todos.map((todo) => {
       const newTODO = { ...todo };
       if (newTODO.id === toEditID) {
         newTODO.priority = newPRIORITY;
@@ -127,7 +127,7 @@ function CREATEnewDay(date, newTODO) {
 }
 function INSERTnewTodo(oldLIST, targetDATE, newTODO) {
   return oldLIST
-    .map(day => {
+    .map((day) => {
       if (day.date === targetDATE) {
         day.todos.push(newTODO);
       }
@@ -138,21 +138,21 @@ function INSERTnewTodo(oldLIST, targetDATE, newTODO) {
 function ISdateNEw(array, targetDATE) {
   // formated date => "dd.mm.yyy"
   // see if the todoList already has the target Date
-  return !array.some(day => day.date === targetDATE);
+  return !array.some((day) => day.date === targetDATE);
 }
 
 export function setLocalStorage() {
-  if (localStorage.getItem('todoLIST') === null) {
-    localStorage.setItem('todoLIST', JSON.stringify(GETtodoList()));
+  if (localStorage.getItem("todoLIST") === null) {
+    localStorage.setItem("todoLIST", JSON.stringify(GETtodoList()));
     return;
   }
-  LOADtodoListInitial(JSON.parse(localStorage.getItem('todoLIST')));
+  LOADtodoListInitial(JSON.parse(localStorage.getItem("todoLIST")));
 }
 function LOADtodoListInitial(LIST) {
-  const todoARRAYS = LIST.map(dayOBJ => dayOBJ.todos);
+  const todoARRAYS = LIST.map((dayOBJ) => dayOBJ.todos);
 
   const allTODOS = todoARRAYS.reduce((acc, array) => acc.concat(array), []);
-  allTODOS.forEach(todo => {
+  allTODOS.forEach((todo) => {
     const { title, desc, priority, date } = todo;
     ADDnewTodo(title, desc, priority, date);
   });

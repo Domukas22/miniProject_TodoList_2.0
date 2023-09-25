@@ -11,13 +11,13 @@
   opacity: 100%;
   transform: translateX(0px);
 }
-.calender[data-visible='false'] {
+.calender[data-visible="false"] {
   opacity: 0%;
 }
-.calender[data-position='past'] {
+.calender[data-position="past"] {
   transform: translateX(-15px);
 }
-.calender[data-position='future'] {
+.calender[data-position="future"] {
   transform: translateX(15px);
 }
 .wrap_Calender {

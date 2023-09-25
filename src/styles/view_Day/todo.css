@@ -21,7 +21,7 @@
 .todo:last-of-type {
   border-bottom: 1px solid rgba(255, 255, 255, 0);
 }
-.todo[data-visible='false'] {
+.todo[data-visible="false"] {
   height: 0px;
   padding: 0px;
   border-bottom: 0px solid rgba(255, 255, 255, 0);
@@ -35,13 +35,13 @@
   letter-spacing: 0.1px;
   white-space: nowrap;
 }
-.title_Todo[data-priority='3'] {
+.title_Todo[data-priority="3"] {
   color: var(--low);
 }
-.title_Todo[data-priority='2'] {
+.title_Todo[data-priority="2"] {
   color: var(--medium);
 }
-.title_Todo[data-priority='1'] {
+.title_Todo[data-priority="1"] {
   color: var(--high);
 }
 
@@ -50,7 +50,7 @@
   word-break: break-all;
   width: 90%;
 }
-.desc_Todo[data-empty='true'] {
+.desc_Todo[data-empty="true"] {
   margin-top: 0px;
 }
 
@@ -109,22 +109,22 @@
   border-radius: 100px;
   background-color: rgb(176, 176, 176);
 }
-.todoBtn:hover > .changePriorityCIRCLE[data-priority='1'] {
+.todoBtn:hover > .changePriorityCIRCLE[data-priority="1"] {
   background-color: var(--high);
 }
-.todoBtn:hover > .changePriorityCIRCLE[data-priority='2'] {
+.todoBtn:hover > .changePriorityCIRCLE[data-priority="2"] {
   background-color: var(--medium);
 }
-.todoBtn:hover > .changePriorityCIRCLE[data-priority='3'] {
+.todoBtn:hover > .changePriorityCIRCLE[data-priority="3"] {
   background-color: var(--low);
 }
 
 .editTodoICON {
-  content: '';
+  content: "";
   width: 100%;
   height: 100%;
 
-  background-image: url('/dist/pen_Edit.svg');
+  background-image: url("/dist/pen_Edit.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: auto 16px;
@@ -165,7 +165,7 @@
   transition: 150ms;
 }
 .editPriorityRADIO::before {
-  content: '';
+  content: "";
   width: 10px;
   height: 10px;
 
@@ -176,26 +176,26 @@
   position: relative;
   border-radius: 10px;
 }
-.editPriorityRADIO[data-priority='3']::before {
+.editPriorityRADIO[data-priority="3"]::before {
   background-color: var(--low);
 }
-.editPriorityRADIO[data-priority='2']::before {
+.editPriorityRADIO[data-priority="2"]::before {
   background-color: var(--medium);
 }
-.editPriorityRADIO[data-priority='1']::before {
+.editPriorityRADIO[data-priority="1"]::before {
   background-color: var(--high);
 }
 
-.editPriorityRADIO[data-priority='3']:hover,
-.editPriorityRADIO[data-priority='3']:checked {
+.editPriorityRADIO[data-priority="3"]:hover,
+.editPriorityRADIO[data-priority="3"]:checked {
   background-color: var(--BG_low);
 }
-.editPriorityRADIO[data-priority='2']:hover,
-.editPriorityRADIO[data-priority='2']:checked {
+.editPriorityRADIO[data-priority="2"]:hover,
+.editPriorityRADIO[data-priority="2"]:checked {
   background-color: var(--BG_medium);
 }
-.editPriorityRADIO[data-priority='1']:hover,
-.editPriorityRADIO[data-priority='1']:checked {
+.editPriorityRADIO[data-priority="1"]:hover,
+.editPriorityRADIO[data-priority="1"]:checked {
   background-color: var(--BG_high);
 }
 

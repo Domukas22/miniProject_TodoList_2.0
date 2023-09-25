@@ -81,13 +81,13 @@
   letter-spacing: 0.1px;
   margin-bottom: 4px;
 }
-.todoTitle_calCell[data-priority='3'] {
+.todoTitle_calCell[data-priority="3"] {
   color: var(--low);
 }
-.todoTitle_calCell[data-priority='2'] {
+.todoTitle_calCell[data-priority="2"] {
   color: var(--medium);
 }
-.todoTitle_calCell[data-priority='1'] {
+.todoTitle_calCell[data-priority="1"] {
   font-size: 14px;
   font-weight: 700;
   color: var(--high);

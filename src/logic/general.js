@@ -10,7 +10,7 @@ export function FORMATEdate(date) {
 }
 export function GETformatedDateInfo(date) {
   // formated date => "dd.mm.yyyy"
-  const [day, month, year] = date.split('.').map(Number);
+  const [day, month, year] = date.split(".").map(Number);
   const dayCOUNT = new Date(year, month + 1, 0).getDate();
   const monthWORD = GETdateWithMonth(`${day}.${month}.${year}`);
   return {
@@ -24,19 +24,19 @@ export function GETformatedDateInfo(date) {
 export function GETdateWithMonth(date) {
   // formated date => "dd.mm.yyy"
   const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
-  const [day, month, year] = date.split('.');
+  const [day, month, year] = date.split(".");
   return `${day}. ${months[month]} ${year}`;
 }

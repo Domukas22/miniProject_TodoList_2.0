@@ -1,14 +1,14 @@
-import { PRINTcalender } from './1_print_Calender';
-import { PRINTtodos } from './2_print_Todos';
-import PRINTnavLinks from './3_print_Nav';
+import { PRINTcalender } from "./1_print_Calender";
+import { PRINTtodos } from "./2_print_Todos";
+import PRINTnavLinks from "./3_print_Nav";
 import {
   TOGGLEactiveNavLink,
   EDITdateTitle,
   TOGGLEcalenderCell,
   EDITyearTitle,
   PLAYclickEffect,
-} from './6_other_Effects';
-import { FORMATEdate, GETformatedDateInfo } from '../general';
+} from "./6_other_Effects";
+import { FORMATEdate, GETformatedDateInfo } from "../general";
 
 let selDATE = FORMATEdate(new Date());
 let selMONTH = new Date().getMonth();
@@ -107,7 +107,7 @@ export function SELECTnextMonth() {
 
 export function SELECTyear(year) {
   selYEAR = year;
-  PLAYclickEffect(document.querySelector('.wrap_navYear'));
+  PLAYclickEffect(document.querySelector(".wrap_navYear"));
   EDITyearTitle(year);
 }
 

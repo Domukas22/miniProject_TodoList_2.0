@@ -19,23 +19,23 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
-  font-family: 'Nunito' !important;
+  font-family: "Nunito" !important;
   transition: 150ms;
   color: rgba(255, 255, 255, 0.822);
   /* border: 1px solid grey; */
 }
 @font-face {
-  font-family: 'Nunito';
+  font-family: "Nunito";
   src: url(../assets/fonts/Nunito-Medium.ttf);
   font-weight: medium;
 }
 @font-face {
-  font-family: 'Nunito';
+  font-family: "Nunito";
   src: url(../assets/fonts/Nunito-Bold.ttf);
   font-weight: bold;
 }
 @font-face {
-  font-family: 'Nunito';
+  font-family: "Nunito";
   src: url(../assets/fonts/Nunito-Light.ttf);
   font-weight: light;
 }

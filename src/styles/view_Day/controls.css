@@ -38,7 +38,7 @@
   transition: 300ms;
 }
 
-.controlBtn[data-action='next'] {
+.controlBtn[data-action="next"] {
   border-right: 1px solid rgba(255, 255, 255, 0.03);
   border-left: 1px solid rgba(255, 255, 255, 0.03);
 }
@@ -58,24 +58,24 @@
   fill: rgba(255, 255, 255, 0.6);
 }
 
-.date_controlBox[data-click_effect='true'] {
+.date_controlBox[data-click_effect="true"] {
   color: var(--color_selected);
   /* background-color: var(--color_selectedHover) */
 }
-.controlBtn[data-click_effect='true'] {
+.controlBtn[data-click_effect="true"] {
   background-color: var(--color_selectedHover);
 }
-.controlBtn[data-click_effect='true'] > .circle_Control,
-.controlBtn[data-click_effect='true'] > svg > .path_controlArrow {
+.controlBtn[data-click_effect="true"] > .circle_Control,
+.controlBtn[data-click_effect="true"] > svg > .path_controlArrow {
   background-color: var(--color_selected);
   fill: var(--color_selected);
 }
 
-.controlBtn[data-click_effect='false']:active {
+.controlBtn[data-click_effect="false"]:active {
   background-color: var(--color_selectedHover);
 }
-.controlBtn[data-click_effect='false']:active > .circle_Control,
-.controlBtn[data-click_effect='false']:active > svg > .path_controlArrow {
+.controlBtn[data-click_effect="false"]:active > .circle_Control,
+.controlBtn[data-click_effect="false"]:active > svg > .path_controlArrow {
   background-color: var(--color_selected);
   fill: var(--color_selected);
 }
