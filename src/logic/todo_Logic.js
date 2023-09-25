@@ -31,6 +31,14 @@ export function GETlastTouchTodoObj() {
 export function GETtodoList() {
   return todoLIST;
 }
+export function GETsingleTodo(toSearchID) {
+  const foundTodo = todoLIST.reduce((result, dayOBJ) => {
+    if (result) return result; // If a match was already found, return it
+    // the .find() method returns the item itsefl, not containing the array
+    return dayOBJ.todos.find((todo) => todo.id === toSearchID);
+  }, null);
+  return foundTodo;
+}
 
 function REPLACEtodoList(newLIST) {
   todoLIST = newLIST;

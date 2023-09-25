@@ -4,7 +4,6 @@ import { FORMATEdate, GETformatedDateInfo } from '../general';
 
 export function PRINTcalender(requestedDATE, selectedDATE, selectDateFUNC) {
   // formated date => "dd.mm.yyyy"
-
   const { month, year } = GETformatedDateInfo(requestedDATE);
   const { dayCOUNT, blankCOUNT } = GETcellCount(year, month);
   CLEARhtml('.calender');

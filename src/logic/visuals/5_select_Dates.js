@@ -33,7 +33,6 @@ export function SELECTdate(requestedDATE) {
   }
 
   TOGGLEcalenderCell(requestedDATE);
-  CLEARhtml('.wrap_Todos');
   PRINTtodos(requestedDATE);
   EDITdateTitle(requestedDATE);
   selDATE = requestedDATE;

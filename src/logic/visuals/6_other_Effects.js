@@ -1,5 +1,4 @@
 import { GETdateWithMonth } from '../general';
-import { todoTitleINPUT, todoDescINPUT } from './4_submit_newTodo';
 
 export function PLAYclickEffect(el) {
   el.setAttribute('data-click_effect', 'true');
@@ -108,9 +107,28 @@ export function PREPAREformForEdit(title, desc, priority, id) {
   todoDescINPUT.value = desc;
   todoPriorityRADIO.checked = true;
 }
-
 export function CLEARinputs() {
   document.querySelector('.input_todoTitle').value = '';
   document.querySelector('.input_todoDesc').value = '';
   document.querySelector('.radio_Priority[data-priority="3"][data-action="create"]').checked = true;
+}
+export function ADJUSThtmlAfterTodoEdit(newTITLE, newDESC, newPRIORITY, id, todoFORM) {
+  const inCellTodoTITLE = document.querySelector(`.todoTitle_calCell[data-id="${id}"]`);
+  const inDayViewTodoTITLE = document.querySelector(`.title_Todo[data-id="${id}"]`);
+  const todoDESC = document.querySelector(`.desc_Todo[data-id="${id}"]`);
+  const priorityBtnCIRCLE = document.querySelector(`.changePriorityCIRCLE[data-id="${id}"]`);
+  const priorityBtnRADIO = document.querySelector(`.editPriorityRADIO[data-priority="${newPRIORITY}"][name="${id}"]`);
+
+  // eslint-disable-next-line no-param-reassign
+  [inCellTodoTITLE, inDayViewTodoTITLE].forEach((x) => { x.textContent = newTITLE; });
+  [inCellTodoTITLE, inDayViewTodoTITLE].forEach((x) => x.setAttribute('data-priority', newPRIORITY));
+  todoDESC.textContent = newDESC;
+  todoDESC.setAttribute('data-empty', (newDESC === ''));
+  priorityBtnCIRCLE.setAttribute('data-priority', newPRIORITY);
+  priorityBtnRADIO.checked = true;
+
+  CLEARinputs();
+  TOGGLEtodoForm('close');
+  todoFORM.setAttribute('data-editing', 'false');
+  todoFORM.setAttribute('data-toeditid', '');
 }

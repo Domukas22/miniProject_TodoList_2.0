@@ -6,12 +6,9 @@ import {
 import { APPENDtodoTitleToCell } from './1_print_Calender';
 import { APPENDsingleTodo } from './2_print_Todos';
 import { SELECTdate, GETselectedDate } from './5_select_Dates';
-import { CLEARinputs } from './6_other_Effects';
-import { EDITnavLinkTodoCount, TOGGLEtodoForm } from './6_other_Effects';
+import { CLEARinputs, EDITnavLinkTodoCount, ADJUSThtmlAfterTodoEdit } from './6_other_Effects';
 
-// DELETE theses
-export const todoTitleINPUT = document.querySelector('.input_todoTitle');
-export const todoDescINPUT = document.querySelector('.input_todoDesc');
+
 
 export default function SUBMITnewTodo() {
   const {
@@ -28,7 +25,7 @@ export default function SUBMITnewTodo() {
     return;
   }
 
-  todoTitleINPUT.focus();
+  document.querySelector('.input_todoTitle').focus();
   SELECTdate(date);
   ADDnewTodo(title, desc, parseFloat(priority), date);
   ADJUSThtmlAfterNewTodo();
@@ -50,21 +47,9 @@ function ADJUSThtmlAfterNewTodo() {
   EDITnavLinkTodoCount(month, year, GETtodosOfMonth(month, year).length);
   CLEARinputs();
 }
-function ADJUSThtmlAfterTodoEdit(newTITLE, newDESC, newPRIORITY, id, todoFORM) {
-  const inCellTITLE = document.querySelector(`.todoTitle_calCell[data-id="${id}"]`);
-  const inDayViewTITLE = document.querySelector(`.title_Todo[data-id="${id}"]`);
-
-  [inCellTITLE, inDayViewTITLE].forEach((x) => x.textContent = newTITLE);
-  [inCellTITLE, inDayViewTITLE].forEach((x) => x.setAttribute('data-priority', newPRIORITY));
-
-  CLEARinputs();
-  TOGGLEtodoForm('close');
-  todoFORM.setAttribute('data-editing', 'false');
-  todoFORM.setAttribute('data-toeditid', '');
-}
 function GETsubmitInfos() {
-  const title = todoTitleINPUT.value;
-  const desc = todoDescINPUT.value;
+  const title = document.querySelector('.input_todoTitle').value;
+  const desc = document.querySelector('.input_todoDesc').value;
   const priority = GETselectedPriority();
   const id = GENERATEid();
   const date = GETselectedDate();
@@ -81,4 +66,3 @@ function FINDtargetCalCell(date) {
   // formated date => "dd.mm.yyy"
   return document.querySelector(`.calender_Cell[data-date="${date}"]`);
 }
-

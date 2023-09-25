@@ -23,4 +23,3 @@ export function GETdateWithMonth(date) {
   const [day, month, year] = date.split('.');
   return `${day}. ${months[month]} ${year}`;
 }
-

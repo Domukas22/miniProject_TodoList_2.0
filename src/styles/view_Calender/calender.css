@@ -1,6 +1,27 @@
 
 
+.calender {
+  display: grid;
+  row-gap: 2.5px;
+  column-gap: 2.5px;
 
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: 1fr;
+  grid-auto-rows: 1fr;
+
+  height: 100%;
+  opacity: 100%;
+  transform: translateX(0px);
+}
+.calender[data-visible="false"] {
+  opacity: 0%;
+}
+.calender[data-position="past"]{
+  transform: translateX(-15px);
+}
+.calender[data-position="future"]{
+  transform: translateX(15px);
+}
 .wrap_Calender {
     flex: 1;
     display: flex;

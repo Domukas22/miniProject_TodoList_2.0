@@ -5,16 +5,9 @@
 
 
 
-. toggle priorities with arrows
 . Fix overcrowding issues
-. cant delete todo if loaded with local storage
-
-2. Edit priorities / text
-
-
-
-
-
+. ad calender swap animations
+. stop editing form if you chang epriority or delete white the form is open
 
 
 Drawbacks of current structure:
