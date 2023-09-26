@@ -1,3 +1,4 @@
+import { GETformatedDateInfo } from "../general";
 import { PRINTcalender } from "./1_print_Calender";
 import { PRINTtodos } from "./2_print_Todos";
 import PRINTnavLinks from "./3_print_Nav";
@@ -17,6 +18,7 @@ import {
   EDITyearTitle,
   PLAYclickEffect,
   TOGGLEtodoForm,
+  EDITdateTitle,
 } from "./6_other_Effects";
 
 export default function SETlisteners() {
@@ -26,6 +28,7 @@ export default function SETlisteners() {
   PRINTnavLinks(today, SELECTmonth);
   PRINTcalender(today, today, SELECTdate);
   PRINTtodos(today);
+  EDITdateTitle(today);
   EDITyearTitle(GETselectedYear());
 
   const createTodoBTN = document.querySelector(".btn_createTodo.submit");
@@ -57,52 +60,50 @@ export default function SETlisteners() {
     btn.addEventListener("click", (e) => PLAYclickEffect(e.currentTarget)),
   );
 
-  let ISdPressed = false;
+  let ISshiftPressed = false;
   window.addEventListener("keyup", (e) => {
-    if (e.key === "d") {
-      ISdPressed = false;
+    if (e.key === "Shift") {
+      ISshiftPressed = false;
     }
   });
   window.addEventListener("keydown", (e) => {
     const ISformOpen =
       document.querySelector(".todo_Form").dataset.open === "true";
-
-    if (e.key === "d") {
-      ISdPressed = true;
+    console.log(e.key);
+    if (e.key === "Shift") {
+      ISshiftPressed = true;
     }
-    if (e.key === "ArrowLeft") {
+    if (e.key === "a" || e.key === "A") {
       if (ISformOpen) return;
-      if (ISdPressed) {
-        SELECTprevDate();
+      if (ISshiftPressed) {
+        SELECTprevMonth();
         return;
       }
-      SELECTprevMonth();
+      SELECTprevDate();
     }
-    if (e.key === "ArrowRight") {
+    if (e.key === "d" || e.key === "D") {
       if (ISformOpen) return;
-      if (ISdPressed) {
-        SELECTnextDate();
+      if (ISshiftPressed) {
+        SELECTnextMonth();
         return;
       }
-      SELECTnextMonth();
+      SELECTnextDate();
     }
-    if (e.key === "ArrowUp") {
-      if (!ISformOpen) return;
-      const checkedRADIO = document.querySelector(".radio_Priority:checked");
-      if (checkedRADIO.dataset.priority === "1") {
-        checkedRADIO.parentElement.lastElementChild.checked = true;
-        return;
-      }
-      checkedRADIO.previousElementSibling.checked = true;
+    if (e.key === "w" || e.key === "W") {
+      if (ISshiftPressed) return;
+      if (ISformOpen) return;
+      const { day, month, year } = GETformatedDateInfo(GETselectedDate());
+      const upDAY = day - 7;
+      if (upDAY > 0) SELECTdate(`${upDAY}.${month}.${year}`);
     }
-    if (e.key === "ArrowDown") {
-      if (!ISformOpen) return;
-      const checkedRADIO = document.querySelector(".radio_Priority:checked");
-      if (checkedRADIO.dataset.priority === "3") {
-        checkedRADIO.parentElement.firstElementChild.checked = true;
-        return;
-      }
-      checkedRADIO.nextElementSibling.checked = true;
+    if (e.key === "s" || e.key === "S") {
+      if (ISshiftPressed) return;
+      if (ISformOpen) return;
+      const { day, month, year, dayCOUNT } = GETformatedDateInfo(
+        GETselectedDate(),
+      );
+      const downDAY = day + 7;
+      if (downDAY <= dayCOUNT) SELECTdate(`${downDAY}.${month}.${year}`);
     }
 
     if (e.key === "Escape") TOGGLEtodoForm("close");
