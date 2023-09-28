@@ -1,10 +1,25 @@
 import { GETtodosOfDay } from "../todo_Logic";
-import { FORMATEdate, GETformatedDateInfo } from "../general";
+import { FORMATEdate } from "../general";
 
-export function PRINTcalender(ISfutureMonth, month, year, selDATE, SELECTdate) {
+export function PRINTcalender(
+  ISfutureMonth,
+  reqMONTH,
+  reqYEAR,
+  selDAY,
+  selMONTH,
+  selYEAR,
+  SELECTdate,
+) {
   const calenderPARENT = document.querySelector(".calenderPARENT");
   const oldCalenderDIV = document.querySelector(".calender");
-  const newCalenderDIV = GENERATEcalender(month, year, selDATE, SELECTdate);
+  const newCalenderDIV = GENERATEcalender(
+    reqMONTH,
+    reqYEAR,
+    selDAY,
+    selMONTH,
+    selYEAR,
+    SELECTdate,
+  );
   const oldCalenderPOSITION = ISfutureMonth ? "left" : "right";
   const newCalenderPOSITION = ISfutureMonth ? "right" : "left";
 
@@ -17,9 +32,16 @@ export function PRINTcalender(ISfutureMonth, month, year, selDATE, SELECTdate) {
   }, 120);
 }
 
-function GENERATEcalender(month, year, selDATE, SELECTdate) {
+function GENERATEcalender(
+  reqMONTH,
+  reqYEAR,
+  selDAY,
+  selMONTH,
+  selYEAR,
+  SELECTdate,
+) {
   // formated date => "dd.mm.yyyy"
-  const { dayCOUNT, blankCOUNT } = GETcellCount(year, month);
+  const { dayCOUNT, blankCOUNT } = GETcellCount(reqYEAR, reqMONTH);
 
   const newCalenderDIV = document.createElement("div");
   newCalenderDIV.classList.add("calender");
@@ -27,13 +49,16 @@ function GENERATEcalender(month, year, selDATE, SELECTdate) {
 
   GENERATEcalenderBlanks(blankCOUNT, newCalenderDIV);
   GENERATEcalenderCellS(
+    reqMONTH,
+    reqYEAR,
+    selDAY,
+    selMONTH,
+    selYEAR,
     dayCOUNT,
-    month,
-    year,
-    selDATE,
     SELECTdate,
     newCalenderDIV,
   );
+
   return newCalenderDIV;
 }
 function GENERATEcalenderBlanks(blankCOUNT, newCalenderDIV) {
@@ -45,30 +70,33 @@ function GENERATEcalenderBlanks(blankCOUNT, newCalenderDIV) {
   }
 }
 function GENERATEcalenderCellS(
+  reqMONTH,
+  reqYEAR,
+  selDAY,
+  selMONTH,
+  selYEAR,
   dayCOUNT,
-  month,
-  year,
-  selDATE,
   SELECTdate,
   newCalenderDIV,
 ) {
-  const todayDATE = new Date();
+  for (let loopDAY = 1; loopDAY < dayCOUNT + 1; loopDAY += 1) {
+    const ISsameDate =
+      loopDAY === selDAY && reqMONTH === selMONTH && reqYEAR === selYEAR;
 
-  for (let monthDAY = 1; monthDAY < dayCOUNT + 1; monthDAY += 1) {
-    const loopDATE = new Date(year, month, monthDAY);
-    const cellCOLOR = GETcellColor(todayDATE, loopDATE);
-    const todos = GETtodosOfDay(`${monthDAY}.${month}.${year}`);
+    const todos = GETtodosOfDay(`${loopDAY}.${reqMONTH}.${reqYEAR}`);
 
     const calCellDIV = document.createElement("div");
     calCellDIV.classList.add("calender_Cell");
-    calCellDIV.classList.add(cellCOLOR);
-    if (FORMATEdate(loopDATE) === selDATE) {
+    calCellDIV.classList.add(
+      GETcellColor(new Date(), new Date(reqYEAR, reqMONTH, loopDAY)),
+    );
+    if (ISsameDate) {
       calCellDIV.classList.add("active");
     }
-    calCellDIV.setAttribute("data-date", FORMATEdate(loopDATE));
-    calCellDIV.innerHTML = `<p class="cornerText_dayOfMonth">${loopDATE.getDate()}</p>`;
-    calCellDIV.addEventListener("click", (e) =>
-      SELECTdate(e.currentTarget.dataset.date),
+    calCellDIV.setAttribute("data-date", `${loopDAY}.${reqMONTH}.${reqYEAR}`);
+    calCellDIV.innerHTML = `<p class="cornerText_dayOfMonth">${loopDAY}</p>`;
+    calCellDIV.addEventListener("click", () =>
+      SELECTdate(loopDAY, reqMONTH, reqYEAR),
     );
     newCalenderDIV.appendChild(calCellDIV);
     APPENDtodoTitles(calCellDIV, todos);

@@ -1,36 +1,49 @@
-import { GETformatedDateInfo } from "../general";
 import { PRINTcalender } from "./1_print_Calender";
 import { PRINTtodos } from "./2_print_Todos";
 import PRINTnavLinks from "./3_print_Nav";
 import SUBMITnewTodo from "./4_submit_newTodo";
 import {
   GETselectedDate,
-  GETselectedYear,
+  GETprintedYear,
   SELECTdate,
   SELECTprevDate,
   SELECTnextDate,
-  TOGGLEmonth,
-  SHOWnextMonth,
-  SHOWprevMonth,
+  PRINTmonth,
+  SETprintedMonth,
+  PRINTnextMonth,
+  PRINTprevMonth,
   SELECTtoday,
 } from "./5_select_Dates";
 import {
   EDITyearTitle,
   PLAYclickEffect,
   TOGGLEtodoForm,
-  EDITdateTitle,
+  EDITcontrolBoxDate,
 } from "./6_other_Effects";
 
 export default function SETlisteners() {
   console.log("-------");
 
-  const today = GETselectedDate();
-  const { day, month, year } = GETformatedDateInfo(GETselectedDate());
-  PRINTnavLinks(today, TOGGLEmonth);
-  PRINTcalender(true, day, month, today, SELECTdate);
-  PRINTtodos(today);
-  EDITdateTitle(today);
-  EDITyearTitle(GETselectedYear());
+  const {
+    selDAY: todayDAY,
+    selMONTH: todayMONTH,
+    selYEAR: todayYEAR,
+  } = GETselectedDate();
+
+  PRINTnavLinks(todayMONTH, todayYEAR, PRINTmonth, SETprintedMonth);
+
+  PRINTcalender(
+    true,
+    todayMONTH,
+    todayYEAR,
+    todayDAY,
+    todayMONTH,
+    todayYEAR,
+    SELECTdate,
+  );
+  PRINTtodos(todayDAY, todayMONTH, todayYEAR);
+  EDITcontrolBoxDate(todayDAY, todayMONTH, todayYEAR);
+  EDITyearTitle(GETprintedYear());
 
   const createTodoBTN = document.querySelector(".btn_createTodo.submit");
   const cancelTodoBTN = document.querySelector(".btn_createTodo.cancel");
@@ -49,10 +62,13 @@ export default function SETlisteners() {
   );
   const selectedDayBTN = document.querySelector(".date_controlBox");
   const nextDayBTN = document.querySelector('.controlBtn[data-action="next"]');
-  prevDayBTN.addEventListener("click", SHOWprevMonth);
+  prevDayBTN.addEventListener("click", PRINTprevMonth);
   currentDayBTN.addEventListener("click", SELECTtoday);
-  nextDayBTN.addEventListener("click", SHOWnextMonth);
-  selectedDayBTN.addEventListener("click", () => SELECTdate(GETselectedDate()));
+  nextDayBTN.addEventListener("click", PRINTnextMonth);
+  selectedDayBTN.addEventListener("click", () => {
+    const { selDAY, selMONTH, selYEAR } = GETselectedDate();
+    SELECTdate(selDAY, selMONTH, selYEAR);
+  });
 
   const colorOnClickBTNS = document.querySelectorAll(
     '[data-click_effect="false"]',
@@ -76,7 +92,7 @@ export default function SETlisteners() {
     if (e.key === "a" || e.key === "A" || e.key === "ArrowLeft") {
       if (ISformOpen) return;
       if (ISshiftPressed) {
-        SHOWprevMonth();
+        PRINTprevMonth();
         return;
       }
       SELECTprevDate();
@@ -84,7 +100,7 @@ export default function SETlisteners() {
     if (e.key === "d" || e.key === "D" || e.key === "ArrowRight") {
       if (ISformOpen) return;
       if (ISshiftPressed) {
-        SHOWnextMonth();
+        PRINTnextMonth();
         return;
       }
       SELECTnextDate();
@@ -92,18 +108,17 @@ export default function SETlisteners() {
     if (e.key === "w" || e.key === "W" || e.key === "ArrowUp") {
       if (ISshiftPressed) return;
       if (ISformOpen) return;
-      const { day, month, year } = GETformatedDateInfo(GETselectedDate());
-      const upDAY = day - 7;
-      if (upDAY > 0) SELECTdate(`${upDAY}.${month}.${year}`);
+      const { selDAY, selMONTH, selYEAR } = GETselectedDate();
+      const upDAY = selDAY - 7;
+      if (upDAY > 0) SELECTdate(upDAY, selMONTH, selYEAR);
     }
     if (e.key === "s" || e.key === "S" || e.key === "ArrowDown") {
       if (ISshiftPressed) return;
       if (ISformOpen) return;
-      const { day, month, year, dayCOUNT } = GETformatedDateInfo(
-        GETselectedDate(),
-      );
-      const downDAY = day + 7;
-      if (downDAY <= dayCOUNT) SELECTdate(`${downDAY}.${month}.${year}`);
+      const { selDAY, selMONTH, selYEAR } = GETselectedDate();
+      const dayCOUNT = new Date(selYEAR, selMONTH + 1, 0).getDate();
+      const downDAY = selDAY + 7;
+      if (downDAY <= dayCOUNT) SELECTdate(downDAY, selMONTH, selYEAR);
     }
 
     if (e.key === "ArrowUp") {

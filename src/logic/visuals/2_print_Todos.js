@@ -8,10 +8,9 @@ import {
   TOGGLEtodoForm,
 } from "./6_other_Effects";
 import { GETtodosOfDay, GETtodosOfMonth, GETsingleTodo } from "../todo_Logic";
-import { GETformatedDateInfo } from "../general";
 
-export function PRINTtodos(date) {
-  const todos = GETtodosOfDay(date);
+export function PRINTtodos(reqDAY, reqMONTH, reqYEAR) {
+  const todos = GETtodosOfDay(`${reqDAY}.${reqMONTH}.${reqYEAR}`);
   const htmlTODOS = document.querySelectorAll(".todo");
   // if seected day has todos, remove them and print new ones later
   // if it doesn't, print them instantly
@@ -30,6 +29,7 @@ export function PRINTtodos(date) {
     APPENDsingleTodo(todoOBJ);
   });
 }
+
 export function APPENDsingleTodo({
   id,
   priority,
@@ -81,7 +81,8 @@ export function APPENDsingleTodo({
 
 function ATTACHeventREMOVE(todoDIV, removeMETHOD, id, date) {
   const removeBTN = todoDIV.querySelector(".todo .remove");
-  const { year, month } = GETformatedDateInfo(date);
+  const [, _month, _year] = date.split(".").map(Number);
+  const { _month: month, _year: year } = { _month, _year };
   removeBTN.addEventListener("click", () => {
     todoDIV.setAttribute("data-visible", "false");
     setTimeout(() => {

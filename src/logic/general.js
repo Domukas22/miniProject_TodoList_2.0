@@ -8,19 +8,6 @@ export function FORMATEdate(date) {
   const year = date.getFullYear();
   return `${day}.${month}.${year}`;
 }
-export function GETformatedDateInfo(date) {
-  // formated date => "dd.mm.yyyy"
-  const [day, month, year] = date.split(".").map(Number);
-  const dayCOUNT = new Date(year, month + 1, 0).getDate();
-  const monthWORD = GETdateWithMonth(`${day}.${month}.${year}`);
-  return {
-    day,
-    month,
-    year,
-    dayCOUNT,
-    monthWORD,
-  };
-}
 export function GETdateWithMonth(date) {
   // formated date => "dd.mm.yyy"
   const months = [

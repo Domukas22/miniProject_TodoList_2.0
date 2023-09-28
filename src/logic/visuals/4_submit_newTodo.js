@@ -1,4 +1,4 @@
-import { GENERATEid, GETformatedDateInfo } from "../general";
+import { GENERATEid } from "../general";
 import {
   ADDnewTodo,
   GETtodosOfMonth,
@@ -16,13 +16,14 @@ import {
 } from "./6_other_Effects";
 
 export default function SUBMITnewTodo() {
-  const { title, desc, priority, date } = GETsubmitInfos();
+  const { title, desc, priority, date, selDAY, selMONTH, selYEAR } =
+    GETsubmitInfos();
   const todoFORM = document.querySelector(".todo_Form");
   const ISediting = todoFORM.dataset.editing === "true";
   if (title === "") return;
 
   if (ISediting) {
-    SELECTdate(date);
+    SELECTdate(selDAY, selMONTH, selYEAR);
     EDITtodo(
       parseFloat(todoFORM.dataset.toeditid),
       title,
@@ -41,8 +42,14 @@ export default function SUBMITnewTodo() {
   }
 
   document.querySelector(".input_todoTitle").focus();
-  SELECTdate(date);
-  ADDnewTodo(title, desc, parseFloat(priority), date);
+  SELECTdate(selDAY, selMONTH, selYEAR);
+  console.log(parseFloat(priority));
+  ADDnewTodo(
+    title,
+    desc,
+    parseFloat(priority),
+    `${selDAY}.${selMONTH}.${selYEAR}`,
+  );
   ADJUSThtmlAfterNewTodo();
 }
 
@@ -53,7 +60,8 @@ function ADJUSThtmlAfterNewTodo() {
   const todoOBJ = GETlastTouchTodoObj();
   const { title, priority, id, date } = todoOBJ;
 
-  const { month, year } = GETformatedDateInfo(date);
+  const [, _month, _year] = date.split(".").map(Number);
+  const { _month: month, _year: year } = { _month, _year };
 
   APPENDtodoTitleToCell(FINDtargetCalCell(date), title, priority, id);
   APPENDsingleTodo(todoOBJ);
@@ -65,14 +73,16 @@ function GETsubmitInfos() {
   const desc = document.querySelector(".input_todoDesc").value;
   const priority = GETselectedPriority();
   const id = GENERATEid();
-  const date = GETselectedDate();
+  const { selDAY, selMONTH, selYEAR } = GETselectedDate();
 
   return {
     title,
     desc,
     priority,
     id,
-    date,
+    selDAY,
+    selMONTH,
+    selYEAR,
   };
 }
 function GETselectedPriority() {

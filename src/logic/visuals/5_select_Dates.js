@@ -3,130 +3,169 @@ import { PRINTtodos } from "./2_print_Todos";
 import PRINTnavLinks from "./3_print_Nav";
 import {
   TOGGLEactiveNavLink,
-  EDITdateTitle,
+  EDITcontrolBoxDate,
   TOGGLEcalenderCell,
   EDITyearTitle,
   PLAYclickEffect,
   ISfutureDate,
 } from "./6_other_Effects";
-import { FORMATEdate, GETformatedDateInfo } from "../general";
 
-let selDATE = FORMATEdate(new Date());
-let selMONTH = new Date().getMonth();
-let selYEAR = new Date().getFullYear();
+const today = new Date();
+const selDATE = {
+  selDAY: today.getDate(),
+  selMONTH: today.getMonth(),
+  selYEAR: today.getFullYear(),
+};
+// let selDATE = FORMATEdate(new Date());
+let printedMONTH = new Date().getMonth();
+let printedYEAR = new Date().getFullYear();
 
-export function SELECTdate(reqDATE) {
-  const { year: reqYEAR, month: reqMONTH } = GETformatedDateInfo(reqDATE);
-  const ISsameDate = reqDATE === selDATE;
-  const ISsameYear = reqYEAR === selYEAR;
-  const ISsameMonth = reqMONTH === selMONTH;
+export function SELECTdate(reqDAY, reqMONTH, reqYEAR) {
+  const { selDAY, selMONTH, selYEAR } = GETselectedDate();
+  const ISsameDate =
+    reqDAY === selDAY && reqMONTH === selMONTH && reqYEAR === selYEAR;
+  const ISsameYear = reqYEAR === printedYEAR;
+  const ISsameMonth = reqMONTH === printedMONTH;
 
   if (ISsameDate && ISsameYear && ISsameMonth) {
-    TOGGLEcalenderCell(reqDATE);
+    TOGGLEcalenderCell(`${selDAY}.${selMONTH}.${selYEAR}`);
+    EDITcontrolBoxDate(reqDAY, reqMONTH, reqYEAR);
     return;
   }
+
   if (!ISsameYear || !ISsameMonth) {
     if (!ISsameYear) {
-      SELECTyear(reqYEAR);
+      PRINTnavLinks(reqMONTH, reqYEAR, PRINTmonth, SETprintedMonth);
       EDITyearTitle(reqYEAR);
-      PRINTnavLinks(reqDATE, TOGGLEmonth);
+      SETprintedYear(reqYEAR);
     }
+
     TOGGLEactiveNavLink();
-    TOGGLEmonth(selMONTH > reqMONTH, reqMONTH);
+    PRINTmonth(reqMONTH, reqYEAR);
+    SETprintedMonth(reqMONTH);
   }
-
-  TOGGLEcalenderCell(reqDATE);
-  PRINTtodos(reqDATE);
-  EDITdateTitle(reqDATE);
-  selDATE = reqDATE;
+  PRINTnavLinks(reqMONTH, reqYEAR, PRINTmonth, SETprintedMonth);
+  TOGGLEcalenderCell(`${reqDAY}.${reqMONTH}.${reqYEAR}`);
+  PRINTtodos(reqDAY, reqMONTH, reqYEAR);
+  EDITcontrolBoxDate(reqDAY, reqMONTH, reqYEAR);
+  SETselectedDate(reqDAY, reqMONTH, reqYEAR);
 }
-export function SELECTprevDate() {
-  const { day, month, year } = GETformatedDateInfo(GETselectedDate());
-
-  if (day === 1) {
-    const newDAY = new Date(year, month, 0).getDate();
-    if (month === 0) {
-      SELECTdate(`${newDAY}.${11}.${year - 1}`);
-      return;
-    }
-    SELECTdate(`${newDAY}.${month - 1}.${year}`);
-    return;
-  }
-  SELECTdate(`${day - 1}.${month}.${year}`);
-}
-export function SELECTnextDate() {
-  const { day, month, year, dayCOUNT } = GETformatedDateInfo(GETselectedDate());
-
-  if (day === dayCOUNT) {
-    if (month === 11) {
-      SELECTdate(`${1}.${0}.${year + 1}`);
-      return;
-    }
-    SELECTdate(`${1}.${month + 1}.${year}`);
-    return;
-  }
-  SELECTdate(`${day + 1}.${month}.${year}`);
-}
-export function SELECTtoday() {
-  const { day, month, year } = GETformatedDateInfo(FORMATEdate(new Date()));
-  SELECTdate(`${day}.${month}.${year}`);
-}
-export function SELECTyear(year) {
-  selYEAR = year;
-  PLAYclickEffect(document.querySelector(".wrap_navYear"));
-  EDITyearTitle(year);
-}
-
-export function TOGGLEmonth(reqMONTH, reqYEAR) {
+export function PRINTmonth(reqMONTH, reqYEAR) {
   // needs to check the date, not jsut the month, in case the year is differnet
+  // console.log(GETprintedYear()); // RETURNS WRONG YEAR
+  const { selDAY } = GETselectedDate();
   const ISfuture = ISfutureDate(
     reqMONTH,
     reqYEAR,
-    GETselectedMonth(),
-    GETselectedYear(),
+    GETprintedMonth(),
+    GETprintedYear(),
   );
-
-  selMONTH = reqMONTH;
   PRINTcalender(
     ISfuture,
-    selMONTH,
-    GETselectedYear(),
-    GETselectedDate(),
+    reqMONTH,
+    reqYEAR,
+    selDAY,
+    GETprintedMonth(),
+    GETprintedYear(),
     SELECTdate,
   );
-  TOGGLEactiveNavLink(selMONTH);
 }
-export function SHOWprevMonth() {
-  const month = GETselectedMonth();
-  const year = GETselectedYear();
+
+export function SELECTprevDate() {
+  const { selDAY, selMONTH, selYEAR } = GETselectedDate();
+
+  let newDAY = selDAY - 1;
+  let newMONTH = selMONTH;
+  let newYEAR = selYEAR;
+
+  if (selDAY === 1) {
+    newDAY = new Date(selYEAR, selMONTH, 0).getDate();
+    newMONTH = selMONTH - 1;
+    if (selMONTH === 0) {
+      newMONTH = 11;
+      newYEAR = selYEAR - 1;
+    }
+  }
+
+  SELECTdate(newDAY, newMONTH, newYEAR);
+}
+export function SELECTnextDate() {
+  const { selDAY, selMONTH, selYEAR } = GETselectedDate();
+  const inMonthDAYS = new Date(selYEAR, selMONTH + 1, 0).getDate();
+
+  let newDAY = selDAY + 1;
+  let newMONTH = selMONTH;
+  let newYEAR = selYEAR;
+
+  if (selDAY === inMonthDAYS) {
+    newDAY = 1;
+    newMONTH = selMONTH + 1;
+    if (selMONTH === 11) {
+      newMONTH = 0;
+      newYEAR = selYEAR + 1;
+    }
+  }
+
+  SELECTdate(newDAY, newMONTH, newYEAR);
+}
+export function PRINTprevMonth() {
+  const month = GETprintedMonth();
+  const year = GETprintedYear();
+  let newMONTH = month - 1;
+  let newYEAR = year;
+
   if (month === 0) {
-    const newYEAR = year - 1;
-    PRINTnavLinks(`xx.11.${newYEAR}`, TOGGLEmonth);
-    TOGGLEmonth(11, newYEAR);
-    SELECTyear(newYEAR);
-    return;
+    newMONTH = 11;
+    newYEAR -= 1;
   }
-  TOGGLEmonth(month - 1, year);
+
+  PRINTmonth(newMONTH, newYEAR);
+  PRINTnavLinks(newMONTH, newYEAR, PRINTmonth, SETprintedMonth);
+  SETprintedMonth(newMONTH);
+  SETprintedYear(newYEAR);
+  EDITyearTitle(newYEAR);
 }
-export function SHOWnextMonth() {
-  const month = GETselectedMonth();
-  const year = GETselectedYear();
+export function PRINTnextMonth() {
+  const month = GETprintedMonth();
+  const year = GETprintedYear();
+  let newMONTH = month + 1;
+  let newYEAR = year;
+
   if (month === 11) {
-    const newYEAR = year + 1;
-    PRINTnavLinks(`xx.1.${newYEAR}`, TOGGLEmonth);
-    TOGGLEmonth(0, newYEAR);
-    SELECTyear(newYEAR);
-    return;
+    newMONTH = 0;
+    newYEAR += 1;
   }
-  TOGGLEmonth(month + 1, year);
+
+  PRINTmonth(newMONTH, newYEAR);
+  PRINTnavLinks(newMONTH, newYEAR, PRINTmonth, SETprintedMonth);
+  SETprintedMonth(newMONTH);
+  SETprintedYear(newYEAR);
+  EDITyearTitle(newYEAR);
+}
+export function SELECTtoday() {
+  const todayNEW = new Date();
+
+  SELECTdate(todayNEW.getDate(), todayNEW.getMonth(), todayNEW.getFullYear());
+}
+
+function SETselectedDate(reqDAY, reqMONTH, reqYEAR) {
+  selDATE.selDAY = reqDAY;
+  selDATE.selMONTH = reqMONTH;
+  selDATE.selYEAR = reqYEAR;
+}
+export function SETprintedMonth(reqMONTH) {
+  printedMONTH = reqMONTH;
+}
+function SETprintedYear(reqYEAR) {
+  printedYEAR = reqYEAR;
 }
 
 export function GETselectedDate() {
   return selDATE;
 }
-export function GETselectedMonth() {
-  return selMONTH;
+export function GETprintedMonth() {
+  return printedMONTH;
 }
-export function GETselectedYear() {
-  return selYEAR;
+export function GETprintedYear() {
+  return printedYEAR;
 }

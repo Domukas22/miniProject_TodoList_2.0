@@ -1,4 +1,4 @@
-import { GETdateWithMonth, GETformatedDateInfo } from "../general";
+import { GETdateWithMonth } from "../general";
 
 export function PLAYclickEffect(el) {
   el.setAttribute("data-click_effect", "true");
@@ -6,10 +6,13 @@ export function PLAYclickEffect(el) {
     el.setAttribute("data-click_effect", "false");
   }, 500);
 }
-export function EDITdateTitle(date) {
-  const controlBoxDATE = document.querySelector(".date_controlBox");
-  controlBoxDATE.textContent = GETdateWithMonth(date);
-  PLAYclickEffect(controlBoxDATE);
+
+export function EDITcontrolBoxDate(selDAY, selMONTH, selYEAR) {
+  const dateControlBOX = document.querySelector(".date_controlBox");
+  dateControlBOX.textContent = GETdateWithMonth(
+    `${selDAY}.${selMONTH}.${selYEAR}`,
+  );
+  PLAYclickEffect(dateControlBOX);
 }
 export function EDITyearTitle(year) {
   document.querySelector(".title_Year").textContent = year;
@@ -21,6 +24,19 @@ export function EDITnavLinkTodoCount(month, year, count) {
   todoCountSPAN.setAttribute("data-count", count);
   todoCountSPAN.textContent = count;
 }
+export function EDIThtmlTodosPrio(id, priority) {
+  const cellTodoTITLE = document.querySelector(
+    `.todoTitle_calCell[data-id="${id}"]`,
+  );
+  const todoTITLE = document.querySelector(`.title_Todo[data-id="${id}"]`);
+  const todoEditCIRCLE = document.querySelector(
+    `.changePriorityCIRCLE[data-id="${id}"]`,
+  );
+  [todoTITLE, cellTodoTITLE, todoEditCIRCLE].forEach((el) =>
+    el.setAttribute("data-priority", priority),
+  );
+}
+
 export function TOGGLEcalenderCell(date) {
   const calenderCELLS = document.querySelectorAll(".calender_Cell");
   calenderCELLS.forEach((cell) => {
@@ -31,17 +47,6 @@ export function TOGGLEcalenderCell(date) {
       cell.classList.add("active");
     }
   });
-}
-export function CLEARhtml(elementCLASS) {
-  const element = document.querySelector(elementCLASS);
-  element.innerHTML = "";
-}
-export function REMOVEelementClassId(elementCLASS, id) {
-  const el = document.querySelector(`${elementCLASS}[data-id="${id}"]`);
-  if (!el) {
-    return;
-  }
-  el.remove();
 }
 export function TOGGLEactiveNavLink(selectedMONTH) {
   document.querySelectorAll(".navlink_Month").forEach((x) => {
@@ -96,17 +101,17 @@ export function TOGGLEeditPriority(id) {
   }, 160);
   editTodoRADIOS.setAttribute("data-open", "false");
 }
-export function EDIThtmlTodosPrio(id, priority) {
-  const cellTodoTITLE = document.querySelector(
-    `.todoTitle_calCell[data-id="${id}"]`,
-  );
-  const todoTITLE = document.querySelector(`.title_Todo[data-id="${id}"]`);
-  const todoEditCIRCLE = document.querySelector(
-    `.changePriorityCIRCLE[data-id="${id}"]`,
-  );
-  [todoTITLE, cellTodoTITLE, todoEditCIRCLE].forEach((el) =>
-    el.setAttribute("data-priority", priority),
-  );
+
+export function CLEARhtml(elementCLASS) {
+  const element = document.querySelector(elementCLASS);
+  element.innerHTML = "";
+}
+export function REMOVEelementClassId(elementCLASS, id) {
+  const el = document.querySelector(`${elementCLASS}[data-id="${id}"]`);
+  if (!el) {
+    return;
+  }
+  el.remove();
 }
 export function PREPAREformForEdit(title, desc, priority, id) {
   const todoFORM = document.querySelector(".todo_Form");
@@ -172,6 +177,7 @@ export function ISfutureDate(reqMONTH, reqYEAR, selMONTH, selYEAR) {
   const ISfutureYEAR = reqYEAR > selYEAR;
   const ISsameYEAR = reqYEAR === selYEAR;
   const ISfutureMonth = reqMONTH > selMONTH;
+
   if (ISfutureYEAR || (ISsameYEAR && ISfutureMonth)) return true;
   return false;
 }

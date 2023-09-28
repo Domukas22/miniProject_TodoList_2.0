@@ -1,3 +1,8 @@
+
+
+// when selecting today, for some reason the selected year is not correct.
+// --> 5_select_Dates, line 55
+
 . restore deletes todos
 . Fix overcrowding issues
 . ad calender swap animations

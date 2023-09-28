@@ -1,48 +1,62 @@
-import { GETformatedDateInfo } from "../general";
 import { GETtodosOfMonth } from "../todo_Logic";
 
-export default function PRINTnavLinks(date, TOGGLEmonth) {
+export default function PRINTnavLinks(
+  reqMONTH,
+  reqYEAR,
+  PRINTmonth,
+  SETprintedMonth,
+) {
   EMPTYnavLinkWrap();
 
-  const { year, month: todayMONTH } = GETformatedDateInfo(date);
   const navLinkWRAP = document.querySelector(".wrap_navMonths");
-  const todayDATE = new Date();
 
-  for (let month = 0; month < 12; month += 1) {
+  for (let loopMONTH = 0; loopMONTH < 12; loopMONTH += 1) {
     navLinkWRAP.appendChild(
-      CREATEnavLink(year, month, todayMONTH, todayDATE, TOGGLEmonth),
+      CREATEnavLink(reqYEAR, reqMONTH, loopMONTH, PRINTmonth, SETprintedMonth),
     );
   }
 }
-function CREATEnavLink(year, month, todayMONTH, todayDATE, TOGGLEmonth) {
+
+function CREATEnavLink(
+  reqYEAR,
+  reqMONTH,
+  loopMONTH,
+  PRINTmonth,
+  SETprintedMonth,
+) {
   const link = document.createElement("li");
-  const todoCOUNT = GETtodosOfMonth(month, year).length;
+  const todoCOUNT = GETtodosOfMonth(loopMONTH, reqYEAR).length;
 
   link.classList.add("navlink_Month");
-  if (month === todayMONTH) {
+  if (loopMONTH === reqMONTH) {
     link.classList.add("active");
   }
-  link.setAttribute("data-month", month);
-  link.setAttribute("data-year", year);
+  link.setAttribute("data-month", loopMONTH);
+  link.setAttribute("data-year", reqYEAR);
   link.setAttribute("data-click_effect", "false");
   link.addEventListener("click", () => {
-    TOGGLEmonth(month, month);
+    PRINTmonth(loopMONTH, reqYEAR);
+    PRINTnavLinks(loopMONTH, reqYEAR, PRINTmonth, SETprintedMonth);
+    SETprintedMonth(loopMONTH);
   });
-
-  link.setAttribute("data-has_passed", new Date(year, month, 1) < todayDATE);
+  link.setAttribute(
+    "data-has_passed",
+    new Date(reqYEAR, loopMONTH, 1) < new Date(),
+  );
   link.setAttribute("data-this_Month", false);
-  if (todayDATE.getMonth() === month && todayDATE.getFullYear() === year) {
+  link.innerHTML = `${GETmonthName(
+    loopMONTH,
+  )}<span class="todoCount_month" data-count="${todoCOUNT}" data-month="${loopMONTH}" data-year="${reqYEAR}">${todoCOUNT}</span>`;
+  if (
+    new Date().getMonth() === loopMONTH &&
+    new Date().getFullYear() === reqYEAR
+  ) {
     link.setAttribute("data-has_passed", false);
     link.setAttribute("data-this_Month", true);
   }
 
-  link.innerHTML = `${GETmonthName(
-    month,
-  )}<span class="todoCount_month" data-count="${todoCOUNT}" data-month="${month}" data-year="${year}">${todoCOUNT}</span>`;
-
   return link;
 }
-
 function GETmonthName(month) {
   const names = {
     0: "Jan",
