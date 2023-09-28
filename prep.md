@@ -1,3 +1,4 @@
+. restore deletes todos
 . Fix overcrowding issues
 . ad calender swap animations
 . stop editing form if you change priority or delete white the form is open

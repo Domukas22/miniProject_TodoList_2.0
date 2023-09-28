@@ -1,4 +1,4 @@
-import { GETdateWithMonth } from "../general";
+import { GETdateWithMonth, GETformatedDateInfo } from "../general";
 
 export function PLAYclickEffect(el) {
   el.setAttribute("data-click_effect", "true");
@@ -167,4 +167,11 @@ export function ADJUSThtmlAfterTodoEdit(
   TOGGLEtodoForm("close");
   todoFORM.setAttribute("data-editing", "false");
   todoFORM.setAttribute("data-toeditid", "");
+}
+export function ISfutureDate(reqMONTH, reqYEAR, selMONTH, selYEAR) {
+  const ISfutureYEAR = reqYEAR > selYEAR;
+  const ISsameYEAR = reqYEAR === selYEAR;
+  const ISfutureMonth = reqMONTH > selMONTH;
+  if (ISfutureYEAR || (ISsameYEAR && ISfutureMonth)) return true;
+  return false;
 }

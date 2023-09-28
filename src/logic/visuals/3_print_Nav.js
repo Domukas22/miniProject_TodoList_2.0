@@ -1,32 +1,32 @@
 import { GETformatedDateInfo } from "../general";
 import { GETtodosOfMonth } from "../todo_Logic";
 
-export default function PRINTnavLinks(date, selectMonthFUNC) {
+export default function PRINTnavLinks(date, TOGGLEmonth) {
   EMPTYnavLinkWrap();
 
-  const { year, month: printedMONTH } = GETformatedDateInfo(date);
+  const { year, month: todayMONTH } = GETformatedDateInfo(date);
   const navLinkWRAP = document.querySelector(".wrap_navMonths");
   const todayDATE = new Date();
 
   for (let month = 0; month < 12; month += 1) {
     navLinkWRAP.appendChild(
-      CREATEnavLink(year, month, printedMONTH, todayDATE, selectMonthFUNC),
+      CREATEnavLink(year, month, todayMONTH, todayDATE, TOGGLEmonth),
     );
   }
 }
-function CREATEnavLink(year, month, printedMONTH, todayDATE, selectMonthFUNC) {
+function CREATEnavLink(year, month, todayMONTH, todayDATE, TOGGLEmonth) {
   const link = document.createElement("li");
   const todoCOUNT = GETtodosOfMonth(month, year).length;
 
   link.classList.add("navlink_Month");
-  if (month === printedMONTH) {
+  if (month === todayMONTH) {
     link.classList.add("active");
   }
   link.setAttribute("data-month", month);
   link.setAttribute("data-year", year);
   link.setAttribute("data-click_effect", "false");
   link.addEventListener("click", () => {
-    selectMonthFUNC(month);
+    TOGGLEmonth(month, month);
   });
 
   link.setAttribute("data-has_passed", new Date(year, month, 1) < todayDATE);

@@ -9,9 +9,9 @@ import {
   SELECTdate,
   SELECTprevDate,
   SELECTnextDate,
-  SELECTmonth,
-  SELECTnextMonth,
-  SELECTprevMonth,
+  TOGGLEmonth,
+  SHOWnextMonth,
+  SHOWprevMonth,
   SELECTtoday,
 } from "./5_select_Dates";
 import {
@@ -25,8 +25,9 @@ export default function SETlisteners() {
   console.log("-------");
 
   const today = GETselectedDate();
-  PRINTnavLinks(today, SELECTmonth);
-  PRINTcalender(today, today, SELECTdate);
+  const { day, month, year } = GETformatedDateInfo(GETselectedDate());
+  PRINTnavLinks(today, TOGGLEmonth);
+  PRINTcalender(true, day, month, today, SELECTdate);
   PRINTtodos(today);
   EDITdateTitle(today);
   EDITyearTitle(GETselectedYear());
@@ -48,9 +49,9 @@ export default function SETlisteners() {
   );
   const selectedDayBTN = document.querySelector(".date_controlBox");
   const nextDayBTN = document.querySelector('.controlBtn[data-action="next"]');
-  prevDayBTN.addEventListener("click", SELECTprevMonth);
+  prevDayBTN.addEventListener("click", SHOWprevMonth);
   currentDayBTN.addEventListener("click", SELECTtoday);
-  nextDayBTN.addEventListener("click", SELECTnextMonth);
+  nextDayBTN.addEventListener("click", SHOWnextMonth);
   selectedDayBTN.addEventListener("click", () => SELECTdate(GETselectedDate()));
 
   const colorOnClickBTNS = document.querySelectorAll(
@@ -69,34 +70,33 @@ export default function SETlisteners() {
   window.addEventListener("keydown", (e) => {
     const ISformOpen =
       document.querySelector(".todo_Form").dataset.open === "true";
-    console.log(e.key);
     if (e.key === "Shift") {
       ISshiftPressed = true;
     }
-    if (e.key === "a" || e.key === "A") {
+    if (e.key === "a" || e.key === "A" || e.key === "ArrowLeft") {
       if (ISformOpen) return;
       if (ISshiftPressed) {
-        SELECTprevMonth();
+        SHOWprevMonth();
         return;
       }
       SELECTprevDate();
     }
-    if (e.key === "d" || e.key === "D") {
+    if (e.key === "d" || e.key === "D" || e.key === "ArrowRight") {
       if (ISformOpen) return;
       if (ISshiftPressed) {
-        SELECTnextMonth();
+        SHOWnextMonth();
         return;
       }
       SELECTnextDate();
     }
-    if (e.key === "w" || e.key === "W") {
+    if (e.key === "w" || e.key === "W" || e.key === "ArrowUp") {
       if (ISshiftPressed) return;
       if (ISformOpen) return;
       const { day, month, year } = GETformatedDateInfo(GETselectedDate());
       const upDAY = day - 7;
       if (upDAY > 0) SELECTdate(`${upDAY}.${month}.${year}`);
     }
-    if (e.key === "s" || e.key === "S") {
+    if (e.key === "s" || e.key === "S" || e.key === "ArrowDown") {
       if (ISshiftPressed) return;
       if (ISformOpen) return;
       const { day, month, year, dayCOUNT } = GETformatedDateInfo(
@@ -104,6 +104,25 @@ export default function SETlisteners() {
       );
       const downDAY = day + 7;
       if (downDAY <= dayCOUNT) SELECTdate(`${downDAY}.${month}.${year}`);
+    }
+
+    if (e.key === "ArrowUp") {
+      if (!ISformOpen) return;
+      const checkedRADIO = document.querySelector(".radio_Priority:checked");
+      if (checkedRADIO.dataset.priority === "1") {
+        checkedRADIO.parentElement.lastElementChild.checked = true;
+        return;
+      }
+      checkedRADIO.previousElementSibling.checked = true;
+    }
+    if (e.key === "ArrowDown") {
+      if (!ISformOpen) return;
+      const checkedRADIO = document.querySelector(".radio_Priority:checked");
+      if (checkedRADIO.dataset.priority === "3") {
+        checkedRADIO.parentElement.firstElementChild.checked = true;
+        return;
+      }
+      checkedRADIO.nextElementSibling.checked = true;
     }
 
     if (e.key === "Escape") TOGGLEtodoForm("close");

@@ -1,3 +1,13 @@
+
+.calenderGRANDPARENT {
+  flex: 1
+}
+.calenderPARENT {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
 .calender {
   display: grid;
   row-gap: 2.5px;
@@ -8,17 +18,24 @@
   grid-auto-rows: 1fr;
 
   height: 100%;
+  width: 100%;
   opacity: 100%;
   transform: translateX(0px);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 100%;
+  transition: 100ms;
 }
-.calender[data-visible="false"] {
+
+.calender[data-position="left"] {
+  transform: translateX(-20px);
   opacity: 0%;
 }
-.calender[data-position="past"] {
-  transform: translateX(-15px);
-}
-.calender[data-position="future"] {
-  transform: translateX(15px);
+.calender[data-position="right"] {
+  transform: translateX(20px);
+  opacity: 0%;
 }
 .wrap_Calender {
   flex: 1;

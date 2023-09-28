@@ -7,6 +7,7 @@ import {
   TOGGLEcalenderCell,
   EDITyearTitle,
   PLAYclickEffect,
+  ISfutureDate,
 } from "./6_other_Effects";
 import { FORMATEdate, GETformatedDateInfo } from "../general";
 
@@ -14,33 +15,31 @@ let selDATE = FORMATEdate(new Date());
 let selMONTH = new Date().getMonth();
 let selYEAR = new Date().getFullYear();
 
-export function SELECTdate(requestedDATE) {
-  const { year: reqYEAR, month: reqMONTH } = GETformatedDateInfo(requestedDATE);
-  const ISsameDate = requestedDATE === selDATE;
+export function SELECTdate(reqDATE) {
+  const { year: reqYEAR, month: reqMONTH } = GETformatedDateInfo(reqDATE);
+  const ISsameDate = reqDATE === selDATE;
   const ISsameYear = reqYEAR === selYEAR;
   const ISsameMonth = reqMONTH === selMONTH;
 
   if (ISsameDate && ISsameYear && ISsameMonth) {
-    TOGGLEcalenderCell(requestedDATE);
+    TOGGLEcalenderCell(reqDATE);
     return;
   }
   if (!ISsameYear || !ISsameMonth) {
     if (!ISsameYear) {
       SELECTyear(reqYEAR);
       EDITyearTitle(reqYEAR);
-      PRINTnavLinks(requestedDATE, SELECTmonth);
+      PRINTnavLinks(reqDATE, TOGGLEmonth);
     }
     TOGGLEactiveNavLink();
-    PRINTcalender(requestedDATE, selDATE, SELECTdate);
-    SELECTmonth(reqMONTH);
+    TOGGLEmonth(selMONTH > reqMONTH, reqMONTH);
   }
 
-  TOGGLEcalenderCell(requestedDATE);
-  PRINTtodos(requestedDATE);
-  EDITdateTitle(requestedDATE);
-  selDATE = requestedDATE;
+  TOGGLEcalenderCell(reqDATE);
+  PRINTtodos(reqDATE);
+  EDITdateTitle(reqDATE);
+  selDATE = reqDATE;
 }
-
 export function SELECTprevDate() {
   const { day, month, year } = GETformatedDateInfo(GETselectedDate());
 
@@ -72,43 +71,54 @@ export function SELECTtoday() {
   const { day, month, year } = GETformatedDateInfo(FORMATEdate(new Date()));
   SELECTdate(`${day}.${month}.${year}`);
 }
+export function SELECTyear(year) {
+  selYEAR = year;
+  PLAYclickEffect(document.querySelector(".wrap_navYear"));
+  EDITyearTitle(year);
+}
 
-export function SELECTmonth(month) {
-  selMONTH = month;
+export function TOGGLEmonth(reqMONTH, reqYEAR) {
+  // needs to check the date, not jsut the month, in case the year is differnet
+  const ISfuture = ISfutureDate(
+    reqMONTH,
+    reqYEAR,
+    GETselectedMonth(),
+    GETselectedYear(),
+  );
+
+  selMONTH = reqMONTH;
   PRINTcalender(
-    `xx.${selMONTH}.${GETselectedYear()}`,
+    ISfuture,
+    selMONTH,
+    GETselectedYear(),
     GETselectedDate(),
     SELECTdate,
   );
   TOGGLEactiveNavLink(selMONTH);
 }
-export function SELECTprevMonth() {
+export function SHOWprevMonth() {
   const month = GETselectedMonth();
+  const year = GETselectedYear();
   if (month === 0) {
-    const newYEAR = GETselectedYear() - 1;
-    PRINTnavLinks(`1.${month}.${newYEAR}`, SELECTmonth);
+    const newYEAR = year - 1;
+    PRINTnavLinks(`xx.11.${newYEAR}`, TOGGLEmonth);
+    TOGGLEmonth(11, newYEAR);
     SELECTyear(newYEAR);
-    SELECTmonth(11);
     return;
   }
-  SELECTmonth(month - 1);
+  TOGGLEmonth(month - 1, year);
 }
-export function SELECTnextMonth() {
+export function SHOWnextMonth() {
   const month = GETselectedMonth();
+  const year = GETselectedYear();
   if (month === 11) {
-    const newYEAR = GETselectedYear() + 1;
-    PRINTnavLinks(`1.${month}.${newYEAR}`, SELECTmonth);
+    const newYEAR = year + 1;
+    PRINTnavLinks(`xx.1.${newYEAR}`, TOGGLEmonth);
+    TOGGLEmonth(0, newYEAR);
     SELECTyear(newYEAR);
-    SELECTmonth(0);
     return;
   }
-  SELECTmonth(month + 1);
-}
-
-export function SELECTyear(year) {
-  selYEAR = year;
-  PLAYclickEffect(document.querySelector(".wrap_navYear"));
-  EDITyearTitle(year);
+  TOGGLEmonth(month + 1, year);
 }
 
 export function GETselectedDate() {
