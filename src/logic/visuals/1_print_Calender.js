@@ -94,7 +94,7 @@ function GENERATEcalenderCellS(
       calCellDIV.classList.add("active");
     }
     calCellDIV.setAttribute("data-date", `${loopDAY}.${reqMONTH}.${reqYEAR}`);
-    calCellDIV.innerHTML = `<p class="cornerText_dayOfMonth">${loopDAY}</p>`;
+    calCellDIV.innerHTML = `<p class="cornerText_dayOfMonth">${loopDAY}</p><p class="calCellDOTS">...</p>`;
     calCellDIV.addEventListener("click", () =>
       SELECTdate(loopDAY, reqMONTH, reqYEAR),
     );
@@ -109,16 +109,16 @@ function GETcellCount(year, month) {
 }
 function APPENDtodoTitles(calCellDIV, todos) {
   todos.forEach((todo) => {
-    APPENDtodoTitleToCell(calCellDIV, todo.title, todo.priority, todo.id);
+    PREPENDtodoTitleToCell(calCellDIV, todo.title, todo.priority, todo.id);
   });
 }
-export function APPENDtodoTitleToCell(calCellDIV, title, priority, id) {
+export function PREPENDtodoTitleToCell(calCellDIV, title, priority, id) {
   const paragraph = document.createElement("p");
   paragraph.classList.add("todoTitle_calCell");
   paragraph.setAttribute("data-priority", priority);
   paragraph.setAttribute("data-id", `${id}`);
   paragraph.innerHTML = title;
-  calCellDIV.appendChild(paragraph);
+  calCellDIV.prepend(paragraph);
 }
 
 function GETcellColor(todayDATE, requestedDATE) {

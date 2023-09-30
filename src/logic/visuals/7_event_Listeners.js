@@ -15,7 +15,6 @@ import {
   SELECTtoday,
 } from "./5_select_Dates";
 import {
-  EDITyearTitle,
   PLAYclickEffect,
   TOGGLEtodoForm,
   EDITcontrolBoxDate,
@@ -31,7 +30,7 @@ export default function SETlisteners() {
   } = GETselectedDate();
 
   PRINTnavLinks(todayMONTH, todayYEAR, PRINTmonth, SETprintedMonth);
-
+  document.querySelector(".title_Year").textContent = todayYEAR;
   PRINTcalender(
     true,
     todayMONTH,
@@ -43,7 +42,6 @@ export default function SETlisteners() {
   );
   PRINTtodos(todayDAY, todayMONTH, todayYEAR);
   EDITcontrolBoxDate(todayDAY, todayMONTH, todayYEAR);
-  EDITyearTitle(GETprintedYear());
 
   const createTodoBTN = document.querySelector(".btn_createTodo.submit");
   const cancelTodoBTN = document.querySelector(".btn_createTodo.cancel");

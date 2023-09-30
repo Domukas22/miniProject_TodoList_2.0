@@ -6,8 +6,8 @@ import {
   EDITtodo,
   GETtodoList,
 } from "../todo_Logic";
-import { APPENDtodoTitleToCell } from "./1_print_Calender";
-import { APPENDsingleTodo } from "./2_print_Todos";
+import { PREPENDtodoTitleToCell } from "./1_print_Calender";
+import { PREPENDsingleTodo } from "./2_print_Todos";
 import { SELECTdate, GETselectedDate } from "./5_select_Dates";
 import {
   CLEARinputs,
@@ -43,7 +43,6 @@ export default function SUBMITnewTodo() {
 
   document.querySelector(".input_todoTitle").focus();
   SELECTdate(selDAY, selMONTH, selYEAR);
-  console.log(parseFloat(priority));
   ADDnewTodo(
     title,
     desc,
@@ -63,8 +62,8 @@ function ADJUSThtmlAfterNewTodo() {
   const [, _month, _year] = date.split(".").map(Number);
   const { _month: month, _year: year } = { _month, _year };
 
-  APPENDtodoTitleToCell(FINDtargetCalCell(date), title, priority, id);
-  APPENDsingleTodo(todoOBJ);
+  PREPENDtodoTitleToCell(FINDtargetCalCell(date), title, priority, id);
+  PREPENDsingleTodo(todoOBJ);
   EDITnavLinkTodoCount(month, year, GETtodosOfMonth(month, year).length);
   CLEARinputs();
 }

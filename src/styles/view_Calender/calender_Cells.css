@@ -44,6 +44,21 @@
   background-color: rgba(255, 255, 255, 0.03);
 }
 
+.calender_Cell > .todoTitle_calCell,
+.calCellDOTS  {
+  display: none;
+}
+.calender_Cell .todoTitle_calCell:nth-child(-n+3) {
+  display: block;
+}
+.calender_Cell:has(.todoTitle_calCell:nth-child(n+4)) .calCellDOTS {
+  display: block;
+}
+.calCellDOTS {
+  font-weight: 600;
+  margin-top: -5px;
+}
+
 .calender_Cell:hover,
 .calender_Cell.future:hover,
 .calender_Cell.future_weekend:hover {
@@ -75,20 +90,16 @@
   top: 4px;
   left: 4px;
 }
-.todoTitle_calCell {
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.1px;
-  margin-bottom: 4px;
-}
+
+
 .todoTitle_calCell[data-priority="3"] {
   color: var(--low);
 }
 .todoTitle_calCell[data-priority="2"] {
   color: var(--medium);
+  font-weight: 600;
 }
 .todoTitle_calCell[data-priority="1"] {
-  font-size: 14px;
   font-weight: 700;
   color: var(--high);
 }

@@ -15,29 +15,39 @@
   --color_selected: rgb(255, 249, 140);
   --color_selectedHover: rgba(255, 249, 140, 0.1);
 }
-* {
-  margin: 0px;
-  padding: 0px;
-  box-sizing: border-box;
-  font-family: "Nunito" !important;
-  transition: 150ms;
-  color: rgba(255, 255, 255, 0.822);
-  /* border: 1px solid grey; */
+
+@font-face {
+  font-family: "Nunito";
+  src: url(../assets/fonts/Nunito-Light.ttf);
+  font-weight: 300;
+  font-style: light;
+}
+@font-face {
+  font-family: "Nunito";
+  src: url(../assets/fonts/Nunito-Regular.ttf);
+  font-weight: 400;
+  font-style: normal;
 }
 @font-face {
   font-family: "Nunito";
   src: url(../assets/fonts/Nunito-Medium.ttf);
-  font-weight: medium;
+  font-weight: 500;
+  font-style: medium;
+}
+@font-face {
+  font-family: "Nunito";
+  src: url(../assets/fonts/Nunito-SemiBold.ttf);
+  font-weight: 600;
 }
 @font-face {
   font-family: "Nunito";
   src: url(../assets/fonts/Nunito-Bold.ttf);
-  font-weight: bold;
+  font-weight: 700;
 }
 @font-face {
   font-family: "Nunito";
-  src: url(../assets/fonts/Nunito-Light.ttf);
-  font-weight: light;
+  src: url(../assets/fonts/Nunito-Black.ttf);
+  font-weight: 800;
 }
 
 body {
@@ -54,6 +64,7 @@ main {
 }
 p {
   font-size: 14px;
+  line-height: 18px;
   color: rgba(255, 255, 255, 0.6);
 }
 .contentWrap {

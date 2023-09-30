@@ -19,18 +19,18 @@ export function PRINTtodos(reqDAY, reqMONTH, reqYEAR) {
     setTimeout(() => {
       CLEARhtml(".wrap_Todos");
       todos.forEach((todoOBJ) => {
-        APPENDsingleTodo(todoOBJ);
+        PREPENDsingleTodo(todoOBJ);
       });
     }, 160);
     return;
   }
   CLEARhtml(".wrap_Todos");
   todos.forEach((todoOBJ) => {
-    APPENDsingleTodo(todoOBJ);
+    PREPENDsingleTodo(todoOBJ);
   });
 }
 
-export function APPENDsingleTodo({
+export function PREPENDsingleTodo({
   id,
   priority,
   title,
@@ -72,7 +72,7 @@ export function APPENDsingleTodo({
   ATTACHeventREMOVE(todoDIV, removeMETHOD, id, date);
   ATTACHeventEDITpriority(todoDIV, id, editPriorityMETHOD);
   ATTACHeventOPENedit(todoDIV, id, title, desc, priority);
-  todoWrapDIV.appendChild(todoDIV);
+  todoWrapDIV.prepend(todoDIV);
 
   setTimeout(() => {
     todoDIV.setAttribute("data-visible", "true");

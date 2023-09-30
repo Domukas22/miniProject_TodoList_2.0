@@ -1,11 +1,9 @@
 
 
-// when selecting today, for some reason the selected year is not correct.
-// --> 5_select_Dates, line 55
 
+. lower bar => delete all todos, view deleted
 . restore deletes todos
 . Fix overcrowding issues
-. ad calender swap animations
 . stop editing form if you change priority or delete white the form is open
 . blank days should be showing past and future month todos
 . show how many days left until selected date
